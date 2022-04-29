@@ -9,6 +9,9 @@ jobs:
   release:
     runs-on: ubuntu-latest
     if: "! github.event.pull_request.head.repo.fork"
+    permissions:
+      contents: write
+      packages: write
     steps:
 
     - name: 🛎️ checkout
@@ -38,8 +41,10 @@ jobs:
         rm -rf node_modules
         npm ci --production
 
-    - name: ✍️ write nojekyll
-      run: touch .nojekyll
+    - name: ✍️ write cname and nojekyll
+      run: |
+        touch .nojekyll
+        echo "namaka.chasemoskal.com" > CNAME
 
     - name: 🚀 deploy to gh-pages
       uses: JamesIves/github-pages-deploy-action@v4.3.0
