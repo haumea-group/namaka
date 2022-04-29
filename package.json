@@ -16,6 +16,7 @@
 		"compile": "tsc",
 		"importly": "importly < package-lock.json > x/importmap.json",
 		"watch": "tsc -w",
+		"server": "node x/server.js 8000",
 		"start": "http-server",
 		"test": "cynic node x/tests.test.js"
 	},
