@@ -5,10 +5,16 @@ import {Comment} from "../../../api/types/schema.js"
 import {makeTopicModel} from "./topic/topic-model.js"
 import {AppRemote} from "../../../api/types/remote.js"
 
-export function makeCommentingModel({remote}: {remote: AppRemote}) {
+export interface CommentingState {
+	allComments: Comment[]
+}
 
-	const snap = snapstate({
-		allComments: [] as Comment[],
+export function makeCommentingModel({remote}: {
+		remote: {commenting: AppRemote["commenting"]}
+	}) {
+
+	const snap = snapstate<CommentingState>({
+		allComments: []
 	})
 
 	return {
@@ -16,7 +22,7 @@ export function makeCommentingModel({remote}: {remote: AppRemote}) {
 		getTopicModel: (topicId: string) => makeTopicModel({
 			topicId,
 			remote,
-			snap,
+			state: snap.state,
 		}),
 	}
 }

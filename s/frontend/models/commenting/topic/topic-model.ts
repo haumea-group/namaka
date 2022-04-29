@@ -1,18 +1,16 @@
 
-import {Snapstate} from "@chasemoskal/snapstate"
-import {AppRemote} from "../../../../api/types/remote.js"
-import {Comment, CommentDraft} from "../../../../api/types/schema.js"
+import {AppRemote} from "../../../../namaka.js"
+import {CommentingState} from "../commenting-model.js"
+import {CommentDraft} from "../../../../api/types/schema.js"
 
 export function makeTopicModel({
 		topicId,
+		state,
 		remote,
-		snap: {state},
 	}: {
 		topicId: string
-		remote: AppRemote
-		snap: Snapstate<{
-			allComments: Comment[]
-		}>
+		state: CommentingState
+		remote: {commenting: AppRemote["commenting"]},
 	}) {
 
 	return {

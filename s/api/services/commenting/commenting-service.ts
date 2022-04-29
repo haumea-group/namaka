@@ -1,5 +1,6 @@
 
 import * as dbmage from "dbmage"
+import * as renraku from "renraku"
 
 import {BasicAuth} from "../../types/auth.js"
 import {CommentDraft} from "../../types/schema.js"
@@ -28,6 +29,8 @@ export const makeCommentingService = () => ({
 	},
 
 	async postComment(draft: CommentDraft) {
+		if (!userId)
+			throw new renraku.ApiError(403, "cannot post, not logged in")
 		const newRow = newCommentRow({
 			rando,
 			userId,

@@ -1,9 +1,7 @@
 
-import {Suite, expect} from "cynic"
+import {Suite} from "cynic"
+import commentingModelTest from "./frontend/models/commenting/commenting-model.test.js"
 
 export default <Suite>{
-
-	async "test suite is loading"() {
-		expect(1).defined()
-	},
+	commentingModelTest,
 }

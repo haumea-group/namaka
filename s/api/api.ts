@@ -13,8 +13,6 @@ export async function makeApi({database}: {
 	const rando = await dbmage.getRando()
 
 	const basicPolicy: renraku.Policy<BasicMeta, BasicAuth> = async meta => {
-		if (!meta.userId)
-			throw new renraku.ApiError(400, "user id not recognized")
 		return {
 			rando,
 			database,

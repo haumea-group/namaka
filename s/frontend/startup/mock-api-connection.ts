@@ -3,8 +3,8 @@ import * as dbmage from "dbmage"
 import * as renraku from "renraku"
 
 import {makeApi} from "../../api/api.js"
-import {AppRemote} from "../../api/types/remote.js"
 import {BasicMeta} from "../../api/types/auth.js"
+import {AppRemote} from "../../api/types/remote.js"
 import {databaseShape} from "../../api/types/schema.js"
 
 export async function mockApiConnection({getMockMeta}: {
