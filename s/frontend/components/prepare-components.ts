@@ -5,13 +5,14 @@ import {themeComponents} from "../framework/theme-components.js"
 
 import themeCss from "./theme.css.js"
 
-export function prepareComponents({models: {commentingModel}}: {
+export function prepareComponents({models: {commenting}}: {
 		models: ReturnType<typeof prepareModels>
 	}) {
 
 	return themeComponents(themeCss, {
+
 		NamakaComments: NamakaComments
-			.withContext({commentingModel})
-			.withSubscriptions(commentingModel.snap.subscribe),
+			.withContext({commenting})
+			.withSubscriptions(commenting.snap.subscribe),
 	})
 }

@@ -1,4 +1,6 @@
 
+<br/>
+
 # ⁓ 🌑 namaka ⁓
 
 namaka is a fullstack user comments and 5-star reviews system for web applications.
@@ -9,3 +11,5 @@ namaka is a fullstack user comments and 5-star reviews system for web applicatio
 🛠️ typescript library and nodejs server  
 🌐 universal web components  
 💖 made with open source love, just for you  
+
+<br/>

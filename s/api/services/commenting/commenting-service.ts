@@ -6,7 +6,9 @@ import {CommentDraft} from "../../types/schema.js"
 import {rowToComment} from "./utils/row-to-comment.js"
 import {newCommentRow} from "./utils/new-comment-row.js"
 
-export const commentingService = ({rando, userId, database}: BasicAuth) => ({
+export const makeCommentingService = () => ({
+		rando, userId, database,
+	}: BasicAuth) => ({
 
 	async getComments({topicId: topicIdString, limit, offset}: {
 			topicId: string

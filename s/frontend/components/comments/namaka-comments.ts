@@ -11,22 +11,20 @@ import namakaCommentsCss from "./namaka-comments.css.js"
 
 @mixinStyles(namakaCommentsCss)
 export class NamakaComments extends mixinStandard<{
-		commentingModel: ReturnType<typeof makeCommentingModel>
+		commenting: ReturnType<typeof makeCommentingModel>
 	}>()(LitElement) {
-
-	get state() {
-		return this.context.commentingModel.snap.readable
-	}
 
 	@property({type: String})
 	topic?: string
 
-	#topicModel: ReturnType<typeof makeTopicModel> = <any>undefined
+	#topicModel: ReturnType<typeof makeTopicModel> = undefined as any
 
 	async firstUpdated() {
 		if (!this.topic)
 			throw new Error("topic attribute is required")
-		this.#topicModel = this.context.commentingModel.getTopicModel(this.topic)
+
+		this.#topicModel = this.context.commenting.getTopicModel(this.topic)
+
 		await this.#topicModel.getComments()
 	}
 
@@ -44,12 +42,12 @@ export class NamakaComments extends mixinStandard<{
 	}
 
 	render() {
-		const {allComments} = this.state
+		const {allComments} = this.context.commenting.snap.state
 		return html`
 			<p>topic id: ${this.topic}</p>
 			<div>
 				<button @click=${this.#postRandomComment}>post random comment</button>
-				<button @click=${this.#clearLocalStorage}>clear localstorage</button>
+				<button @click=${this.#clearLocalStorage}>wipe database</button>
 			</div>
 			<ol>
 				${allComments.map(comment => html`

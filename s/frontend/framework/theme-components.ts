@@ -2,14 +2,14 @@
 import {LitElement, CSSResultGroup} from "lit"
 import {objectMap} from "@chasemoskal/snapstate"
 
-import {Constructor} from "../../toolbox/handy-types.js"
 import {mixinStyles} from "./mixins/mixin-styles.js"
+import {Constructor} from "../../toolbox/handy-types.js"
 
 export const themeComponents = <
 		xComponents extends {[key: string]: Constructor<LitElement>}
 	>(
 		theme: CSSResultGroup,
-		components: xComponents
+		components: xComponents,
 	): xComponents => {
 
 	return objectMap(

@@ -4,6 +4,6 @@ import {makeCommentingModel} from "./commenting/commenting-model.js"
 
 export function prepareModels({remote}: {remote: AppRemote}) {
 	return {
-		commentingModel: makeCommentingModel({remote}),
+		commenting: makeCommentingModel({remote}),
 	}
 }
