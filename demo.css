@@ -1,0 +1,41 @@
+
+* {
+	margin: 0;
+	padding: 0;
+	box-sizing: border-box;
+}
+
+html {
+	background: #111;
+	color: #888;
+}
+
+body {
+	padding: 5vh 10vw;
+	margin: auto;
+	text-align: center;
+}
+
+h1 > strong {
+	color: white;
+	text-shadow: 0 0 12px #fff6;
+}
+
+h1 > em {
+	display: block;
+	opacity: 0.5;
+	font-size: 0.5em;
+	padding-top: 0.5em;
+}
+
+body > * + * {
+	margin-top: 2em;
+}
+
+a { color: skyblue; }
+a:hover { color: white; }
+
+namaka-comments {
+	text-align: left;
+	margin: auto;
+}
