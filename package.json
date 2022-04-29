@@ -30,7 +30,7 @@
 		"@chasemoskal/snapstate": "^0.0.8",
 		"dbmage": "^0.0.0-dev.7",
 		"es-module-shims": "^1.5.4",
-		"lit": "^2.2.2",
+		"lit": "^2.2.3",
 		"renraku": "^0.0.0-dev.57"
 	},
 	"devDependencies": {
