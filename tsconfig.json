@@ -1,0 +1,19 @@
+{
+	"compilerOptions": {
+		"rootDir": "s",
+		"outDir": "x",
+		"target": "es2019",
+		"lib": ["es2019", "dom"],
+		"module": "esnext",
+		"moduleResolution": "node",
+		"experimentalDecorators": true,
+		"noImplicitAny": true,
+		"sourceMap": true,
+		"declaration": true,
+		"skipLibCheck": true,
+		"strict": true,
+	},
+	"include": [
+		"s/**/*.ts"
+	]
+}

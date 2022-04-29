@@ -1,0 +1,44 @@
+{
+	"name": "namaka",
+	"description": "user comments and 5-star review system",
+	"version": "0.0.0-dev.0",
+	"license": "MIT",
+	"type": "module",
+	"author": "Chase Moskal <chasemoskal@gmail.com>",
+	"files": [
+		"x",
+		"s"
+	],
+	"main": "x/namaka.js",
+	"scripts": {
+		"build": "run-s clean && run-p compile importly",
+		"clean": "rimraf x && mkdirp x",
+		"compile": "tsc",
+		"importly": "importly < package-lock.json > x/importmap.json",
+		"watch": "tsc -w",
+		"start": "http-server",
+		"test": "cynic node x/tests.test.js"
+	},
+	"keywords": [
+		"comments",
+		"user-comments",
+		"reviews",
+		"5-star-reviews"
+	],
+	"dependencies": {
+		"@chasemoskal/snapstate": "^0.0.8",
+		"dbmage": "^0.0.0-dev.7",
+		"es-module-shims": "^1.5.4",
+		"lit": "^2.2.2",
+		"renraku": "^0.0.0-dev.57"
+	},
+	"devDependencies": {
+		"cynic": "0.1.0-dev.16",
+		"http-server": "^14.1.0",
+		"importly": "^0.2.0",
+		"mkdirp": "^1.0.4",
+		"npm-run-all": "^4.1.5",
+		"rimraf": "^3.0.2",
+		"typescript": "^4.6.3"
+	}
+}
