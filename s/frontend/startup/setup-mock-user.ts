@@ -1,12 +1,28 @@
 
 import * as dbmage from "dbmage"
-import {BasicMeta} from "../../api/types/auth.js"
+import {MockMeta} from "../../api/types/auth.js"
 
 export async function setupMockUser() {
 
 	const rando = await dbmage.getRando()
 	const userId = rando.randomId().string
 
-	const getMockMeta = async() => (<BasicMeta>{userId})
+	const meta: MockMeta = {
+		user: {
+			userId,
+			profile: {
+				nickname: "Jimmy",
+				avatar: "fake-image",
+				joinedTime: Date.now() - (1000 * 60 * 60),
+			},
+			permissions: {
+				canPost: true,
+				canBanUsers: false,
+				canDeleteAnyComment: false,
+			},
+		}
+	}
+
+	const getMockMeta = async() => meta
 	return getMockMeta
 }

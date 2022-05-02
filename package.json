@@ -30,10 +30,12 @@
 		"@chasemoskal/snapstate": "^0.0.8",
 		"dbmage": "^0.0.0-dev.7",
 		"es-module-shims": "^1.5.4",
+		"express": "^4.18.1",
 		"lit": "^2.2.3",
-		"renraku": "^0.0.0-dev.57"
+		"renraku": "^0.0.0-dev.58"
 	},
 	"devDependencies": {
+		"@types/express": "^4.17.13",
 		"cynic": "0.1.0-dev.16",
 		"http-server": "^14.1.0",
 		"importly": "^0.2.0",

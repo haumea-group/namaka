@@ -2,14 +2,15 @@
 import * as dbmage from "dbmage"
 import * as renraku from "renraku"
 
-import {BasicAuth} from "../../types/auth.js"
+import {Auth} from "../../types/auth.js"
 import {CommentDraft} from "../../types/schema.js"
 import {rowToComment} from "./utils/row-to-comment.js"
 import {newCommentRow} from "./utils/new-comment-row.js"
 
 export const makeCommentingService = () => ({
-		rando, userId, database,
-	}: BasicAuth) => ({
+		user,
+		rando, database,
+	}: Auth) => ({
 
 	async getComments({topicId: topicIdString, limit, offset}: {
 			topicId: string
@@ -29,12 +30,12 @@ export const makeCommentingService = () => ({
 	},
 
 	async postComment(draft: CommentDraft) {
-		if (!userId)
+		if (!user)
 			throw new renraku.ApiError(403, "cannot post, not logged in")
 		const newRow = newCommentRow({
 			rando,
-			userId,
 			draft,
+			userId: user.userId,
 		})
 		await database.tables.comments.create(newRow)
 		return rowToComment(newRow)

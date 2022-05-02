@@ -1,13 +1,30 @@
 
 import {Suite, expect} from "cynic"
+import {User} from "../../../api/types/auth.js"
 import {newServer, randomId} from "./testing/commenting-test-setups.js"
+
+export function makeRegularUser(): User {
+	return {
+		userId: randomId(),
+		permissions: {
+			canPost: true,
+			canBanUsers: false,
+			canDeleteAnyComment: false,
+		},
+		profile: {
+			nickname: "Jimmy",
+			avatar: "fake-image",
+			joinedTime: Date.now() - (1000 * 60 * 60),
+		},
+	}
+}
 
 export default <Suite>{
 	"a logged-in user": {
 
 		async "can post a comment, and see it appear"() {
 			const {commenting, helpers} = newServer()
-				.newUser(randomId())
+				.newUser(makeRegularUser())
 				.newBrowserTab()
 			const topicId = randomId()
 			const topic = commenting.getTopicModel(topicId)
@@ -26,7 +43,7 @@ export default <Suite>{
 			const topicId = randomId()
 			{
 				const {commenting, helpers} = server
-					.newUser(randomId())
+					.newUser(makeRegularUser())
 					.newBrowserTab()
 				const topic = commenting.getTopicModel(topicId)
 				await topic.postComment({
@@ -38,7 +55,7 @@ export default <Suite>{
 			}
 			{
 				const {commenting, helpers} = server
-					.newUser(randomId())
+					.newUser(makeRegularUser())
 					.newBrowserTab()
 				const topic = commenting.getTopicModel(topicId)
 				await topic.getComments()
@@ -71,7 +88,7 @@ export default <Suite>{
 			const topicId = randomId()
 			{
 				const {commenting, helpers} = server
-					.newUser(randomId())
+					.newUser(makeRegularUser())
 					.newBrowserTab()
 				const topic = commenting.getTopicModel(topicId)
 				await topic.postComment({

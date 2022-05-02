@@ -1,6 +1,6 @@
 
-import {AppRemote} from "../../../../namaka.js"
 import {CommentingState} from "../commenting-model.js"
+import {AppRemote} from "../../../../api/types/remote.js"
 import {CommentDraft} from "../../../../api/types/schema.js"
 
 export function makeTopicModel({
