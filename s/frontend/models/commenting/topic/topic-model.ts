@@ -1,19 +1,27 @@
 
 import {CommentingState} from "../commenting-model.js"
 import {AppRemote} from "../../../../api/types/remote.js"
-import {CommentDraft} from "../../../../api/types/schema.js"
+import {Comment, CommentDraft} from "../../../../api/types/schema.js"
 
 export function makeTopicModel({
 		topicId,
 		state,
 		remote,
+		addComments,
 	}: {
 		topicId: string
 		state: CommentingState
 		remote: {commenting: AppRemote["commenting"]},
+		addComments: (comments: Comment[]) => void
 	}) {
 
 	return {
+
+		get comments() {
+			return state.allComments.filter(
+				comment => comment.topicId === topicId
+			)
+		},
 
 		async getComments() {
 			const comments = await remote.commenting.getComments({
@@ -21,7 +29,7 @@ export function makeTopicModel({
 				limit: 100,
 				offset: 0,
 			})
-			state.allComments = comments
+			addComments(comments)
 		},
 
 		async postComment(draft: Omit<CommentDraft, "topicId">) {
@@ -29,7 +37,7 @@ export function makeTopicModel({
 				...draft,
 				topicId,
 			})
-			state.allComments = [comment, ...state.allComments]
+			addComments([comment])
 		},
 	}
 }

@@ -17,12 +17,23 @@ export function makeCommentingModel({remote}: {
 		allComments: []
 	})
 
+	const commentMap = new Map<string, Comment>()
+
 	return {
 		snap: restricted(snap),
+		wipe() {
+			commentMap.clear()
+			snap.state.allComments = []
+		},
 		getTopicModel: (topicId: string) => makeTopicModel({
 			topicId,
 			remote,
 			state: snap.state,
+			addComments: (comments: Comment[]) => {
+				for (const comment of comments)
+					commentMap.set(comment.id, comment)
+				snap.state.allComments = [...commentMap.values()]
+			},
 		}),
 	}
 }

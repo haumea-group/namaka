@@ -38,11 +38,14 @@ export class NamakaComments extends mixinStandard<{
 
 	#clearLocalStorage = async() => {
 		window.localStorage.clear()
-		await this.#topicModel.getComments()
+		this.context.commenting.wipe()
 	}
 
 	render() {
-		const {allComments} = this.context.commenting.snap.state
+		if (!this.#topicModel)
+			return null
+
+		const {comments} = this.#topicModel
 		return html`
 			<p>topic id: ${this.topic}</p>
 			<div>
@@ -50,7 +53,7 @@ export class NamakaComments extends mixinStandard<{
 				<button @click=${this.#clearLocalStorage}>wipe database</button>
 			</div>
 			<ol>
-				${allComments.map(comment => html`
+				${comments.map(comment => html`
 					<li>
 						<p>id: ${comment.id}</p>
 						<p>subject: ${comment.subject}</p>

@@ -5,6 +5,10 @@
 	box-sizing: border-box;
 }
 
+:not(:defined) {
+	display: none;
+}
+
 html {
 	background: #111;
 	color: #888;
@@ -35,7 +39,13 @@ body > * + * {
 a { color: skyblue; }
 a:hover { color: white; }
 
+.demo > * + * {
+	margin-top: 2em;
+}
+
 namaka-comments {
 	text-align: left;
 	margin: auto;
+	border: 1px solid;
+	padding: 1em;
 }
