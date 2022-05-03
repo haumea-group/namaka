@@ -12,6 +12,10 @@ export interface User {
 	}
 }
 
+export interface UserIntegration extends Omit<User, "userId"> {
+	userId: dbmage.Id
+}
+
 export interface Profile {
 	nickname: string
 	avatar: string
