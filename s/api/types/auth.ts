@@ -5,11 +5,9 @@ export interface User {
   userId: string;
   profile: Profile;
   permissions: {
-    canPost?: boolean;
-    canEditOwnComment?: boolean;
-    canDeleteAnyComment?: boolean;
-    canBanUsers?: boolean;
-    canDeleteOwnComment?: boolean;
+    canPost: boolean;
+    canBanUsers: boolean;
+    canDeleteAnyComment: boolean;
   };
 }
 
