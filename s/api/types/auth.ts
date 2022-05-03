@@ -1,33 +1,34 @@
-
-import * as dbmage from "dbmage"
-import {AppDatabase} from "./schema.js"
+import * as dbmage from "dbmage";
+import { AppDatabase } from "./schema.js";
 
 export interface User {
-	userId: string
-	profile: Profile
-	permissions: {
-		canPost: boolean
-		canBanUsers: boolean
-		canDeleteAnyComment: boolean
-	}
+  userId: string;
+  profile: Profile;
+  permissions: {
+    canPost?: boolean;
+    canEditOwnComment?: boolean;
+    canDeleteAnyComment?: boolean;
+    canBanUsers?: boolean;
+    canDeleteOwnComment?: boolean;
+  };
 }
 
 export interface UserIntegration extends Omit<User, "userId"> {
-	userId: dbmage.Id
+  userId: dbmage.Id;
 }
 
 export interface Profile {
-	nickname: string
-	avatar: string
-	joinedTime: number
+  nickname: string;
+  avatar: string;
+  joinedTime: number;
 }
 
 export interface MockMeta {
-	user?: User
+  user?: User;
 }
 
 export interface Auth {
-	user: User | undefined
-	rando: dbmage.Rando
-	database: AppDatabase
+  user: User | undefined;
+  rando: dbmage.Rando;
+  database: AppDatabase;
 }
