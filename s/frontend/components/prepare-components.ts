@@ -2,6 +2,7 @@
 import {AppSnap} from "../models/app-snap.js"
 import {NamakaLoadMore} from "./load-more/index.js"
 import {NamakaBanUser} from "./modal/unban/index.js"
+import {NamakaModals} from "./modals/namaka-modals.js"
 import {NamakaBannedUsers} from "./banned-users/index.js"
 import {prepareModels} from "../models/prepare-models.js"
 import {NamakaMyReview} from "./reviews/my-review/index.js"
@@ -28,6 +29,7 @@ export function prepareComponents({
 	}) {
 
 	return themeComponents(themeCss, {
+		NamakaModals,
 		NamakaTextInput,
 		NamakaAuthorReply,
 		NamakaMyReview,
