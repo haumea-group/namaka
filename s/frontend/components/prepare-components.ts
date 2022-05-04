@@ -2,7 +2,7 @@
 import {prepareModels} from "../models/prepare-models.js"
 import {NamakaComments} from "./comments/namaka-comments.js"
 import {themeComponents} from "../framework/theme-components.js"
-import { ReviewComment } from "./review/review-comment.js"
+import { NamakaReviewComment } from "./review/namaka-review-comment.js"
 
 import themeCss from "./theme.css.js"
 
@@ -12,7 +12,7 @@ export function prepareComponents({models: {commenting}}: {
 
 	return themeComponents(themeCss, {
 
-		ReviewComment,
+		NamakaReviewComment: NamakaReviewComment,
 
 		NamakaComments: NamakaComments
 			.withContext({commenting})

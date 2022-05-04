@@ -1,13 +1,13 @@
 import {html, LitElement} from "lit"
 import {property} from "lit/decorators.js"
 import {mixinStyles} from "../../../namaka.js"
-import reviewCommentCss from "./review-comment.css.js"
-import binSvg from "../../../icons/iconify/bin.svg.js"
-import dangerSvg from "../../../icons/iconify/danger.svg.js"
-import infoSquareSvg from "../../../icons/iconify/info-square.svg.js"
+import namakaCommentsCss from "../comments/namaka-comments.css.js"
+import binSvg from "../../../icons/bin.svg.js"
+import dangerSvg from "../../../icons/danger.svg.js"
+import infoSquareSvg from "../../../icons/info-square.svg.js"
 
-@mixinStyles(reviewCommentCss)
-export class ReviewComment extends LitElement {
+@mixinStyles(namakaCommentsCss)
+export class NamakaReviewComment extends LitElement {
 	@property()
 	showDropDown = false
 
