@@ -1,11 +1,9 @@
-import { html, LitElement } from "lit";
+import {html, LitElement} from "lit"
+import {mixinStyles} from "../../../framework/mixins/mixin-styles.js"
+import namakaHorizontalReviewCss from "./index.css.js"
 
-import { mixinStyles } from "../../../framework/mixins/mixin-styles.js";
-
-import horizontalReviewCss from "./index.css.js";
-
-@mixinStyles(horizontalReviewCss)
-export class HorizontalReview extends LitElement {
+@mixinStyles(namakaHorizontalReviewCss)
+export class NamakaHorizontalReview extends LitElement {
     render() {
         return html`
             <div class="horizontal-review">
@@ -48,6 +46,6 @@ export class HorizontalReview extends LitElement {
                     </div>
                 </div>
             </div>
-        `;
+        `
     }
 }

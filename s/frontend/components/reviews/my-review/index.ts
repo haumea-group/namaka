@@ -1,16 +1,14 @@
-import { html, LitElement } from "lit";
+import {html, LitElement} from "lit"
 import ratingsSvg from "../../../../icons/iconify/ratings.svg.js"
 import starSvg from "../../../../icons/iconify/star.svg.js"
 import tickSquareSvg from "../../../../icons/iconify/tick-square.svg.js"
 import timeCircleSvg from "../../../../icons/iconify/time-circle.svg.js"
+import {mixinStyles} from "../../../framework/mixins/mixin-styles.js"
+// import { mixinStandard } from "../../../framework/mixins/mixin-standard.js"
+import namakaMyReviewCss from "./index.css.js"
 
-import { mixinStyles } from "../../../framework/mixins/mixin-styles.js";
-// import { mixinStandard } from "../../../framework/mixins/mixin-standard.js";
-
-import myReviewCss from "./index.css.js";
-
-@mixinStyles(myReviewCss)
-export class MyReview extends LitElement {
+@mixinStyles(namakaMyReviewCss)
+export class NamakaMyReview extends LitElement {
     render() {
         return html`
             <div class="review-summary">
@@ -41,6 +39,6 @@ export class MyReview extends LitElement {
                     </div>
                 </div>
             </div>
-        `;
+        `
     }
 }

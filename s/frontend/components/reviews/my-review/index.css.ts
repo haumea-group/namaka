@@ -1,73 +1,66 @@
-import { css } from "lit";
-
+import {css} from "lit"
 export default css`
-    .review-summary {
-        width: 100%;
-        padding: 20px;
-		max-width: 300px;
-		border: 0.5px solid #718096;
-		border-radius: 10px;
-    }
 
-    .group {
-        display: flex;
-        align-items: center;
-        margin-bottom: 20px;
-    }
+.review-summary {
+	width: 100%;
+	padding: 20px;
+	max-width: 300px;
+	border: 0.5px solid #718096;
+	border-radius: 10px;
+}
 
-    .group > img {
-        margin-right: 20px;
-    }
+.group {
+	display: flex;
+	align-items: center;
+	margin-bottom: 20px;
+}
 
-    #name {
-        font-size: 16px;
-        line-height: 22.4px;
-        font-weight: 600;
-        margin-bottom: 7px;
-    }
+.group > img {
+	margin-right: 20px;
+}
 
-    .rating svg {
-        width: 16px;
-        height: 16px;
-    }
+#name {
+	font-size: 16px;
+	line-height: 22.4px;
+	font-weight: 600;
+	margin-bottom: 7px;
+}
 
-    .rating #value {
-        font-weight: 600;
-        margin: 0 10px;
-    }
+.rating svg {
+	width: 16px;
+	height: 16px;
+}
 
-    .rating #total {
-        color: #718096;
-        font-weight: 600;
-    }
+.rating #value {
+	font-weight: 600;
+	margin: 0 10px;
+}
 
-    .grid {
-        display: grid;
-        row-gap: .5em;
-    }
+.rating #total {
+	color: #718096;
+	font-weight: 600;
+}
 
-    .flex {
-        display: flex;
-        align-items: center;
-    }
+.grid {
+	display: grid;
+	row-gap: .5em;
+}
 
-    .grid .flex svg {
-        margin-right: 10px;
-    }
+.flex {
+	display: flex;
+	align-items: center;
+}
 
-    .gray {
-        color: #718096;
-    }
+.grid .flex svg {
+	margin-right: 10px;
+}
 
-    .black {
-        color: #000;
-    }
+.gray {
+	color: #718096;
+}
 
-    /* 
+.black {
+	color: #000;
+}
 
-    :host #title {
-        font-size: 20px;
-        line-height: 24px;
-        font-weight: 700;
-    } */
-`;
+`
