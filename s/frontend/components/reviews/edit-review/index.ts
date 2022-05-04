@@ -1,13 +1,11 @@
-import { html, LitElement } from "lit";
-import closeIconSvg from "../../../../icons/iconify/close-icon.svg.js";
+import {html, LitElement} from "lit"
+import closeIconSvg from "../../../../icons/iconify/close-icon.svg.js"
 import starSvg from "../../../../icons/iconify/star.svg.js"
+import {mixinStyles} from "../../../framework/mixins/mixin-styles.js"
+import namakaEditReviewCss from "./index.css.js"
 
-import { mixinStyles } from "../../../framework/mixins/mixin-styles.js";
-
-import editReviewCss from "./index.css.js";
-
-@mixinStyles(editReviewCss)
-export class EditReview extends LitElement {
+@mixinStyles(namakaEditReviewCss)
+export class NamakaEditReview extends LitElement {
     render() {
         return html`
             <div class="edit-review">
@@ -37,6 +35,6 @@ export class EditReview extends LitElement {
                     </div>
                 </div>
             </div>
-        `;
+        `
     }
 }

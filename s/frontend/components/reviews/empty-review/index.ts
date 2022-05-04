@@ -1,12 +1,10 @@
-import { html, LitElement } from "lit";
-import noDataSvg from "../../../../icons/iconify/no-data.svg.js";
+import {html, LitElement} from "lit"
+import noDataSvg from "../../../../icons/iconify/no-data.svg.js"
+import {mixinStyles} from "../../../framework/mixins/mixin-styles.js"
+import namakaEmptyReviewCss from "./index.css.js"
 
-import { mixinStyles } from "../../../framework/mixins/mixin-styles.js";
-
-import emptyReviewCss from "./index.css.js";
-
-@mixinStyles(emptyReviewCss)
-export class EmptyReview extends LitElement {
+@mixinStyles(namakaEmptyReviewCss)
+export class NamakaEmptyReview extends LitElement {
     render() {
         return html`
             <div class="empty-review">
@@ -23,6 +21,6 @@ export class EmptyReview extends LitElement {
                     <p class="gray">You currently don&apos;t have any reviews here. Keep trading and get reviews from other users.</p>
                 </div>
             </div>
-        `;
+        `
     }
 }
