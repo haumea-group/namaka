@@ -66,4 +66,34 @@ export default css`
 	margin-right: 5px;
 }
 
+.edit-feedback {
+	margin-top: 20px;
+}
+
+textarea {
+	resize: none;
+	width: 100%;
+	border: 1px solid #DDE2E5;
+	margin-top: 10px;
+	border-radius: 20px;
+	padding: 20px;
+	background: transparent;
+	color: #fff;
+}
+
+textarea:focus {
+	outline: none;
+}
+
+button {
+	background: #FFAF02;
+	color: #fff;
+	width: 250px;
+	padding: 15px 0;
+	/* box-shadow: 0px 20px 20px rgba(77, 85, 188, 0.12); */
+	border-radius: 40px;
+	border: none;
+	margin-top: 30px;
+}
+
 `

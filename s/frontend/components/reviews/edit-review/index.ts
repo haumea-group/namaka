@@ -20,7 +20,7 @@ export class NamakaEditReview extends LitElement {
 					<div class="group">
 						<div>
 							<p>Share Review?</p>
-							<p>Please choose a review to rate this particular user.</p>
+							<p class="gray">Please choose a review to rate this particular user.</p>
 						</div>
 						<div class="flex">
 							${starSvg}
@@ -32,7 +32,9 @@ export class NamakaEditReview extends LitElement {
 					</div>
 					<div class="edit-feedback">
 						<p><span class="black">Edit your feedback to this user</span> <span class="gray">(This will be made public)</span></p>
+						<textarea name="message" id="message" rows="10"></textarea>
 					</div>
+					<button>Submit</button>
 				</div>
 			</div>
         `
