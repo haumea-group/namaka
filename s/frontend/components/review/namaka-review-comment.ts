@@ -1,12 +1,12 @@
 import {html, LitElement} from "lit"
 import {property} from "lit/decorators.js"
 import {mixinStyles} from "../../../namaka.js"
-import namakaCommentsCss from "../comments/namaka-comments.css.js"
-import binSvg from "../../../icons/bin.svg.js"
-import dangerSvg from "../../../icons/danger.svg.js"
+import binSvg from "../../../icons/feather-Icons/bin.svg.js"
 import infoSquareSvg from "../../../icons/info-square.svg.js"
+import dangerSvg from "../../../icons/feather-Icons/danger.svg.js"
+import namakaReviewCommentCss from "./namaka-review-comment.css.js"
 
-@mixinStyles(namakaCommentsCss)
+@mixinStyles(namakaReviewCommentCss)
 export class NamakaReviewComment extends LitElement {
 	@property()
 	showDropDown = false
@@ -18,20 +18,20 @@ export class NamakaReviewComment extends LitElement {
 
 	#renderDropDown = () => {
 		return html`
-		<div class="drop-down">
-			<div class="report">
-				${infoSquareSvg}
-				<button>Report user</button>
+			<div class="drop-down">
+				<div class="report">
+					${infoSquareSvg}
+					<button>Report user</button>
+				</div>
+				<div class="suspend">
+					<span>${dangerSvg}</span>
+					<button>Suspend user</button>
+				</div>
+				<div class="delete">
+					<span>${binSvg}</span>
+					<button>Delete Review</button>
+				</div>
 			</div>
-			<div class="suspend">
-				<span>${dangerSvg}</span>
-				<button>Suspend user</button>
-			</div>
-			<div class="delete">
-				<span>${binSvg}</span>
-				<button>Delete Review</button>
-			</div>
-		</div>
 	`}
 
 	render() {

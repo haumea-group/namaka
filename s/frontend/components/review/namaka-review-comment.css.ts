@@ -45,7 +45,6 @@ button:hover {
 	font-weight: 500;
 	font-size: 14px;
 	line-height: 24px;
-	color: #141416;
 }
 
 .header__btn {
@@ -56,7 +55,6 @@ button:hover {
 .drop-down__btn {
 	width: 23px;
 	height: 11px;
-	background: rgba(17, 17, 17, 0.1);
 	border-radius: 40px;
 	border: none;
 	display: grid;
@@ -68,7 +66,7 @@ button:hover {
 	font-weight: 400;
 	font-size: 14px;
 	line-height: 24px;
-	color: #353945;
+	opacity: 0.8;
 }
 
 .footer {
@@ -82,7 +80,7 @@ button:hover {
 	font-weight: 400;
 	font-size: 12px;
 	line-height: 20px;
-	color: #777E91;
+	opacity: 0.5;
 }
 
 .footer li, .footer button {
@@ -90,7 +88,6 @@ button:hover {
 	font-weight: 600;
 	font-size: 12px;
 	line-height: 20px;
-	color: #23262F;
 }
 
 .footer button, .drop-down button {
@@ -124,15 +121,15 @@ svg {
 }
 
 .report, .report button {
-	color: #1A202C;
+	color: var(--report-btn-color, #1A202C);
 }
 
 .suspend, .suspend button {
-	color: #F2994A;
+	color: var(--suspend-btn-color, #F2994A);
 }
 
 .delete, .delete button {
-	color: #EB0000;
+	color: var(--delete-btn-color, #EB0000);
 }
 
 .drop-down button {
@@ -141,5 +138,4 @@ svg {
 	font-size: 16px;
 	line-height: 19px;
 }
-
 `
