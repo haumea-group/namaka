@@ -7,9 +7,13 @@ import {NamakaMyReview} from "./reviews/my-review/index.js"
 import {NamakaComments} from "./comments/namaka-comments.js"
 import {NamakaEditReview} from "./reviews/edit-review/index.js"
 import {themeComponents} from "../framework/theme-components.js"
+<<<<<<< HEAD
 import {NamakaEmptyReview} from "./reviews/empty-review/index.js"
 import {NamakaReviewComment} from "./review/namaka-review-comment.js"
 import {NamakaHorizontalReview} from "./reviews/horizontal-five-star-review/index.js"
+=======
+import { NamakaReview } from "./common/five-stars/namaka-review.js"
+>>>>>>> 498165b (prepare: namakaReview component)
 
 import themeCss from "./theme.css.js"
 import {AppSnap} from "../models/app-snap.js"
@@ -34,6 +38,11 @@ export function prepareComponents({
 		NamakaDeleteReview,
 		NamakaComments: NamakaComments
 			.withContext({commenting})
+<<<<<<< HEAD
 			.withSubscriptions(subscribe),
+=======
+			.withSubscriptions(commenting.snap.subscribe),
+		NamakaReview: NamakaReview
+>>>>>>> 498165b (prepare: namakaReview component)
 	})
 }
