@@ -19,21 +19,6 @@ export type CommentRow = dbmage.AsRow<{
 	timePosted: number
 	subject: string
 	body: string
+	rating?: number
+	archived: boolean
 }>
-
-export interface Comment {
-	id: string
-	parentCommentId: undefined | string
-	authorId: string
-	topicId: string
-	timePosted: number
-	subject: string
-	body: string
-}
-
-export interface CommentDraft {
-	parentCommentId: undefined | string
-	topicId: string
-	subject: string
-	body: string
-}

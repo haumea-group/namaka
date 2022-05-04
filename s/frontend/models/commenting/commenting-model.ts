@@ -1,23 +1,26 @@
 
 import {restricted, snapstate} from "@chasemoskal/snapstate"
 
-import {Comment} from "../../../api/types/schema.js"
 import {makeTopicModel} from "./topic/topic-model.js"
 import {AppRemote} from "../../../api/types/remote.js"
+import {CommentPost} from "../../../api/types/concepts.js"
 
 export interface CommentingState {
-	allComments: Comment[]
+	allComments: CommentPost[]
 }
 
 export function makeCommentingModel({remote}: {
-		remote: {commenting: AppRemote["commenting"]}
+		remote: {
+			commentReading: AppRemote["commentReading"]
+			commentWriting: AppRemote["commentWriting"]
+		}
 	}) {
 
 	const snap = snapstate<CommentingState>({
 		allComments: []
 	})
 
-	const commentMap = new Map<string, Comment>()
+	const commentMap = new Map<string, CommentPost>()
 
 	return {
 		snap: restricted(snap),
@@ -29,7 +32,7 @@ export function makeCommentingModel({remote}: {
 			topicId,
 			remote,
 			state: snap.state,
-			addComments: (comments: Comment[]) => {
+			addComments: (comments: CommentPost[]) => {
 				for (const comment of comments)
 					commentMap.set(comment.id, comment)
 				snap.state.allComments = [...commentMap.values()]

@@ -15,10 +15,13 @@ export function newServer() {
 	const database = dbmage.memory<AppSchema>({shape: databaseShape})
 	return {
 		newUser: (user?: User) => {
+			const getAuth = async() => ({rando, database, user})
 			const remote = <AppRemote>renraku.mock()
 				.forApi(makeApi<MockMeta>({policy: async() => {throw new Error("nope")}}))
 				.withAuthMap({
-					commenting: async() => ({rando, database, user})
+					commentReading: getAuth,
+					commentWriting: getAuth,
+					adminActions: getAuth,
 				})
 			return {
 				newBrowserTab: () => {
