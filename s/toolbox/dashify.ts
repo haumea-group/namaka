@@ -5,6 +5,6 @@
  *       dashify("BigManStyle")
  *       //> "big-man-style"
  */
- export function dashify(camel: string) {
+export function dashify(camel: string) {
 	return camel.replace(/([a-zA-Z])(?=[A-Z])/g, '$1-').toLowerCase()
 }
