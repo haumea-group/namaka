@@ -6,6 +6,8 @@ import {Auth} from "../types/auth.js"
 import {rowToComment} from "./utils/row-to-comment.js"
 import {newCommentRow} from "./utils/new-comment-row.js"
 import {CommentPostDraft, CommentPost, CommentEditDraft} from "../types/concepts.js"
+// import {find, and, or} from "dbmage"
+
 
 export const makeCommentWritingService = () => ({
 		user, rando, database,
@@ -29,10 +31,24 @@ export const makeCommentWritingService = () => ({
 	},
 
 	async editComment(draft: CommentEditDraft): Promise<void> {
-		throw new Error("todo implement")
+		const { id, body, subject, rating } = draft
+		if (!user)
+			throw new renraku.ApiError(403, "cannot edit, not logged in")
+		if(user?.userId !== id) 
+			throw new renraku.ApiError(403, "cannot edit, can only edit own comment")  
+		await database.tables.comments.update({
+			...dbmage.find({id: id}),
+			write: {
+				subject, 
+				body,
+				rating
+			},
+		})
 	},
 
 	async archiveComment(id: string): Promise<void> {
 		throw new Error("todo implement")
 	},
 })
+
+

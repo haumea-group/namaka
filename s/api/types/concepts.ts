@@ -19,7 +19,7 @@ export interface CommentPostDraft {
 }
 
 export interface CommentEditDraft {
-	id: string
+	id: dbmage.Id
 	subject: string
 	body: string
 	rating?: number

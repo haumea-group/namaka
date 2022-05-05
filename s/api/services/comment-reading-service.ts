@@ -29,7 +29,7 @@ export const makeCommentReadingService = () => ({database}: Auth) => ({
 	},
 
 	async getTopicStats({topicId: topicIdString}: {topicId: string}): Promise<TopicStats> {
-		throw new Error("todo implement")
+		// throw new Error("todo implement")
 		return {
 			topicId: topicIdString,
 			numberOfRootComments: 10,

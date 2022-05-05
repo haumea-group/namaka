@@ -39,12 +39,3 @@ export interface CommentDraft {
 	subject: string
 	body: string
 }
-
-
-export interface CommentModify {
-	id: string
-	parentCommentId: undefined | string
-	authorId: string
-	subject: string
-	body: string
-}
