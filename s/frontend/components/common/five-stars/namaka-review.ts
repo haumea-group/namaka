@@ -1,17 +1,24 @@
-import { renderFiveStarRating } from './render-five-star-display.js';
-import namakaReviewCss from './render-five-star-display.css.js';
-import fiveStarRatingCss from './five-star-rating.css.js';
+import { renderFiveStarRating, stateBuddy } from './render-five-star-display.js';
+import fiveStarRatingCss from './render-five-star-display.css.js';
 import { mixinStyles } from '../../../../namaka.js';
-import { html, LitElement } from 'lit';
+import {html, LitElement} from 'lit';
 
 
-@mixinStyles(namakaReviewCss, fiveStarRatingCss)
+@mixinStyles(fiveStarRatingCss)
 export class NamakaReview extends LitElement {
 	render() {
+		customElements.whenDefined( 'namaka-review').then( () => {
+			let el:HTMLElement = document.querySelector('namaka-review')?.shadowRoot?.querySelector('.test')!
+					const fivestar = stateBuddy(
+			el,
+			{rating: 60},
+			renderFiveStarRating,
+		)
+} )
 		return html`
-			<div>
-			${renderFiveStarRating(2)}
-			</div>
-		`;
-  }
-}
+		<div class="test"></div>
+		`
+	}
+	}
+
+
