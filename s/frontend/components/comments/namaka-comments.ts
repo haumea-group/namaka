@@ -4,8 +4,10 @@ import {property} from "lit/decorators.js"
 
 import {mixinStyles} from "../../framework/mixins/mixin-styles.js"
 import {mixinStandard} from "../../framework/mixins/mixin-standard.js"
+import {randomComment, randomSubject} from "../../../toolbox/randomly.js"
 import {makeTopicModel} from "../../models/commenting/topic/topic-model.js"
 import {makeCommentingModel} from "../../models/commenting/commenting-model.js"
+import {recursivelyRenderComments} from "./utils/recursively-render-comments.js"
 
 import namakaCommentsCss from "./namaka-comments.css.js"
 
@@ -31,12 +33,12 @@ export class NamakaComments extends mixinStandard<{
 	#postRandomComment = async() => {
 		await this.#topicModel.postComment({
 			parentCommentId: undefined,
-			subject: `hello`,
-			body: `world`,
+			subject: randomSubject(),
+			body: [randomComment(), randomComment(), randomComment()].join(" "),
 		})
 	}
 
-	#clearLocalStorage = async() => {
+	#clearLocalStorage = () => {
 		window.localStorage.clear()
 		this.context.commenting.wipe()
 	}
@@ -46,22 +48,13 @@ export class NamakaComments extends mixinStandard<{
 			return null
 
 		const {comments} = this.#topicModel
+
 		return html`
-			<p>topic id: ${this.topic}</p>
 			<div>
-				<button @click=${this.#postRandomComment}>post random comment</button>
+				<button @click=${this.#postRandomComment}>post a comment</button>
 				<button @click=${this.#clearLocalStorage}>wipe database</button>
 			</div>
-			<ol>
-				${comments.map(comment => html`
-					<li>
-						<p>id: ${comment.id}</p>
-						<p>subject: ${comment.subject}</p>
-						<p>body: ${comment.body}</p>
-						<p>time posted: ${comment.timePosted}</p>
-					</li>
-				`)}
-			</ol>
+			${recursivelyRenderComments(comments)}
 		`
 	}
 }

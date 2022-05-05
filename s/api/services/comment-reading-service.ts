@@ -8,7 +8,7 @@ import {CommentPost, TopicStats} from "../types/concepts.js"
 
 export const makeCommentReadingService = () => ({database}: Auth) => ({
 
-	async getComments({topicId: topicIdString, limit, offset}:  {
+	async getComments({topicId: topicIdString, limit, offset}: {
 			topicId: string
 			limit: number
 			offset: number
@@ -17,7 +17,7 @@ export const makeCommentReadingService = () => ({database}: Auth) => ({
 		const topicId = dbmage.Id.fromString(topicIdString)
 
 		const rows = await database.tables.comments.read({
-			...dbmage.find({topicId}),
+			...dbmage.find({topicId, archived: false}),
 			offset,
 			order: {timePosted: "descend"},
 			limit: limit > 100
