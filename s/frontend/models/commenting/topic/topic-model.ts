@@ -1,5 +1,5 @@
 
-import {CommentingState} from "../commenting-model.js"
+import {CommentingState} from "../commenting-types.js"
 import {AppRemote} from "../../../../api/types/remote.js"
 import {CommentPost, CommentPostDraft} from "../../../../api/types/concepts.js"
 
@@ -21,7 +21,7 @@ export function makeTopicModel({
 	return {
 
 		get comments() {
-			return state.allComments.filter(
+			return state.commentTree.filter(
 				comment => comment.topicId === topicId
 			)
 		},
@@ -41,6 +41,11 @@ export function makeTopicModel({
 				topicId,
 			})
 			addComments([comment])
+		},
+
+		async getTopicStats() {
+			const stats = await remote.commentReading.getTopicStats({topicId})
+			return stats
 		},
 	}
 }

@@ -28,15 +28,15 @@ export default <Suite>{
 				.newBrowserTab()
 			const topicId = randomId()
 			const topic = commenting.getTopicModel(topicId)
-			expect(helpers.allComments.length).equals(0)
+			expect(helpers.commentTree.length).equals(0)
 			await topic.postComment({
 				parentCommentId: undefined,
 				subject: "hello",
 				body: "world",
 			})
-			expect(helpers.allComments.length).equals(1)
-			expect(helpers.allComments[0].subject).equals("hello")
-			expect(helpers.allComments[0].body).equals("world")
+			expect(helpers.commentTree.length).equals(1)
+			expect(helpers.commentTree[0].subject).equals("hello")
+			expect(helpers.commentTree[0].body).equals("world")
 		},
 		async "can post a comment that another user can see"() {
 			const server = newServer()
@@ -51,7 +51,7 @@ export default <Suite>{
 					subject: "hello",
 					body: "world",
 				})
-				expect(helpers.allComments.length).equals(1)
+				expect(helpers.commentTree.length).equals(1)
 			}
 			{
 				const {commenting, helpers} = server
@@ -59,7 +59,7 @@ export default <Suite>{
 					.newBrowserTab()
 				const topic = commenting.getTopicModel(topicId)
 				await topic.getComments()
-				expect(helpers.allComments.length).equals(1)
+				expect(helpers.commentTree.length).equals(1)
 			}
 		},
 
@@ -77,7 +77,7 @@ export default <Suite>{
 				subject: "hello",
 				body: "world",
 			})).throws()
-			expect(helpers.allComments.length).equals(0)
+			expect(helpers.commentTree.length).equals(0)
 		},
 
 	},
@@ -96,7 +96,7 @@ export default <Suite>{
 					subject: "hello",
 					body: "world",
 				})
-				expect(helpers.allComments.length).equals(1)
+				expect(helpers.commentTree.length).equals(1)
 			}
 			{
 				const {commenting, helpers} = server
@@ -104,7 +104,7 @@ export default <Suite>{
 					.newBrowserTab()
 				const topic = commenting.getTopicModel(topicId)
 				await topic.getComments()
-				expect(helpers.allComments.length).equals(1)
+				expect(helpers.commentTree.length).equals(1)
 			}
 		},
 

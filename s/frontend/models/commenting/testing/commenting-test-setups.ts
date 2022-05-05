@@ -37,8 +37,8 @@ function withTestingHelpers(commenting: ReturnType<typeof makeCommentingModel>) 
 	return {
 		commenting,
 		helpers: {
-			get allComments() {
-				return commenting.snap.readable.allComments
+			get commentTree() {
+				return commenting.snap.readable.commentTree
 			},
 		},
 	}

@@ -28,7 +28,7 @@ export const makeCommentWritingService = () => ({
 		return rowToComment(newRow)
 	},
 
-	async editComment(draft: CommentEditDraft): Promise<CommentPost> {
+	async editComment(draft: CommentEditDraft): Promise<void> {
 		throw new Error("todo implement")
 	},
 
