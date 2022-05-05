@@ -44,9 +44,8 @@ export default <Suite>{
 				const server = newServer()
 				const topicId = randomId()
 				{
-					const regularUser = makeRegularUser()
 					const {commenting, helpers} = server
-						.newUser(regularUser)
+						.newUser(makeRegularUser())
 						.newBrowserTab()
 					const topic = commenting.getTopicModel(topicId)
 					await topic.postComment({
@@ -171,7 +170,6 @@ export default <Suite>{
 					subject: "hello",
 					body: "world",
 				})
-				
 				expect(topic.comments[0].subject).equals("hello")
 				expect(topic.comments[0].body).equals("world")
 				await commenting.editComment({
