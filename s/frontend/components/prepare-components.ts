@@ -1,4 +1,4 @@
-
+import {NamakaBannedUsers} from './banned-users/index.js'
 import {NamakaLoadMore} from "./load-more/index.js"
 import {prepareModels} from "../models/prepare-models.js"
 import {NamakaMyReview} from "./reviews/my-review/index.js"
@@ -26,6 +26,7 @@ export function prepareComponents({
 		NamakaHorizontalReview,
 		NamakaEmptyReview,
 		NamakaEditReview,
+		NamakaBannedUsers,
 		NamakaLoadMore,
 		NamakaComments: NamakaComments
 			.withContext({commenting})

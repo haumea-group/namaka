@@ -64,6 +64,7 @@ namaka-comments {
 	width: 100%;
 	display: grid;
 	row-gap: 2em;
+	overflow-x: auto;
 }
 
 @media (min-width: 640px) {
@@ -173,3 +174,6 @@ select {
 	}
 }
 
+.container .banned-users {
+	width: 100%;
+}
