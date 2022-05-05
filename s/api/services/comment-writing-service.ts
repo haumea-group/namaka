@@ -6,7 +6,7 @@ import {Auth} from "../types/auth.js"
 import {rowToComment} from "./utils/row-to-comment.js"
 import {newCommentRow} from "./utils/new-comment-row.js"
 import {CommentPostDraft, CommentPost, CommentEditDraft} from "../types/concepts.js"
-import {find, and, or} from "dbmage"
+import {find} from "dbmage"
 
 
 export const makeCommentWritingService = () => ({
