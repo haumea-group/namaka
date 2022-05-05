@@ -42,7 +42,6 @@ export const makeCommentWritingService = () => ({
 		
 		if(userId !== commentAuthorId) 
 			throw new renraku.ApiError(403, "cannot edit, can only edit own comment")  
-
 			
 		await database.tables.comments.update({
 			...find({id: dbmage.Id.fromString(id)}),
