@@ -14,7 +14,7 @@ export const randomId = () => rando.randomId().string
 export function newServer() {
 	const database = dbmage.memory<AppSchema>({shape: databaseShape})
 	return {
-		newUser: (user?: User) => {
+		newUser: (user: undefined | User) => {
 			const getAuth = async() => ({rando, database, user})
 			const remote = <AppRemote>renraku.mock()
 				.forApi(makeApi<MockMeta>({policy: async() => {throw new Error("nope")}}))
