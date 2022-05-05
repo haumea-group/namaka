@@ -9,10 +9,28 @@ export function makeRegularUser(): User {
 		permissions: {
 			canPost: true,
 			canBanUsers: false,
+			canEditAnyComment: false,
 			canDeleteAnyComment: false,
 		},
 		profile: {
 			nickname: "Jimmy",
+			avatar: "fake-image",
+			joinedTime: Date.now() - (1000 * 60 * 60),
+		},
+	}
+}
+
+export function makeAdminUser(): User {
+	return {
+		userId: randomId(),
+		permissions: {
+			canPost: true,
+			canBanUsers: true,
+			canEditAnyComment: true,
+			canDeleteAnyComment: true,
+		},
+		profile: {
+			nickname: "Jimmy Admin",
 			avatar: "fake-image",
 			joinedTime: Date.now() - (1000 * 60 * 60),
 		},
@@ -211,10 +229,74 @@ export default <Suite>{
 			},
 		},
 		"a logged-out user": {
-			async "cannot edit comments"() {},
+			async "cannot edit comments"() {
+				const server = newServer()
+				const topicId = randomId()
+				{
+					const {commenting} = server
+						.newUser(makeRegularUser())
+						.newBrowserTab()
+					await commenting.postComment({
+						topicId,
+						parentCommentId: undefined,
+						subject: "hello",
+						body: "world",
+					})
+				}
+				{
+					const {commenting} = server
+						.newUser(undefined)
+						.newBrowserTab()
+					await commenting.downloadComments(topicId)
+					const [comment] = commenting.getComments(topicId)
+					expect(comment).defined()
+					await expect(async() => commenting.editComment({
+						id: comment.id,
+						subject: comment.subject + "!",
+						body: comment.body + "!",
+					})).throws()
+				}
+			},
 		},
-		"a canEditAnyComment user": {
-			async "can edit anybody's comment"() {},
+		"an 'admin' user": {
+			async "can edit anybody's comment"() {
+				const server = newServer()
+				const topicId = randomId()
+				{
+					const {commenting} = server
+						.newUser(makeRegularUser())
+						.newBrowserTab()
+					await commenting.postComment({
+						topicId,
+						parentCommentId: undefined,
+						subject: "hello",
+						body: "world",
+					})
+				}
+				{
+					const {commenting, helpers} = server
+						.newUser(makeAdminUser())
+						.newBrowserTab()
+					await commenting.downloadComments(topicId)
+					const [comment] = commenting.getComments(topicId)
+					await commenting.editComment({
+						id: comment.id,
+						subject: comment.subject + "!",
+						body: comment.body + "!",
+					})
+					const [editedComment] = commenting.getComments(topicId)
+					expect(editedComment.subject).equals("hello!")
+					expect(editedComment.body).equals("world!")
+				}
+			},
+		},
+	},
+
+	"archiving comments": {
+		"a regular user": {
+			async "can archive their own comment"() {
+
+			},
 		},
 	},
 }

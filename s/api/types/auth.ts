@@ -2,14 +2,17 @@
 import * as dbmage from "dbmage"
 import {AppDatabase} from "./schema.js"
 
+export interface Permissions {
+	canPost: boolean
+	canBanUsers: boolean
+	canEditAnyComment: boolean
+	canDeleteAnyComment: boolean
+}
+
 export interface User {
 	userId: string
 	profile: Profile
-	permissions: {
-		canPost: boolean
-		canBanUsers: boolean
-		canDeleteAnyComment: boolean
-	}
+	permissions: Permissions
 }
 
 export interface UserIntegration extends Omit<User, "userId"> {
