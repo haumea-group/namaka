@@ -19,14 +19,21 @@ export class NamakaComments extends mixinStandard<{
 	@property({type: String})
 	topic?: string
 
+	// this is the commenting model. it contains state and functions you need.
+	get #commenting() {
+		return this.context.commenting
+	}
+
+	// this is the topic model. it's kind of like a "subsidiary" of the
+	// commenting model.
+	// it provides data and functions that are relevant *only* to the
+	// current comment topic id.
 	#topicModel: ReturnType<typeof makeTopicModel> = undefined as any
 
 	async firstUpdated() {
 		if (!this.topic)
 			throw new Error("topic attribute is required")
-
-		this.#topicModel = this.context.commenting.getTopicModel(this.topic)
-
+		this.#topicModel = this.#commenting.getTopicModel(this.topic)
 		await this.#topicModel.getComments()
 	}
 
@@ -40,7 +47,7 @@ export class NamakaComments extends mixinStandard<{
 
 	#clearLocalStorage = () => {
 		window.localStorage.clear()
-		this.context.commenting.wipe()
+		this.#commenting.wipe()
 	}
 
 	render() {
