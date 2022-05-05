@@ -1,12 +1,25 @@
 import {css} from "lit"
 export default css`
 
-.review-summary {
-	width: 100%;
+.container {
+	display: flex;
+	justify-content: center;
+	border-bottom: 0.5px solid #EDEFF5;
 	padding: 20px;
-	max-width: 300px;
-	border: 0.5px solid #718096;
-	border-radius: 10px;
+}
+
+@media screen and (min-width: 768px) {
+	.container {
+		display: block;
+		border-bottom: none;
+		padding: 0;
+	}
+
+	.review-summary {
+		/* max-width: 768px; */
+		border-bottom: none;
+		border-right: 0.5px solid #EDEFF5;
+	}
 }
 
 .group {

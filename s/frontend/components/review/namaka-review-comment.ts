@@ -37,7 +37,21 @@ export class NamakaReviewComment extends LitElement {
 	render() {
 		return html`
 			<div class="outer-div">
-				<div class="avatar"></div>
+				<div class="box">
+					<div class="avatar"></div>
+					<div class="header">
+						<div class="header__txt">
+							<p>Francesca20</p>
+							<li><span>Buy BTC - Bank Transfer</span></li>
+						</div>
+						<div class="header__btn">
+							<button @click=${this.#toggleDropDown} class="drop-down__btn">
+								&bull;&bull;&bull;
+							</button>
+						</div>
+					</div>
+				</div>
+				
 				<div class="inner-div">
 					<div class="header">
 						<div class="header__txt">

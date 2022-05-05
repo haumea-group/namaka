@@ -3,10 +3,7 @@ export default css`
 
 .horizontal-review {
 	width: 100%;
-	padding: 20px;
-	max-width: 300px;
-	border: 0.5px solid red;
-	border-radius: 10px;
+	max-width: 800px;
 }
 
 .grid {
@@ -21,7 +18,7 @@ export default css`
 
 .line {
 	width: 100%;
-	max-width: 300px;
+	max-width: 100%;
 	border-radius: 50px;
 	background-color: #EDF2F7;;
 	position: relative;
