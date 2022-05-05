@@ -1,3 +1,4 @@
+import {dbmage} from "../../namaka.js"
 
 export interface CommentPost {
 	id: string
@@ -19,7 +20,7 @@ export interface CommentPostDraft {
 }
 
 export interface CommentEditDraft {
-	id: string
+	id: string 
 	subject: string
 	body: string
 	rating?: number

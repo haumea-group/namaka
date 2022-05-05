@@ -13,7 +13,6 @@ export class NamakaReviewComment extends LitElement {
 
 	#toggleDropDown = () => {
 		this.showDropDown = !this.showDropDown
-		console.log(this.showDropDown)
 	}
 
 	#renderDropDown = () => {
