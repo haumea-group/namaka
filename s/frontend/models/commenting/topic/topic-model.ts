@@ -41,6 +41,7 @@ export function makeTopicModel({
 				topicId,
 			})
 			addComments([comment])
+			return comment
 		},
 
 		async getTopicStats() {
