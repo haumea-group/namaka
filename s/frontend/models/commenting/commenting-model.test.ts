@@ -136,4 +136,90 @@ export default <Suite>{
 
 		},
 	},
+	"editing comments": {
+		"a regular user": {
+			async "can edit their own comment, instantly sees change"() {
+				const {commenting} = newServer()
+					.newUser(makeRegularUser())
+					.newBrowserTab()
+				const topicId = randomId()
+				const topic = commenting.getTopicModel(topicId)
+				const comment = await topic.postComment({
+					parentCommentId: undefined,
+					subject: "hello",
+					body: "world",
+				})
+				expect(topic.comments[0].subject).equals("hello")
+				expect(topic.comments[0].body).equals("world")
+				await commenting.editComment({
+					id: comment.id,
+					subject: comment.subject + "!",
+					body: comment.body + "!",
+				})
+				expect(topic.comments[0].subject).equals("hello!")
+				expect(topic.comments[0].body).equals("world!")
+			},
+			async "can edit their own comment, sees change after refresh"() {
+				const context = newServer()
+					.newUser(makeRegularUser())
+				const {commenting} = context.newBrowserTab()
+				const topicId = randomId()
+				const topic = commenting.getTopicModel(topicId)
+				const comment = await topic.postComment({
+					parentCommentId: undefined,
+					subject: "hello",
+					body: "world",
+				})
+				expect(topic.comments[0].subject).equals("hello")
+				expect(topic.comments[0].body).equals("world")
+				await commenting.editComment({
+					id: comment.id,
+					subject: comment.subject + "!",
+					body: comment.body + "!",
+				})
+				{
+					const {commenting} = context.newBrowserTab()
+					const topic = commenting.getTopicModel(topicId)
+					await topic.getComments()
+					expect(topic.comments[0].subject).equals("hello!")
+					expect(topic.comments[0].body).equals("world!")
+				}
+			},
+			async "cannot edit another person's comment"() {
+				const server = newServer()
+				const topicId = randomId()
+				{
+					const {commenting} = server
+						.newUser(makeRegularUser())
+						.newBrowserTab()
+					const topic = commenting.getTopicModel(topicId)
+					await topic.postComment({
+						parentCommentId: undefined,
+						subject: "hello",
+						body: "world",
+					})
+				}
+				{
+					const {commenting, helpers} = server
+						.newUser(makeRegularUser())
+						.newBrowserTab()
+					const topic = commenting.getTopicModel(topicId)
+					await topic.getComments()
+					expect(helpers.commentTree.length).equals(1)
+					const [comment] = topic.comments
+					await expect(async() => commenting.editComment({
+						id: comment.id,
+						subject: comment.subject + "!",
+						body: comment.body + "!",
+					})).throws()
+				}
+			},
+		},
+		"a logged-out user": {
+			async "cannot edit comments"() {},
+		},
+		"a canEditAnyComment user": {
+			async "can edit anybody's comment"() {},
+		},
+	},
 }
