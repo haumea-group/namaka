@@ -5,7 +5,6 @@ export default css`
 	display:flex;
 	align-content:center;
 	align-items:center;
-
 }
 svg {
 	width: 20px;
@@ -19,5 +18,6 @@ svg {
 .star-empty svg path {
 	fill: none;
 }
+
 
 `;
