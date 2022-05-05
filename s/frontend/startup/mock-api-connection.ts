@@ -25,6 +25,8 @@ export async function mockApiConnection({getMockMeta}: {
 	return renraku.mock()
 		.forApi(api)
 		.withMetaMap({
-			commenting: getMockMeta,
+			commentReading: getMockMeta,
+			commentWriting: getMockMeta,
+			adminActions: getMockMeta,
 		})
 }

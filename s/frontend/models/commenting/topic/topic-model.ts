@@ -1,7 +1,7 @@
 
-import {CommentingState} from "../commenting-model.js"
+import {CommentingState} from "../commenting-types.js"
 import {AppRemote} from "../../../../api/types/remote.js"
-import {Comment, CommentDraft} from "../../../../api/types/schema.js"
+import {CommentPost, CommentPostDraft} from "../../../../api/types/concepts.js"
 
 export function makeTopicModel({
 		topicId,
@@ -11,20 +11,23 @@ export function makeTopicModel({
 	}: {
 		topicId: string
 		state: CommentingState
-		remote: {commenting: AppRemote["commenting"]},
-		addComments: (comments: Comment[]) => void
+		remote: {
+			commentReading: AppRemote["commentReading"]
+			commentWriting: AppRemote["commentWriting"]
+		}
+		addComments: (comments: CommentPost[]) => void
 	}) {
 
 	return {
 
 		get comments() {
-			return state.allComments.filter(
+			return state.commentTree.filter(
 				comment => comment.topicId === topicId
 			)
 		},
 
 		async getComments() {
-			const comments = await remote.commenting.getComments({
+			const comments = await remote.commentReading.getComments({
 				topicId,
 				limit: 100,
 				offset: 0,
@@ -32,12 +35,17 @@ export function makeTopicModel({
 			addComments(comments)
 		},
 
-		async postComment(draft: Omit<CommentDraft, "topicId">) {
-			const comment = await remote.commenting.postComment({
+		async postComment(draft: Omit<CommentPostDraft, "topicId">) {
+			const comment = await remote.commentWriting.postComment({
 				...draft,
 				topicId,
 			})
 			addComments([comment])
+		},
+
+		async getTopicStats() {
+			const stats = await remote.commentReading.getTopicStats({topicId})
+			return stats
 		},
 	}
 }

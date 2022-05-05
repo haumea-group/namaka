@@ -1,7 +1,8 @@
 
-import {CommentRow, Comment} from "../../../types/schema.js"
+import {CommentPost} from "../../types/concepts.js"
+import {CommentRow} from "../../types/schema.js"
 
-export function rowToComment(row: CommentRow): Comment {
+export function rowToComment(row: CommentRow): CommentPost {
 	return {
 		id: row.id.string,
 		authorId: row.authorId.string,
@@ -11,6 +12,7 @@ export function rowToComment(row: CommentRow): Comment {
 		topicId: row.topicId.string,
 		timePosted: row.timePosted,
 		subject: row.subject,
+		rating: row.rating,
 		body: row.body,
 	}
 }

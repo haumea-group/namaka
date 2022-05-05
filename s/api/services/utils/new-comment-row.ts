@@ -1,11 +1,12 @@
 
 import * as dbmage from "dbmage"
-import {CommentDraft, CommentRow} from "../../../types/schema.js"
+import {CommentRow} from "../../types/schema.js"
+import {CommentPostDraft} from "../../types/concepts.js"
 
 export function newCommentRow({userId, rando, draft}: {
 		userId: string
 		rando: dbmage.Rando
-		draft: CommentDraft
+		draft: CommentPostDraft
 	}): CommentRow {
 
 	return {
@@ -17,6 +18,8 @@ export function newCommentRow({userId, rando, draft}: {
 		topicId: dbmage.Id.fromString(draft.topicId),
 		timePosted: Date.now(),
 		subject: draft.subject,
+		rating: draft.rating,
 		body: draft.body,
+		archived: false,
 	}
 }

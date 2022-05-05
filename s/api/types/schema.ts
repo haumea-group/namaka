@@ -19,6 +19,8 @@ export type CommentRow = dbmage.AsRow<{
 	timePosted: number
 	subject: string
 	body: string
+	rating?: number
+	archived: boolean
 }>
 
 export interface Comment {
