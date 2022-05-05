@@ -4,7 +4,8 @@ export default css`
 
 :host {
 	display: block;
-	max-width: 62.75rem;
+	width: 100%;
+	/* max-width: 62.75rem; */
 	border-top: 1px solid #EDEFF5;
 	position: relative;
 }
@@ -19,9 +20,39 @@ button:hover {
 }
 
 .outer-div {
-	padding: 2rem 1.2rem;
+	padding: 2rem 0rem;
 	display: flex;
-	gap: 1.75rem;
+	gap: 1.5rem;
+	flex-direction: column;
+}
+
+.inner-div .header {
+	display: none;
+}
+
+.outer-div .box {
+	display: flex;
+	justify-content: space-between;
+	align-items: center;
+	text-align: left;
+}
+
+.outer-div .header {
+	width: 100%;
+}
+
+@media screen and (min-width: 768px) {
+	.outer-div {
+		flex-direction: row;
+	}
+
+	.outer-div .box .header {
+		display: none;
+	}
+
+	.inner-div .header {
+		display: flex;
+	}
 }
 
 .avatar {
@@ -35,16 +66,26 @@ button:hover {
 .header {
 	display: flex;
 	justify-content: space-between;
+	margin-bottom: 20px;
 }
 
 .header__txt {
 	display: flex;
-	align-items: center;
-	gap: 1rem;
+	align-items: flex-start;
+	gap: 0.5rem;
 	font-style: normal;
 	font-weight: 500;
 	font-size: 14px;
 	line-height: 24px;
+	flex-direction: column;
+	text-align: left;
+}
+
+@media screen and (min-width: 768px) {
+	.header__txt {
+		flex-direction: row;
+		align-items: center;
+	}
 }
 
 .header__btn {
@@ -67,6 +108,7 @@ button:hover {
 	font-size: 14px;
 	line-height: 24px;
 	opacity: 0.8;
+	text-align: left;
 }
 
 .footer {
@@ -137,5 +179,9 @@ svg {
 	font-weight: 400;
 	font-size: 16px;
 	line-height: 19px;
+}
+
+.footer button {
+	color: #fff;
 }
 `

@@ -3,11 +3,13 @@ export default css`
 
 .edit-review {
 	width: 100%;
+	max-width: 700px;
+	margin: 0 auto;
 	padding: 20px;
-	max-width: 710px;
 	padding: 30px;
-	border: 0.5px solid red;
+	border: 0.5px solid #776e62;
 	border-radius: 25px;
+	text-align: left;
 }
 
 .heading {

@@ -1,11 +1,14 @@
 import {css} from "lit"
 export default css`
 
+:host {
+	color: #000;
+}
+
 .empty-review {
 	width: 100%;
 	padding: 20px;
-	max-width: 300px;
-	border: 0.5px solid red;
+	border: 0.5px solid #776e62;
 	border-radius: 10px;
 }
 
