@@ -46,6 +46,7 @@ export class NamakaComments extends mixinStandard<{
 			return null
 
 		const {comments} = this.#topicModel
+		
 		return html`
 			<p>topic id: ${this.topic}</p>
 			<div>
