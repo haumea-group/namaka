@@ -4,7 +4,7 @@ export default css`
 
 :host {
 	display: block;
-	max-width: 40em;
+	margin: auto;
 }
 
 `

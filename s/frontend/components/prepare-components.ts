@@ -38,7 +38,7 @@ export function prepareComponents({
 			.withContext({auth})
 			.withSubscriptions(subscribe),
 		NamakaComments: NamakaComments
-			.withContext({commenting})
+			.withContext({auth, commenting})
 			.withSubscriptions(subscribe),
 	})
 }

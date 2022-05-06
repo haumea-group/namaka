@@ -2,6 +2,7 @@
 import {html, LitElement} from "lit"
 import {property} from "lit/decorators.js"
 
+import {makeAuthModel} from "../../models/auth/auth-model.js"
 import {mixinStyles} from "../../framework/mixins/mixin-styles.js"
 import {mixinStandard} from "../../framework/mixins/mixin-standard.js"
 import {randomComment, randomSubject} from "../../../toolbox/randomly.js"
@@ -12,6 +13,7 @@ import namakaCommentsCss from "./namaka-comments.css.js"
 
 @mixinStyles(namakaCommentsCss)
 export class NamakaComments extends mixinStandard<{
+		auth: ReturnType<typeof makeAuthModel>
 		commenting: ReturnType<typeof makeCommentingModel>
 	}>()(LitElement) {
 
@@ -42,12 +44,20 @@ export class NamakaComments extends mixinStandard<{
 		if (!this.topic)
 			return null
 
+		const isLoggedIn = !!this.context.auth.user
 		const comments = this.context.commenting.getComments(this.topic)
 
 		return html`
 			<div>
-				<button @click=${this.#postRandomComment}>post a comment</button>
-				<button @click=${this.#clearLocalStorage}>wipe database</button>
+				<button
+					@click=${this.#postRandomComment}
+					?disabled=${!isLoggedIn}>
+						post a comment
+				</button>
+				<button
+					@click=${this.#clearLocalStorage}>
+						wipe database
+				</button>
 			</div>
 			${recursivelyRenderComments(comments)}
 		`
