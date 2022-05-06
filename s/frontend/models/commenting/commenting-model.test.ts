@@ -294,8 +294,68 @@ export default <Suite>{
 
 	"archiving comments": {
 		"a regular user": {
-			async "can archive their own comment"() {
-
+			async "can archive their own comment, sees it disappear"() {
+				const server = newServer()
+				const topicId = randomId()
+				{
+					const {commenting} = server
+						.newUser(makeRegularUser())
+						.newBrowserTab()
+					await commenting.downloadComments(topicId)
+					const {id} = await commenting.postComment({
+						topicId,
+						parentCommentId: undefined,
+						subject: "hello",
+						body: "world",
+					})
+					expect(commenting.getComments(topicId).length).equals(1)
+					await commenting.archiveComment(id)
+					expect(commenting.getComments(topicId).length).equals(0)
+				}
+				{
+					// other users also see the comment is gone
+					const {commenting} = server
+						.newUser(makeRegularUser())
+						.newBrowserTab()
+					await commenting.downloadComments(topicId)
+					expect(commenting.getComments(topicId).length).equals(0)
+				}
+			},
+		},
+		"an admin user": {
+			async "can archive somebody else's comment"() {
+				const server = newServer()
+				const topicId = randomId()
+				{
+					const {commenting} = server
+						.newUser(makeRegularUser())
+						.newBrowserTab()
+					await commenting.downloadComments(topicId)
+					const {id} = await commenting.postComment({
+						topicId,
+						parentCommentId: undefined,
+						subject: "hello",
+						body: "world",
+					})
+					expect(commenting.getComments(topicId).length).equals(1)
+				}
+				{
+					const {commenting} = server
+						.newUser(makeAdminUser())
+						.newBrowserTab()
+					await commenting.downloadComments(topicId)
+					const [comment] = commenting.getComments(topicId)
+					expect(comment).ok()
+					await commenting.archiveComment(comment.id)
+					expect(commenting.getComments(topicId).length).equals(0)
+				}
+				{
+					const {commenting} = server
+						.newUser(makeRegularUser())
+						.newBrowserTab()
+					await commenting.downloadComments(topicId)
+					expect(commenting.getComments(topicId).length).equals(0)
+				}
 			},
 		},
 	},
