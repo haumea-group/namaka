@@ -1,4 +1,5 @@
 
+import {makeAppSnap} from "../models/app-snap.js"
 import {AppRemote} from "../../api/types/remote.js"
 import {prepareModels} from "../models/prepare-models.js"
 import {prepareComponents} from "../components/prepare-components.js"
@@ -8,8 +9,9 @@ export function installFrontend({remote}: {
 		remote: AppRemote
 	}) {
 
-	const models = prepareModels({remote})
-	const components = prepareComponents({models})
+	const snap = makeAppSnap()
+	const models = prepareModels({snap, remote})
+	const components = prepareComponents({snap, models})
 
 	registerComponents(components)
 }
