@@ -6,23 +6,17 @@ export function recursivelyRenderComments(
 		comments: NestedComment[]
 	): TemplateResult {
 
-	return html`
-		<ol>
-			${comments.map(comment => html`
-				<li>
-					<p>author: ${comment.authorId.slice(0, 7)}</p>
-					<p>id: ${comment.id.slice(0, 7)}</p>
-					<p>subject: ${comment.subject}</p>
-					<p>body: ${comment.body}</p>
-					<p>time posted: ${comment.timePosted}</p>
-					${comment.children.length
-						? html`
-							<p>replies:</p>
-							${recursivelyRenderComments(comment.children)}
-						`
-						: null}
-				</li>
-			`)}
-		</ol>
+	return html `
+		${comments.map(comment => html`
+			<namaka-review-comment
+				.authorId="${comment.authorId}"
+				.topicId="${comment.topicId}"
+				.id="${comment.id}"
+				.subject="${comment.subject}"
+				.body="${comment.body}"
+				.timePosted="${comment.timePosted}">
+					${recursivelyRenderComments(comment.children)}
+			</namaka-review-comment>
+		`)}
 	`
 }

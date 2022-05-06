@@ -25,7 +25,9 @@ export function prepareComponents({
 	}) {
 
 	return themeComponents(themeCss, {
-		NamakaReviewComment,
+		NamakaReviewComment: NamakaReviewComment
+			.withContext({commenting})
+			.withSubscriptions(commenting.snap.subscribe),
 		NamakaMyReview,
 		NamakaHorizontalReview,
 		NamakaEmptyReview,
