@@ -7,6 +7,7 @@ import {AppRemote} from "../../../../api/types/remote.js"
 import {makeCommentingModel} from "../commenting-model.js"
 import {MockMeta, User} from "../../../../api/types/auth.js"
 import {AppSchema, databaseShape} from "../../../../api/types/schema.js"
+import {AppState, makeAppSnap} from "../../app-snap.js"
 
 const rando = await dbmage.getRando()
 export const randomId = () => rando.randomId().string
@@ -25,20 +26,25 @@ export function newServer() {
 				})
 			return {
 				newBrowserTab: () => {
-					const commenting = makeCommentingModel({remote})
-					return withTestingHelpers(commenting)
+					const {state, readable} = makeAppSnap()
+					state.user = user
+					const commenting = makeCommentingModel({state, remote})
+					return withTestingHelpers(readable, commenting)
 				}
 			}
 		}
 	}
 }
 
-function withTestingHelpers(commenting: ReturnType<typeof makeCommentingModel>) {
+function withTestingHelpers(
+		state: AppState,
+		commenting: ReturnType<typeof makeCommentingModel>,
+	) {
 	return {
 		commenting,
 		helpers: {
-			get commentTree() {
-				return commenting.snap.readable.commentTree
+			get nestedComments() {
+				return state.nestedComments
 			},
 		},
 	}

@@ -42,19 +42,19 @@ export const makeCommentWritingService = () => ({
 			throw new renraku.ApiError(403, "cannot edit, not logged in")
 
 		const specificComment = await database.tables.comments.readOne(find({id: dbmage.Id.fromString(id)}))
-
-		const userId = user?.userId
-		const commentAuthorId = specificComment.authorId.string
+		const userIsTheAuthor = user.userId === specificComment.authorId.string
+		const userHasAdminRight = user.permissions.canEditAnyComment
+		const userIsAllowedToEdit = userIsTheAuthor || userHasAdminRight
 		
-		if(userId !== commentAuthorId) 
-			throw new renraku.ApiError(403, "cannot edit, can only edit own comment")  
+		if(!userIsAllowedToEdit) 
+			throw new renraku.ApiError(403, "forbidden; must be author or admin to edit a comment")  
 			
 		await database.tables.comments.update({
 			...find({id: dbmage.Id.fromString(id)}),
 			write: {
 				subject, 
 				body,
-				rating
+				rating,
 			},
 		})
 	},

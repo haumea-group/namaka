@@ -1,4 +1,3 @@
-import { dbmage } from "../../namaka.js";
 
 export interface CommentPost {
     id: string

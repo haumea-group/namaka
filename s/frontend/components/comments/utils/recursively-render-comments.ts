@@ -1,9 +1,9 @@
 
 import {html, TemplateResult} from "lit"
-import {CommentTree} from "../../../models/commenting/commenting-types.js"
+import {NestedComment} from "../../../models/commenting/commenting-types.js"
 
 export function recursivelyRenderComments(
-		comments: CommentTree[]
+		comments: NestedComment[]
 	): TemplateResult {
 
 	return html`

@@ -18,6 +18,7 @@ export async function setupMockUser() {
 			permissions: {
 				canPost: true,
 				canBanUsers: false,
+				canEditAnyComment: false,
 				canDeleteAnyComment: false,
 			},
 		}

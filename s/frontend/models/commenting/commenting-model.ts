@@ -1,75 +1,58 @@
 
-import {restricted, snapstate} from "@chasemoskal/snapstate"
-
-import {CommentingState} from "./commenting-types.js"
-import {makeTopicModel} from "./topic/topic-model.js"
+import {AppState} from "../app-snap.js"
 import {AppRemote} from "../../../api/types/remote.js"
-import {computeCommentTree} from "./utils/compute-comment-tree.js"
-import {CommentEditDraft, CommentPost} from "../../../api/types/concepts.js"
+import {CommentEditDraft, CommentPostDraft} from "../../../api/types/concepts.js"
+import {makeCommentStateActions} from "./utils/comment-state-actions.js"
 
-export function makeCommentingModel({remote}: {
+export function makeCommentingModel({state, remote}: {
+		state: AppState
 		remote: {
 			commentReading: AppRemote["commentReading"]
 			commentWriting: AppRemote["commentWriting"]
 		}
 	}) {
 
-	const commentMap = new Map<string, CommentPost>()
-
-	const snap = snapstate<CommentingState>({
-		user: undefined,
-		commentTree: [],
-	})
-
-	const stateOperations = (() => {
-		function refreshTree() {
-			snap.state.commentTree = computeCommentTree([...commentMap.values()])
-		}
-		return {
-			addComments(comments: CommentPost[]) {
-				for (const comment of comments)
-					commentMap.set(comment.id, comment)
-				refreshTree()
-			},
-			updateComment(draft: CommentEditDraft) {
-				const comment = commentMap.get(draft.id)
-				if (!comment)
-					throw new Error(`cannot edit missing comment ${draft.id}`)
-				comment.body = draft.body
-				comment.subject = draft.subject
-				comment.rating = draft.rating
-				refreshTree()
-			},
-			deleteComment(id: string) {
-				commentMap.delete(id)
-				refreshTree()
-			},
-		}
-	})()
+	const stateActions = makeCommentStateActions({state})
 
 	return {
-		snap: restricted(snap),
-
-		wipe() {
-			commentMap.clear()
-			snap.state.commentTree = []
+		wipeComments() {
+			stateActions.wipeComments()
 		},
 
-		getTopicModel: (topicId: string) => makeTopicModel({
-			topicId,
-			remote,
-			state: snap.state,
-			addComments: stateOperations.addComments,
-		}),
+		getComments(topicId: string) {
+			return state.nestedComments.filter(
+				comment => comment.topicId === topicId
+			)
+		},
+
+		async downloadComments(topicId: string) {
+			const comments = await remote.commentReading.getComments({
+				topicId,
+				limit: 100,
+				offset: 0,
+			})
+			stateActions.addComments(comments)
+		},
+
+		async postComment(draft: CommentPostDraft) {
+			const comment = await remote.commentWriting.postComment(draft)
+			stateActions.addComments([comment])
+			return comment
+		},
+
+		async getTopicStats(topicId: string) {
+			const stats = await remote.commentReading.getTopicStats({topicId})
+			return stats
+		},
 
 		async editComment(draft: CommentEditDraft) {
 			await remote.commentWriting.editComment(draft)
-			stateOperations.updateComment(draft)
+			stateActions.updateComment(draft)
 		},
 
 		async archiveComment(id: string) {
 			await remote.commentWriting.archiveComment(id)
-			stateOperations.deleteComment(id)
+			stateActions.deleteComment(id)
 		},
 	}
 }
