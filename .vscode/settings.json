@@ -11,6 +11,11 @@
 		"package-lock.json": true,
 	},
 
+	"search.exclude": {
+		"**/node_modules": true,
+		"x/**": true,
+	},
+
 	"files.watcherExclude": {
 		"x/**": true,
 		"source-a*/**": true,
