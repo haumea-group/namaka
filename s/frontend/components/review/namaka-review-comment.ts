@@ -8,7 +8,7 @@ import namakaReviewCommentCss from "./namaka-review-comment.css.js"
 import {randomComment, randomSubject} from "../../../toolbox/randomly.js"
 import {mixinStandard} from "../../framework/mixins/mixin-standard.js"
 import {makeCommentingModel} from "../../models/commenting/commenting-model.js"
-import {makeTopicModel} from "../../models/commenting/topic/topic-model.js"
+// import {makeTopicModel} from "../../models/commenting/topic/topic-model.js"
 
 @mixinStyles(namakaReviewCommentCss)
 export class NamakaReviewComment extends mixinStandard<{
@@ -33,16 +33,17 @@ export class NamakaReviewComment extends mixinStandard<{
 	@property({type: String})
   timePosted: string = "1 hour ago"
 
-	#topicModel: ReturnType<typeof makeTopicModel> = undefined as any
+	// #topicModel: ReturnType<typeof makeCommentingModel> = undefined as any
 	async firstUpdated() {
-		// console.log(this.topicId)
+		console.log(this.topicId)
 		if (!this.topicId)
 			throw new Error("topic attribute is required")
-		this.#topicModel = this.context.commenting.getTopicModel(this.topicId)
+			await this.context.commenting.downloadComments(this.topicId)
 	}
 
 	#postRandomComment = async() => {
-		await this.#topicModel.postComment({
+		await this.context.commenting.postComment({
+			topicId: this.topicId,
 			parentCommentId: this.id,
 			subject: randomSubject(),
 			body: [randomComment(), randomComment(), randomComment()].join(" "),
