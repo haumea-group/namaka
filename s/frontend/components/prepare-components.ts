@@ -1,3 +1,5 @@
+import {NamakaDeleteReview} from './modal/delete-review/index.js';
+import {NamakaBanUser} from './modal/unban/index.js'
 import {NamakaBannedUsers} from './banned-users/index.js'
 import {NamakaLoadMore} from "./load-more/index.js"
 import {prepareModels} from "../models/prepare-models.js"
@@ -28,6 +30,8 @@ export function prepareComponents({
 		NamakaEditReview,
 		NamakaBannedUsers,
 		NamakaLoadMore,
+		NamakaBanUser,
+		NamakaDeleteReview,
 		NamakaComments: NamakaComments
 			.withContext({commenting})
 			.withSubscriptions(subscribe),
