@@ -29,16 +29,16 @@ export default <Suite>{
 					.newUser(makeRegularUser())
 					.newBrowserTab()
 				const topicId = randomId()
-				const topic = commenting.getTopicModel(topicId)
-				expect(helpers.commentTree.length).equals(0)
-				await topic.postComment({
+				expect(helpers.nestedComments.length).equals(0)
+				await commenting.postComment({
+					topicId,
 					parentCommentId: undefined,
 					subject: "hello",
 					body: "world",
 				})
-				expect(helpers.commentTree.length).equals(1)
-				expect(helpers.commentTree[0].subject).equals("hello")
-				expect(helpers.commentTree[0].body).equals("world")
+				expect(helpers.nestedComments.length).equals(1)
+				expect(helpers.nestedComments[0].subject).equals("hello")
+				expect(helpers.nestedComments[0].body).equals("world")
 			},
 			async "can post a comment that another user can see"() {
 				const server = newServer()
@@ -47,21 +47,20 @@ export default <Suite>{
 					const {commenting, helpers} = server
 						.newUser(makeRegularUser())
 						.newBrowserTab()
-					const topic = commenting.getTopicModel(topicId)
-					await topic.postComment({
+					await commenting.postComment({
+						topicId,
 						parentCommentId: undefined,
 						subject: "hello",
 						body: "world",
 					})
-					expect(helpers.commentTree.length).equals(1)
+					expect(helpers.nestedComments.length).equals(1)
 				}
 				{
 					const {commenting, helpers} = server
 						.newUser(makeRegularUser())
 						.newBrowserTab()
-					const topic = commenting.getTopicModel(topicId)
-					await topic.getComments()
-					expect(helpers.commentTree.length).equals(1)
+					await commenting.downloadComments(topicId)
+					expect(helpers.nestedComments.length).equals(1)
 				}
 			},
 	
@@ -73,13 +72,13 @@ export default <Suite>{
 					.newUser(undefined)
 					.newBrowserTab()
 				const topicId = randomId()
-				const topic = commenting.getTopicModel(topicId)
-				await expect(async() => topic.postComment({
+				await expect(async() => commenting.postComment({
+					topicId,
 					parentCommentId: undefined,
 					subject: "hello",
 					body: "world",
 				})).throws()
-				expect(helpers.commentTree.length).equals(0)
+				expect(helpers.nestedComments.length).equals(0)
 			},
 			async "can comment posted by other users"() {
 				const server = newServer()
@@ -88,21 +87,20 @@ export default <Suite>{
 					const {commenting, helpers} = server
 						.newUser(makeRegularUser())
 						.newBrowserTab()
-					const topic = commenting.getTopicModel(topicId)
-					await topic.postComment({
+					await commenting.postComment({
+						topicId,
 						parentCommentId: undefined,
 						subject: "hello",
 						body: "world",
 					})
-					expect(helpers.commentTree.length).equals(1)
+					expect(helpers.nestedComments.length).equals(1)
 				}
 				{
 					const {commenting} = server
 						.newUser(undefined)
 						.newBrowserTab()
-					const topic = commenting.getTopicModel(topicId)
-					await topic.getComments()
-					expect(topic.comments.length).equals(1)
+					await commenting.downloadComments(topicId)
+					expect(commenting.getComments(topicId).length).equals(1)
 				}
 			},
 	
@@ -116,21 +114,20 @@ export default <Suite>{
 					const {commenting, helpers} = server
 						.newUser(makeRegularUser())
 						.newBrowserTab()
-					const topic = commenting.getTopicModel(topicId)
-					await topic.postComment({
+					await commenting.postComment({
+						topicId,
 						parentCommentId: undefined,
 						subject: "hello",
 						body: "world",
 					})
-					expect(helpers.commentTree.length).equals(1)
+					expect(helpers.nestedComments.length).equals(1)
 				}
 				{
 					const {commenting, helpers} = server
 						.newUser(undefined)
 						.newBrowserTab()
-					const topic = commenting.getTopicModel(topicId)
-					await topic.getComments()
-					expect(helpers.commentTree.length).equals(1)
+					await commenting.downloadComments(topicId)
+					expect(helpers.nestedComments.length).equals(1)
 				}
 			},
 
@@ -143,35 +140,35 @@ export default <Suite>{
 					.newUser(makeRegularUser())
 					.newBrowserTab()
 				const topicId = randomId()
-				const topic = commenting.getTopicModel(topicId)
-				const comment = await topic.postComment({
+				const comment = await commenting.postComment({
+					topicId,
 					parentCommentId: undefined,
 					subject: "hello",
 					body: "world",
 				})
-				expect(topic.comments[0].subject).equals("hello")
-				expect(topic.comments[0].body).equals("world")
+				expect(commenting.getComments(topicId)[0].subject).equals("hello")
+				expect(commenting.getComments(topicId)[0].body).equals("world")
 				await commenting.editComment({
 					id: comment.id,
 					subject: comment.subject + "!",
 					body: comment.body + "!",
 				})
-				expect(topic.comments[0].subject).equals("hello!")
-				expect(topic.comments[0].body).equals("world!")
+				expect(commenting.getComments(topicId)[0].subject).equals("hello!")
+				expect(commenting.getComments(topicId)[0].body).equals("world!")
 			},
 			async "can edit their own comment, sees change after refresh"() {
 				const context = newServer()
 					.newUser(makeRegularUser())
 				const {commenting} = context.newBrowserTab()
 				const topicId = randomId()
-				const topic = commenting.getTopicModel(topicId)
-				const comment = await topic.postComment({
+				const comment = await commenting.postComment({
+					topicId,
 					parentCommentId: undefined,
 					subject: "hello",
 					body: "world",
 				})
-				expect(topic.comments[0].subject).equals("hello")
-				expect(topic.comments[0].body).equals("world")
+				expect(commenting.getComments(topicId)[0].subject).equals("hello")
+				expect(commenting.getComments(topicId)[0].body).equals("world")
 				await commenting.editComment({
 					id: comment.id,
 					subject: comment.subject + "!",
@@ -179,10 +176,9 @@ export default <Suite>{
 				})
 				{
 					const {commenting} = context.newBrowserTab()
-					const topic = commenting.getTopicModel(topicId)
-					await topic.getComments()
-					expect(topic.comments[0].subject).equals("hello!")
-					expect(topic.comments[0].body).equals("world!")
+					await commenting.downloadComments(topicId)
+					expect(commenting.getComments(topicId)[0].subject).equals("hello!")
+					expect(commenting.getComments(topicId)[0].body).equals("world!")
 				}
 			},
 			async "cannot edit another person's comment"() {
@@ -192,8 +188,8 @@ export default <Suite>{
 					const {commenting} = server
 						.newUser(makeRegularUser())
 						.newBrowserTab()
-					const topic = commenting.getTopicModel(topicId)
-					await topic.postComment({
+					await commenting.postComment({
+						topicId,
 						parentCommentId: undefined,
 						subject: "hello",
 						body: "world",
@@ -203,10 +199,9 @@ export default <Suite>{
 					const {commenting, helpers} = server
 						.newUser(makeRegularUser())
 						.newBrowserTab()
-					const topic = commenting.getTopicModel(topicId)
-					await topic.getComments()
-					expect(helpers.commentTree.length).equals(1)
-					const [comment] = topic.comments
+					await commenting.downloadComments(topicId)
+					expect(helpers.nestedComments.length).equals(1)
+					const [comment] = commenting.getComments(topicId)
 					await expect(async() => commenting.editComment({
 						id: comment.id,
 						subject: comment.subject + "!",

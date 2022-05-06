@@ -5,7 +5,6 @@ import {property} from "lit/decorators.js"
 import {mixinStyles} from "../../framework/mixins/mixin-styles.js"
 import {mixinStandard} from "../../framework/mixins/mixin-standard.js"
 import {randomComment, randomSubject} from "../../../toolbox/randomly.js"
-import {makeTopicModel} from "../../models/commenting/topic/topic-model.js"
 import {makeCommentingModel} from "../../models/commenting/commenting-model.js"
 import {recursivelyRenderComments} from "./utils/recursively-render-comments.js"
 
@@ -19,26 +18,15 @@ export class NamakaComments extends mixinStandard<{
 	@property({type: String})
 	topic?: string
 
-	// this is the commenting model. it contains state and functions you need.
-	get #commenting() {
-		return this.context.commenting
-	}
-
-	// this is the topic model. it's kind of like a "subsidiary" of the
-	// commenting model.
-	// it provides data and functions that are relevant *only* to the
-	// current comment topic id.
-	#topicModel: ReturnType<typeof makeTopicModel> = undefined as any
-
 	async firstUpdated() {
 		if (!this.topic)
 			throw new Error("topic attribute is required")
-		this.#topicModel = this.#commenting.getTopicModel(this.topic)
-		await this.#topicModel.getComments()
+		await this.context.commenting.downloadComments(this.topic)
 	}
 
 	#postRandomComment = async() => {
-		await this.#topicModel.postComment({
+		await this.context.commenting.postComment({
+			topicId: this.topic!,
 			parentCommentId: undefined,
 			subject: randomSubject(),
 			body: [randomComment(), randomComment(), randomComment()].join(" "),
@@ -47,14 +35,14 @@ export class NamakaComments extends mixinStandard<{
 
 	#clearLocalStorage = () => {
 		window.localStorage.clear()
-		this.#commenting.wipe()
+		this.context.commenting.wipeComments()
 	}
 
 	render() {
-		if (!this.#topicModel)
+		if (!this.topic)
 			return null
 
-		const {comments} = this.#topicModel
+		const comments = this.context.commenting.getComments(this.topic)
 
 		return html`
 			<div>

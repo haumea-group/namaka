@@ -9,9 +9,10 @@ import {themeComponents} from "../framework/theme-components.js"
 import {NamakaReviewComment} from "./review/namaka-review-comment.js"
 
 import themeCss from "./theme.css.js"
+import {AppSnap} from "../models/app-snap.js"
 
 
-export function prepareComponents({models: {commenting}}: {
+export function prepareComponents({models: {snap, commenting}}: {
 		models: ReturnType<typeof prepareModels>
 	}) {
 
@@ -24,6 +25,6 @@ export function prepareComponents({models: {commenting}}: {
 		NamakaLoadMore,
 		NamakaComments: NamakaComments
 			.withContext({commenting})
-			.withSubscriptions(commenting.snap.subscribe),
+			.withSubscriptions(snap.subscribe),
 	})
 }
