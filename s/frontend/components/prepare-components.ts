@@ -1,4 +1,6 @@
-
+import {NamakaDeleteReview} from './modal/delete-review/index.js';
+import {NamakaBanUser} from './modal/unban/index.js'
+import {NamakaBannedUsers} from './banned-users/index.js'
 import {NamakaLoadMore} from "./load-more/index.js"
 import {prepareModels} from "../models/prepare-models.js"
 import {NamakaMyReview} from "./reviews/my-review/index.js"
@@ -26,7 +28,10 @@ export function prepareComponents({
 		NamakaHorizontalReview,
 		NamakaEmptyReview,
 		NamakaEditReview,
+		NamakaBannedUsers,
 		NamakaLoadMore,
+		NamakaBanUser,
+		NamakaDeleteReview,
 		NamakaComments: NamakaComments
 			.withContext({commenting})
 			.withSubscriptions(subscribe),

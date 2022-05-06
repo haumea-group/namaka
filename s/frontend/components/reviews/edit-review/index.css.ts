@@ -10,6 +10,8 @@ export default css`
 	border: 0.5px solid #776e62;
 	border-radius: 25px;
 	text-align: left;
+	background: #ffff;
+	color: #000;
 }
 
 .heading {
