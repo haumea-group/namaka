@@ -11,7 +11,7 @@ export const validateId = validator(
 export const validateSubject = validator(
 	string(),
 	minLength(1),
-	maxLength(50),
+	maxLength(140),
 	notAllWhitespace(),
 )
 
