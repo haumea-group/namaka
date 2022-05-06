@@ -10,6 +10,7 @@ export function recursivelyRenderComments(
 		<ol>
 			${comments.map(comment => html`
 				<li>
+					<p>author: ${comment.authorId.slice(0, 7)}</p>
 					<p>id: ${comment.id.slice(0, 7)}</p>
 					<p>subject: ${comment.subject}</p>
 					<p>body: ${comment.body}</p>
