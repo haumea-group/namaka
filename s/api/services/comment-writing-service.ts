@@ -1,19 +1,23 @@
 
+import {find} from "dbmage"
 import * as dbmage from "dbmage"
 import * as renraku from "renraku"
 
 import {Auth} from "../types/auth.js"
 import {rowToComment} from "./utils/row-to-comment.js"
 import {newCommentRow} from "./utils/new-comment-row.js"
+import {enforceValidation} from "./utils/enforce-validation.js"
+import {validateCommentPostDraft} from "./validators/validators.js"
 import {CommentPostDraft, CommentPost, CommentEditDraft} from "../types/concepts.js"
-import {find} from "dbmage"
 
 
 export const makeCommentWritingService = () => ({
 		user, rando, database,
 	}: Auth) => ({
 
-	async postComment(draft: CommentPostDraft): Promise<CommentPost> {
+	async postComment(rawDraft: CommentPostDraft): Promise<CommentPost> {
+		const draft = enforceValidation(rawDraft, validateCommentPostDraft)
+
 		if (!user)
 			throw new renraku.ApiError(403, "cannot post, not logged in")
 
