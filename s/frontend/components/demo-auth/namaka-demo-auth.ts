@@ -13,16 +13,24 @@ export class NamakaDemoAuth extends mixinStandard<{
 
 	render() {
 		const {auth} = this.context
+		const isLoggedIn = !!auth.user
 		return html`
-			<button @click=${auth.login}>login</button>
-			<button @click=${auth.logout}>logout</button>
+
+			<button
+				?disabled=${isLoggedIn}
+				@click=${auth.login}>
+					login
+			</button>
+
+			<button
+				?disabled=${!isLoggedIn}
+				@click=${auth.logout}>
+					logout
+			</button>
+
 			${auth.user
-				? html`
-					<p>logged in: ${auth.user.userId.slice(0, 7)}</p>
-				`
-				: html`
-					<p>logged out</p>
-				`}
+				? html`<p>logged in: ${auth.user.userId.slice(0, 7)}</p>`
+				: html`<p>logged out</p>`}
 		`
 	}
 }

@@ -48,6 +48,12 @@ a:hover { color: white; }
 	margin-top: 2em;
 }
 
+namaka-demo-auth {
+	margin: 1em;
+	padding: 1em;
+	border: 1px solid;
+}
+
 namaka-comments {
 	text-align: left;
 	margin: auto;
