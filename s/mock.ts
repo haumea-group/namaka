@@ -1,10 +1,13 @@
 
-import {setupMockUser} from "./frontend/startup/setup-mock-user.js"
-import {installFrontend} from "./frontend/startup/install-frontend.js"
+import {makeAppSnap} from "./frontend/models/app-snap.js"
+import {prepareModels} from "./frontend/models/prepare-models.js"
 import {mockApiConnection} from "./frontend/startup/mock-api-connection.js"
+import {prepareComponents} from "./frontend/components/prepare-components.js"
+import {registerComponents} from "./frontend/framework/register-components.js"
 
-installFrontend({
-	remote: await mockApiConnection({
-		getMockMeta: await setupMockUser(),
-	})
-})
+const snap = makeAppSnap()
+const {remote, authDevice} = await mockApiConnection({snap})
+const models = prepareModels({snap, remote, authDevice})
+const components = prepareComponents({snap, models})
+
+registerComponents(components)
