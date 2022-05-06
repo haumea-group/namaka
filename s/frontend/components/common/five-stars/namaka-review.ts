@@ -3,7 +3,7 @@ import {
 	stateBuddy,
 } from './render-five-star-display.js';
 import fiveStarRatingCss from './render-five-star-display.css.js';
-import { mixinStyles } from '../../../../namaka.js';
+import { mixinStyles } from '../../../framework/mixins/mixin-styles.js';
 import { html, LitElement } from 'lit';
 
 @mixinStyles(fiveStarRatingCss)
