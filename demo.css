@@ -15,8 +15,7 @@ html {
 }
 
 body {
-	padding: 5vh 10vw;
-	margin: auto;
+	
 	text-align: center;
 }
 
@@ -38,6 +37,12 @@ body > * + * {
 
 a { color: skyblue; }
 a:hover { color: white; }
+
+.layout {
+	padding: 5vh 10vw;
+	margin: auto;
+	width: 100%;
+}
 
 .demo > * + * {
 	margin-top: 2em;
@@ -63,8 +68,10 @@ namaka-comments {
 .container {
 	width: 100%;
 	display: grid;
+	margin: 0 auto;
 	row-gap: 2em;
-	overflow-x: auto;
+	padding: 0 20px;
+	/* overflow-x: auto; */
 }
 
 @media (min-width: 640px) {
@@ -174,6 +181,6 @@ select {
 	}
 }
 
-.container .banned-users {
-	width: 100%;
+.banned-users {
+	max-width: 100%;
 }

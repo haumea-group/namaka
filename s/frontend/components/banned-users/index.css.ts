@@ -7,7 +7,7 @@ export default css`
 
 .banned-users {
 	width: 100%;
-	overflow-x: auto;
+	/* overflow-x: hidden; */
 	/* max-width: 400px; */
 	/* margin: 0 auto; */
 	padding: 20px;
@@ -40,6 +40,13 @@ export default css`
 	display: flex;
 	justify-content: space-between;
 	align-items: center;
+	flex-direction: column;
+}
+
+@media screen and (min-width: 768px) {
+	.container .heading {
+		flex-direction: row;
+	}
 }
 
 .heading .search {
@@ -87,6 +94,8 @@ table {
 	width: 100%;
 	margin-top: 50px;
 	border-radius: 8px;
+	table-layout: fixed;
+	/* overflow-x: auto; */
 }
 
 table thead {
