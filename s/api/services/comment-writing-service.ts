@@ -7,7 +7,8 @@ import {Auth} from "../types/auth.js"
 import {rowToComment} from "./utils/row-to-comment.js"
 import {newCommentRow} from "./utils/new-comment-row.js"
 import {enforceValidation} from "./utils/enforce-validation.js"
-import {validateCommentPostDraft} from "./validators/validators.js"
+import {validateCommentPostDraft} from "./validators/validateCommentPostDraft"
+import {validateCommentEditDraft} from "./validators/validateCommentEditDraft"
 import {CommentPostDraft, CommentPost, CommentEditDraft} from "../types/concepts.js"
 
 
@@ -34,8 +35,10 @@ export const makeCommentWritingService = () => ({
 		return rowToComment(newRow)
 	},
 
-	async editComment(draft: CommentEditDraft): Promise<void> {
+	async editComment(rawDraft: CommentEditDraft): Promise<void> {
+		const draft = enforceValidation(rawDraft, validateCommentEditDraft)
 		const { id, body, subject, rating } = draft
+
 		if (!user)
 			throw new renraku.ApiError(403, "cannot edit, not logged in")
 
