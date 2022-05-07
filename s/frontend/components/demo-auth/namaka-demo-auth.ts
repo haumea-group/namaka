@@ -14,12 +14,19 @@ export class NamakaDemoAuth extends mixinStandard<{
 	render() {
 		const {auth} = this.context
 		const isLoggedIn = !!auth.user
+		const isAdmin = !!auth.user?.permissions.canDeleteAnyComment
 		return html`
 
 			<button
 				?disabled=${isLoggedIn}
-				@click=${auth.login}>
-					login
+				@click=${auth.mockLogins.regular}>
+					login (regular)
+			</button>
+
+			<button
+				?disabled=${isLoggedIn}
+				@click=${auth.mockLogins.admin}>
+					login (admin)
 			</button>
 
 			<button
@@ -29,7 +36,7 @@ export class NamakaDemoAuth extends mixinStandard<{
 			</button>
 
 			${auth.user
-				? html`<p>logged in: ${auth.user.userId.slice(0, 7)}</p>`
+				? html`<p>logged in: ${auth.user.userId.slice(0, 7)} ${isAdmin ?"(admin)" :null}</p>`
 				: html`<p>logged out</p>`}
 		`
 	}

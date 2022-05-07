@@ -5,7 +5,7 @@ import * as renraku from "renraku"
 import {makeApi} from "../../api/api.js"
 import {AppSnap} from "../models/app-snap.js"
 import {AuthDevice} from "../frontend-types.js"
-import {MockMeta} from "../../api/types/auth.js"
+import {MockMeta, Permissions} from "../../api/types/auth.js"
 import {AppRemote} from "../../api/types/remote.js"
 import {databaseShape} from "../../api/types/schema.js"
 
@@ -37,29 +37,34 @@ export async function mockApiConnection({snap}: {
 			adminActions: getMeta,
 		})
 
+	function mockLogin(permissions: Permissions) {
+		const id = rando.randomId().string
+		snap.state.user = {
+			permissions,
+			userId: rando.randomId().string,
+			profile: {
+				nickname: "Francesca" + id.slice(0, 5),
+				avatar: "",
+				joinedTime: Date.now() * (1000 * 60 * 60),
+			},
+		}
+	}
+
 	return {
 		remote,
 		authDevice: {
 			async login() {
-				const id = rando.randomId().string
-				snap.state.user = {
-					userId: rando.randomId().string,
-					profile: {
-						nickname: "Francesca" + id.slice(0, 5),
-						avatar: "",
-						joinedTime: Date.now() * (1000 * 60 * 60),
-					},
-					permissions: {
-						canPost: true,
-						canBanUsers: true,
-						canEditAnyComment: true,
-						canDeleteAnyComment: true,
-					},
-				}
+				mockLogin({
+					canPost: true,
+					canBanUsers: true,
+					canEditAnyComment: true,
+					canDeleteAnyComment: true,
+				})
 			},
 			async logout() {
 				snap.state.user = undefined
 			},
+			mockLogin,
 		},
 	}
 }
