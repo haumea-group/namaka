@@ -124,6 +124,7 @@ export default <Suite>{
 	
 		},
 		"multi-user interactions": {
+
 			async "a logged-out user can see a previous comment from a logged-in user"() {
 				const server = newServer()
 				const topicId = randomId()
@@ -152,6 +153,7 @@ export default <Suite>{
 	},
 	"editing comments": {
 		"a regular user": {
+
 			async "can edit their own comment, instantly sees change"() {
 				const {commenting} = newServer()
 					.newUser(makeRegularUser())
@@ -241,8 +243,10 @@ export default <Suite>{
 					})).throws()
 				}
 			},
+
 		},
 		"a logged-out user": {
+
 			async "cannot edit comments"() {
 				const server = newServer()
 				const topicId = randomId()
@@ -271,8 +275,10 @@ export default <Suite>{
 					})).throws()
 				}
 			},
+
 		},
 		"an 'admin' user": {
+
 			async "can edit anybody's comment"() {
 				const server = newServer()
 				const topicId = randomId()
@@ -318,11 +324,12 @@ export default <Suite>{
 				await commenting.downloadComments(topicId)
 				expect(commenting.getComments(topicId).length).equals(0)
 			},
+
 		},
 	},
-
 	"archiving comments": {
 		"a regular user": {
+
 			async "can archive their own comment, sees it disappear"() {
 				const server = newServer()
 				const topicId = randomId()
@@ -349,8 +356,10 @@ export default <Suite>{
 					expect(commenting.getComments(topicId).length).equals(0)
 				}
 			},
+
 		},
 		"an admin user": {
+
 			async "can archive somebody else's comment"() {
 				const server = newServer()
 				const topicId = randomId()
@@ -385,8 +394,10 @@ export default <Suite>{
 					expect(commenting.getComments(topicId).length).equals(0)
 				}
 			},
+
 		},
 		"multi-user interactions": {
+
 			async "a regular user and/or admin cannot archive comment that doesn't exist"() {
 				const server = newServer()
 				const topicId = randomId()
@@ -409,7 +420,6 @@ export default <Suite>{
 						body: comment.body + "!",
 					})).throws()
 				}
-				
 				{
 					const {commenting} = server
 						.newUser(makeAdminUser())
