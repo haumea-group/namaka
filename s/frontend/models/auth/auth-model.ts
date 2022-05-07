@@ -17,5 +17,19 @@ export function makeAuthModel({snap: {readable}, authDevice}: {
 		async logout() {
 			await authDevice.logout()
 		},
+		mockLogins: {
+			regular: () => authDevice.mockLogin({
+				canPost: true,
+				canBanUsers: false,
+				canEditAnyComment: false,
+				canDeleteAnyComment: false,
+			}),
+			admin: () => authDevice.mockLogin({
+				canPost: true,
+				canBanUsers: true,
+				canEditAnyComment: true,
+				canDeleteAnyComment: true,
+			}),
+		},
 	}
 }
