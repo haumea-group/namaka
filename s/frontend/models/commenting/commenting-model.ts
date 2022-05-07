@@ -21,7 +21,7 @@ export function makeCommentingModel({state, remote}: {
 
 		getComments(topicId: string) {
 			return state.nestedComments.filter(
-				comment => comment.topicId === topicId
+				comment => comment.topicId === topicId && !comment.archived
 			)
 		},
 
@@ -52,7 +52,7 @@ export function makeCommentingModel({state, remote}: {
 
 		async archiveComment(id: string) {
 			await remote.commentWriting.archiveComment(id)
-			stateActions.deleteComment(id)
+			stateActions.archiveComment(id)
 		},
 	}
 }

@@ -6,7 +6,7 @@ export interface Permissions {
 	canPost: boolean
 	canBanUsers: boolean
 	canEditAnyComment: boolean
-	canDeleteAnyComment: boolean
+	canArchiveAnyComment: boolean
 }
 
 export interface User {

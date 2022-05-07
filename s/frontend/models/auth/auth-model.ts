@@ -22,13 +22,13 @@ export function makeAuthModel({snap: {readable}, authDevice}: {
 				canPost: true,
 				canBanUsers: false,
 				canEditAnyComment: false,
-				canDeleteAnyComment: false,
+				canArchiveAnyComment: false,
 			}),
 			admin: () => authDevice.mockLogin({
 				canPost: true,
 				canBanUsers: true,
 				canEditAnyComment: true,
-				canDeleteAnyComment: true,
+				canArchiveAnyComment: true,
 			}),
 		},
 	}
