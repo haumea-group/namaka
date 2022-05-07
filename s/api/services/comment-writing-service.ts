@@ -58,6 +58,17 @@ export const makeCommentWritingService = () => ({
 	},
 
 	async archiveComment(id: string): Promise<void> {
-		throw new Error("todo implement")
+		if (!user)
+			throw new renraku.ApiError(403, "cannot edit, not logged in")
+		
+		const specificComment = await database.tables.comments.readOne(find({id: dbmage.Id.fromString(id)}))
+		const userIsTheAuthor = user.userId === specificComment.authorId.string
+		const userHasAdminRight = user.permissions.canDeleteAnyComment
+		const userIsAllowedToDelete = userIsTheAuthor || userHasAdminRight
+
+		if (!userIsAllowedToDelete) 
+			throw new renraku.ApiError(403, "forbidden; must be author or admin to delete a comment")
+		
+		await database.tables.comments.delete(find(specificComment))
 	},
 })
