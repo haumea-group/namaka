@@ -198,6 +198,21 @@ export default <Suite>{
 					expect(commenting.getComments(topicId)[0].body).equals("world!")
 				}
 			},
+			async "cannot edit non-existent comment"() {
+				const server = newServer()
+				const topicId = randomId()
+				const {commenting} = server
+					.newUser(makeRegularUser())
+					.newBrowserTab()
+				const fakeCommentId = randomId()
+				await expect(async() => commenting.editComment({
+					id: fakeCommentId,
+					subject: "hello",
+					body: "world",
+				})).throws()
+				await commenting.downloadComments(topicId)
+				expect(commenting.getComments(topicId).length).equals(0)
+			},
 			async "cannot edit another person's comment"() {
 				const server = newServer()
 				const topicId = randomId()
@@ -288,39 +303,21 @@ export default <Suite>{
 					expect(editedComment.body).equals("world!")
 				}
 			},
-		},
-		"multi-user interactions": {
-			async "a regular user and/or admin cannot edit comment that doesn't exist"() {
+			async "cannot edit non-existent comment"() {
 				const server = newServer()
 				const topicId = randomId()
-				{
-					const {commenting} = server
-						.newUser(makeRegularUser())
-						.newBrowserTab()
-					const fakeCommentId = randomId()
-					await expect(async() => commenting.editComment({
-						id: fakeCommentId,
-						subject: "hello",
-						body: "world",
-					})).throws()
-					await commenting.downloadComments(topicId)
-					expect(commenting.getComments(topicId).length).equals(0)
-				}
-				{
-					const {commenting} = server
-						.newUser(makeAdminUser())
-						.newBrowserTab()
-					const fakeCommentId = randomId()
-					await expect(async() => commenting.editComment({
-						id: fakeCommentId,
-						subject: "hello",
-						body: "world",
-					})).throws()
-					await commenting.downloadComments(topicId)
-					expect(commenting.getComments(topicId).length).equals(0)
-				}
+				const {commenting} = server
+					.newUser(makeAdminUser())
+					.newBrowserTab()
+				const fakeCommentId = randomId()
+				await expect(async() => commenting.editComment({
+					id: fakeCommentId,
+					subject: "hello",
+					body: "world",
+				})).throws()
+				await commenting.downloadComments(topicId)
+				expect(commenting.getComments(topicId).length).equals(0)
 			},
-
 		},
 	},
 
