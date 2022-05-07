@@ -294,36 +294,30 @@ export default <Suite>{
 				const server = newServer()
 				const topicId = randomId()
 				{
-					const {commenting, helpers} = server
+					const {commenting} = server
 						.newUser(makeRegularUser())
 						.newBrowserTab()
-					await commenting.postComment({
-						topicId,
-						parentCommentId: undefined,
-						subject: "hello",
-						body: "world",
-					})
-					expect(helpers.nestedComments.length).equals(1)
-					const [comment] = commenting.getComments(topicId)
 					const fakeCommentId = randomId()
 					await expect(async() => commenting.editComment({
 						id: fakeCommentId,
-						subject: comment.subject + "!",
-						body: comment.body + "!",
+						subject: "hello",
+						body: "world",
 					})).throws()
+					await commenting.downloadComments(topicId)
+					expect(commenting.getComments(topicId).length).equals(0)
 				}
 				{
 					const {commenting} = server
 						.newUser(makeAdminUser())
 						.newBrowserTab()
-					await commenting.downloadComments(topicId)
-					const [comment] = commenting.getComments(topicId)
 					const fakeCommentId = randomId()
 					await expect(async() => commenting.editComment({
 						id: fakeCommentId,
-						subject: comment.subject + "!",
-						body: comment.body + "!",
+						subject: "hello",
+						body: "world",
 					})).throws()
+					await commenting.downloadComments(topicId)
+					expect(commenting.getComments(topicId).length).equals(0)
 				}
 			},
 
