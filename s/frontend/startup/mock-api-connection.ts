@@ -58,7 +58,7 @@ export async function mockApiConnection({snap}: {
 					canPost: true,
 					canBanUsers: true,
 					canEditAnyComment: true,
-					canDeleteAnyComment: true,
+					canArchiveAnyComment: true,
 				})
 			},
 			async logout() {

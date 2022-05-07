@@ -14,7 +14,7 @@ export class NamakaDemoAuth extends mixinStandard<{
 	render() {
 		const {auth} = this.context
 		const isLoggedIn = !!auth.user
-		const isAdmin = !!auth.user?.permissions.canDeleteAnyComment
+		const isAdmin = !!auth.user?.permissions.canArchiveAnyComment
 		return html`
 
 			<button

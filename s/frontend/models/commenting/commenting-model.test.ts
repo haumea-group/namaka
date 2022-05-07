@@ -10,7 +10,7 @@ export function makeRegularUser(): User {
 			canPost: true,
 			canBanUsers: false,
 			canEditAnyComment: false,
-			canDeleteAnyComment: false,
+			canArchiveAnyComment: false,
 		},
 		profile: {
 			nickname: "Jimmy",
@@ -27,7 +27,7 @@ export function makeAdminUser(): User {
 			canPost: true,
 			canBanUsers: true,
 			canEditAnyComment: true,
-			canDeleteAnyComment: true,
+			canArchiveAnyComment: true,
 		},
 		profile: {
 			nickname: "Jimmy Admin",
@@ -124,7 +124,6 @@ export default <Suite>{
 	
 		},
 		"multi-user interactions": {
-
 			async "a logged-out user can see a previous comment from a logged-in user"() {
 				const server = newServer()
 				const topicId = randomId()
@@ -290,6 +289,45 @@ export default <Suite>{
 				}
 			},
 		},
+		"multi-user interactions": {
+			async "a regular user and/or admin cannot edit comment that doesn't exist"() {
+				const server = newServer()
+				const topicId = randomId()
+				{
+					const {commenting, helpers} = server
+						.newUser(makeRegularUser())
+						.newBrowserTab()
+					await commenting.postComment({
+						topicId,
+						parentCommentId: undefined,
+						subject: "hello",
+						body: "world",
+					})
+					expect(helpers.nestedComments.length).equals(1)
+					const [comment] = commenting.getComments(topicId)
+					const fakeCommentId = randomId()
+					await expect(async() => commenting.editComment({
+						id: fakeCommentId,
+						subject: comment.subject + "!",
+						body: comment.body + "!",
+					})).throws()
+				}
+				{
+					const {commenting} = server
+						.newUser(makeAdminUser())
+						.newBrowserTab()
+					await commenting.downloadComments(topicId)
+					const [comment] = commenting.getComments(topicId)
+					const fakeCommentId = randomId()
+					await expect(async() => commenting.editComment({
+						id: fakeCommentId,
+						subject: comment.subject + "!",
+						body: comment.body + "!",
+					})).throws()
+				}
+			},
+
+		},
 	},
 
 	"archiving comments": {
@@ -310,7 +348,6 @@ export default <Suite>{
 					})
 					expect(commenting.getComments(topicId).length).equals(1)
 					await commenting.archiveComment(id)
-					expect(commenting.getComments(topicId).length).equals(0)
 				}
 				{
 					// other users also see the comment is gone
@@ -357,6 +394,46 @@ export default <Suite>{
 					expect(commenting.getComments(topicId).length).equals(0)
 				}
 			},
+		},
+		"multi-user interactions": {
+			async "a regular user and/or admin cannot archive comment that doesn't exist"() {
+				const server = newServer()
+				const topicId = randomId()
+				{
+					const {commenting, helpers} = server
+						.newUser(makeRegularUser())
+						.newBrowserTab()
+					await commenting.postComment({
+						topicId,
+						parentCommentId: undefined,
+						subject: "hello",
+						body: "world",
+					})
+					expect(helpers.nestedComments.length).equals(1)
+					const [comment] = commenting.getComments(topicId)
+					const fakeCommentId = randomId()
+					await expect(async() => commenting.editComment({
+						id: fakeCommentId,
+						subject: comment.subject + "!",
+						body: comment.body + "!",
+					})).throws()
+				}
+				
+				{
+					const {commenting} = server
+						.newUser(makeAdminUser())
+						.newBrowserTab()
+					await commenting.downloadComments(topicId)
+					const [comment] = commenting.getComments(topicId)
+					const fakeCommentId = randomId()
+					await expect(async() => commenting.editComment({
+						id: fakeCommentId,
+						subject: comment.subject + "!",
+						body: comment.body + "!",
+					})).throws()
+				}
+			},
+
 		},
 	},
 }

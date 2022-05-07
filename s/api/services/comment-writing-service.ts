@@ -36,16 +36,21 @@ export const makeCommentWritingService = () => ({
 
 	async editComment(draft: CommentEditDraft): Promise<void> {
 		const { id, body, subject, rating } = draft
+		const specificComment = await database.tables.comments.readOne(find({id: dbmage.Id.fromString(id)}))
+
 		if (!user)
 			throw new renraku.ApiError(403, "cannot edit, not logged in")
 
-		const specificComment = await database.tables.comments.readOne(find({id: dbmage.Id.fromString(id)}))
+		if (!specificComment) {
+			throw new renraku.ApiError(404, "cannot edit, comment not found")
+		}
+			
 		const userIsTheAuthor = user.userId === specificComment.authorId.string
-		const userHasAdminRight = user.permissions.canEditAnyComment
-		const userIsAllowedToEdit = userIsTheAuthor || userHasAdminRight
+		const userHasAdminRights = user.permissions.canEditAnyComment
+		const userIsAllowedToEdit = userIsTheAuthor || userHasAdminRights
 
 		if (!userIsAllowedToEdit) 
-			throw new renraku.ApiError(403, "forbidden; must be author or admin to edit a comment")  
+			throw new renraku.ApiError(403, "forbidden, must be author or admin to edit a comment")  
 
 		await database.tables.comments.update({
 			...find({id: dbmage.Id.fromString(id)}),
@@ -58,17 +63,24 @@ export const makeCommentWritingService = () => ({
 	},
 
 	async archiveComment(id: string): Promise<void> {
-		if (!user)
-			throw new renraku.ApiError(403, "cannot edit, not logged in")
-		
 		const specificComment = await database.tables.comments.readOne(find({id: dbmage.Id.fromString(id)}))
-		const userIsTheAuthor = user.userId === specificComment.authorId.string
-		const userHasAdminRight = user.permissions.canDeleteAnyComment
-		const userIsAllowedToDelete = userIsTheAuthor || userHasAdminRight
 
-		if (!userIsAllowedToDelete) 
-			throw new renraku.ApiError(403, "forbidden; must be author or admin to delete a comment")
-		
-		await database.tables.comments.delete(find(specificComment))
+		if (!user)
+			throw new renraku.ApiError(403, "cannot archive, not logged in")	
+
+		if (!specificComment)
+			throw new renraku.ApiError(404, "cannot archive, comment not found")
+
+		const userIsTheAuthor = user.userId === specificComment.authorId.string
+		const userHasAdminRights = user.permissions.canArchiveAnyComment
+		const userIsAllowedToArchive = userIsTheAuthor || userHasAdminRights
+
+		if (!userIsAllowedToArchive) 
+			throw new renraku.ApiError(403, "forbidden, must be author or admin to archive a comment")
+	
+		await database.tables.comments.update({
+			...find({id: dbmage.Id.fromString(id)}),
+			write: {archived: true},
+		})
 	},
 })

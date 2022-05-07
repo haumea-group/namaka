@@ -14,5 +14,6 @@ export function rowToComment(row: CommentRow): CommentPost {
 		subject: row.subject,
 		rating: row.rating,
 		body: row.body,
+		archived: row.archived
 	}
 }
