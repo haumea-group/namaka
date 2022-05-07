@@ -357,6 +357,15 @@ export default <Suite>{
 				}
 			},
 
+			async "cannot archive non-existent comment"() {
+				const server = newServer()
+				const {commenting} = server
+					.newUser(makeRegularUser())
+					.newBrowserTab()
+				const fakeCommentId = randomId()
+				await expect(async() => commenting.archiveComment(fakeCommentId)).throws()
+			},
+
 		},
 		"an admin user": {
 
@@ -368,7 +377,7 @@ export default <Suite>{
 						.newUser(makeRegularUser())
 						.newBrowserTab()
 					await commenting.downloadComments(topicId)
-					const {id} = await commenting.postComment({
+					await commenting.postComment({
 						topicId,
 						parentCommentId: undefined,
 						subject: "hello",
@@ -394,47 +403,15 @@ export default <Suite>{
 					expect(commenting.getComments(topicId).length).equals(0)
 				}
 			},
-
-		},
-		"multi-user interactions": {
-
-			async "a regular user and/or admin cannot archive comment that doesn't exist"() {
+			async "cannot archive non-existent comment"() {
 				const server = newServer()
-				const topicId = randomId()
-				{
-					const {commenting, helpers} = server
-						.newUser(makeRegularUser())
-						.newBrowserTab()
-					await commenting.postComment({
-						topicId,
-						parentCommentId: undefined,
-						subject: "hello",
-						body: "world",
-					})
-					expect(helpers.nestedComments.length).equals(1)
-					const [comment] = commenting.getComments(topicId)
-					const fakeCommentId = randomId()
-					await expect(async() => commenting.editComment({
-						id: fakeCommentId,
-						subject: comment.subject + "!",
-						body: comment.body + "!",
-					})).throws()
-				}
-				{
-					const {commenting} = server
-						.newUser(makeAdminUser())
-						.newBrowserTab()
-					await commenting.downloadComments(topicId)
-					const [comment] = commenting.getComments(topicId)
-					const fakeCommentId = randomId()
-					await expect(async() => commenting.editComment({
-						id: fakeCommentId,
-						subject: comment.subject + "!",
-						body: comment.body + "!",
-					})).throws()
-				}
+				const {commenting} = server
+					.newUser(makeAdminUser())
+					.newBrowserTab()
+				const fakeCommentId = randomId()
+				await expect(async() => commenting.archiveComment(fakeCommentId)).throws()
 			},
 
-		},
+		}
 	},
 }
