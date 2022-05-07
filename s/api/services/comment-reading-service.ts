@@ -4,18 +4,17 @@ import * as renraku from "renraku"
 
 import {Auth} from "../types/auth.js"
 import {rowToComment} from "./utils/row-to-comment.js"
-import {CommentPost, TopicStats} from "../types/concepts.js"
+import {CommentPost, TopicStats, CommentGet} from "../types/concepts.js"
+import {enforceValidation} from "./utils/enforce-validation.js"
+import {validateGetCommennts} from "./validators/validateGetComments.js"
 
 export const makeCommentReadingService = () => ({database}: Auth) => ({
 
-	async getComments({topicId: topicIdString, limit, offset}: {
-			topicId: string
-			limit: number
-			offset: number
-		}): Promise<CommentPost[]> {
+	async getComments(rawData : CommentGet): Promise<CommentPost[]> {
+		const { topicId: topicIdString, limit, offset } = enforceValidation(rawData, validateGetCommennts)
 
 		const topicId = dbmage.Id.fromString(topicIdString)
-
+ 
 		const rows = await database.tables.comments.read({
 			...dbmage.find({topicId, archived: false}),
 			offset,

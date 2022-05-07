@@ -7,7 +7,8 @@ import {Auth} from "../types/auth.js"
 import {rowToComment} from "./utils/row-to-comment.js"
 import {newCommentRow} from "./utils/new-comment-row.js"
 import {enforceValidation} from "./utils/enforce-validation.js"
-import {validateCommentPostDraft} from "./validators/validators.js"
+import {validateCommentPostDraft} from "./validators/validateCommentPostDraft.js"
+import {validateCommentEditDraft} from "./validators/validateCommentEditDraft.js"
 import {CommentPostDraft, CommentPost, CommentEditDraft} from "../types/concepts.js"
 
 
@@ -34,8 +35,9 @@ export const makeCommentWritingService = () => ({
 		return rowToComment(newRow)
 	},
 
-	async editComment(draft: CommentEditDraft): Promise<void> {
-		const { id, body, subject, rating } = draft
+	async editComment(rawDraft: CommentEditDraft): Promise<void> {
+		const { id, body, subject, rating } = enforceValidation(rawDraft, validateCommentEditDraft)
+
 		if (!user)
 			throw new renraku.ApiError(403, "cannot edit, not logged in")
 
@@ -43,10 +45,10 @@ export const makeCommentWritingService = () => ({
 		const userIsTheAuthor = user.userId === specificComment.authorId.string
 		const userHasAdminRight = user.permissions.canEditAnyComment
 		const userIsAllowedToEdit = userIsTheAuthor || userHasAdminRight
-
-		if (!userIsAllowedToEdit) 
+		
+		if(!userIsAllowedToEdit) 
 			throw new renraku.ApiError(403, "forbidden; must be author or admin to edit a comment")  
-
+			
 		await database.tables.comments.update({
 			...find({id: dbmage.Id.fromString(id)}),
 			write: {
