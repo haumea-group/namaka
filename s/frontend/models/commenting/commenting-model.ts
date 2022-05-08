@@ -1,8 +1,8 @@
 
 import {AppState} from "../app-snap.js"
 import {AppRemote} from "../../../api/types/remote.js"
-import {CommentEditDraft, CommentPostDraft} from "../../../api/types/concepts.js"
 import {makeCommentStateActions} from "./utils/comment-state-actions.js"
+import {CommentEditDraft, CommentPostDraft} from "../../../api/types/concepts.js"
 
 export function makeCommentingModel({state, remote}: {
 		state: AppState
