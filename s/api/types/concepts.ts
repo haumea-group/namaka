@@ -1,5 +1,6 @@
 
 export interface CommentPost {
+	archived: boolean
 	id: string
 	parentCommentId: undefined | string
 	authorId: string

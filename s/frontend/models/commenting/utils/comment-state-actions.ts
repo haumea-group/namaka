@@ -34,6 +34,12 @@ export function makeCommentStateActions({state}: {
 			comment.subject = draft.subject
 			comment.rating = draft.rating
 		},
+		archiveComment(id: string) {
+			const comment = map.get(id)
+			if (!comment)
+				throw new Error(`cannot archive missing comment ${id}`)
+			comment.archived = true
+		},
 		deleteComment(id: string) {
 			map.delete(id)
 		},
