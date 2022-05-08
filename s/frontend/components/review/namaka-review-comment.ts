@@ -1,15 +1,17 @@
+
 import {html, LitElement} from "lit"
 import {property} from "lit/decorators.js"
+
+import {makeAuthModel} from "../../models/auth/auth-model.js"
+import {mixinStyles} from "../../framework/mixins/mixin-styles.js"
+import {mixinStandard} from "../../framework/mixins/mixin-standard.js"
+import {randomComment, randomSubject} from "../../../toolbox/randomly.js"
+import {makeCommentingModel} from "../../models/commenting/commenting-model.js"
+
 import binSvg from "../../../icons/feather-Icons/bin.svg.js"
 import infoSquareSvg from "../../../icons/info-square.svg.js"
 import dangerSvg from "../../../icons/feather-Icons/danger.svg.js"
-import {mixinStyles} from "../../framework/mixins/mixin-styles.js"
 import namakaReviewCommentCss from "./namaka-review-comment.css.js"
-import {randomComment, randomSubject} from "../../../toolbox/randomly.js"
-import {mixinStandard} from "../../framework/mixins/mixin-standard.js"
-import {makeCommentingModel} from "../../models/commenting/commenting-model.js"
-import {makeAuthModel} from "../../models/auth/auth-model.js"
-// import {makeTopicModel} from "../../models/commenting/topic/topic-model.js"
 
 @mixinStyles(namakaReviewCommentCss)
 export class NamakaReviewComment extends mixinStandard<{
@@ -30,15 +32,14 @@ export class NamakaReviewComment extends mixinStandard<{
 	topicId: string = undefined as any
 
 	@property({type: String})
-  subject: string = randomSubject()
+	subject: string = randomSubject()
 	
 	@property({type: String})
-  body: string = randomComment()
+	body: string = randomComment()
 
 	@property({type: String})
-  timePosted: string = "1 hour ago"
+	timePosted: string = "1 hour ago"
 
-	// #topicModel: ReturnType<typeof makeCommentingModel> = undefined as any
 	async firstUpdated() {
 		console.log(this.topicId)
 		if (!this.topicId)
