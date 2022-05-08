@@ -10,6 +10,7 @@ import {themeComponents} from "../framework/theme-components.js"
 import {NamakaEmptyReview} from "./reviews/empty-review/index.js"
 import {NamakaReviewComment} from "./review/namaka-review-comment.js"
 import {NamakaHorizontalReview} from "./reviews/horizontal-five-star-review/index.js"
+import {NamakaReview} from "./common/five-stars/namaka-review.js";
 
 import themeCss from "./theme.css.js"
 import {AppSnap} from "../models/app-snap.js"
@@ -35,5 +36,6 @@ export function prepareComponents({
 		NamakaComments: NamakaComments
 			.withContext({commenting})
 			.withSubscriptions(subscribe),
+		NamakaReview: NamakaReview
 	})
 }
