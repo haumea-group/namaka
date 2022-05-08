@@ -8,10 +8,12 @@ import namakaReviewCommentCss from "./namaka-review-comment.css.js"
 import {randomComment, randomSubject} from "../../../toolbox/randomly.js"
 import {mixinStandard} from "../../framework/mixins/mixin-standard.js"
 import {makeCommentingModel} from "../../models/commenting/commenting-model.js"
+import {makeAuthModel} from "../../models/auth/auth-model.js"
 // import {makeTopicModel} from "../../models/commenting/topic/topic-model.js"
 
 @mixinStyles(namakaReviewCommentCss)
 export class NamakaReviewComment extends mixinStandard<{
+		auth: ReturnType<typeof makeAuthModel>
 		commenting: ReturnType<typeof makeCommentingModel>
 	}>()(LitElement) {
 	
@@ -20,6 +22,9 @@ export class NamakaReviewComment extends mixinStandard<{
 
 	@property({type: String})
 	id: string = undefined as any
+
+	@property({type: String})
+	authorId: string = undefined as any
 
 	@property({type: String})
 	topicId: string = undefined as any
@@ -55,6 +60,22 @@ export class NamakaReviewComment extends mixinStandard<{
 	}
 
 	#renderDropDown = () => {
+		const {user} = this.context.auth
+
+		const isUserLoggedIn = !!user
+		const userCanArchiveAnyComment
+			= !!user?.permissions.canArchiveAnyComment
+
+		const userIsTheAuthorOfThisComment = isUserLoggedIn
+			&& user?.userId === this.authorId
+
+		const deleteButtonIsAvailable = userCanArchiveAnyComment
+			|| userIsTheAuthorOfThisComment
+
+		const archiveThisComment = async() => {
+			return this.context.commenting.archiveComment(this.id)
+		}
+
 		return html`
 			<div class="drop-down">
 				<div class="report">
@@ -65,10 +86,16 @@ export class NamakaReviewComment extends mixinStandard<{
 					<span>${dangerSvg}</span>
 					<button>Suspend user</button>
 				</div>
-				<div class="delete">
-					<span>${binSvg}</span>
-					<button>Delete Review</button>
-				</div>
+				${deleteButtonIsAvailable
+					? html`
+						<div class="delete">
+							<span>${binSvg}</span>
+							<button @click=${archiveThisComment}>
+								Delete Review
+							</button>
+						</div>
+					`
+					: null}
 			</div>
 	`}
 

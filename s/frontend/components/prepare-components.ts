@@ -36,7 +36,7 @@ export function prepareComponents({
 		NamakaBanUser,
 		NamakaDeleteReview,
 		NamakaReviewComment: NamakaReviewComment
-			.withContext({commenting})
+			.withContext({auth, commenting})
 			.withSubscriptions(subscribe),
 		NamakaDemoAuth: NamakaDemoAuth
 			.withContext({auth})
