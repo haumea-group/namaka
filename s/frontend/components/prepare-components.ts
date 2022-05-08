@@ -15,6 +15,7 @@ import {NamakaReviewComment} from "./review/namaka-review-comment.js"
 import {NamakaTextInput} from "./namaka-text-input/namaka-text-input.js"
 import {NamakaAuthorReply} from "./namaka-author-reply/namaka-author-reply.js"
 import {NamakaHorizontalReview} from "./reviews/horizontal-five-star-review/index.js"
+import {NamakaReview} from "./common/five-stars/namaka-review.js";
 
 import themeCss from "./theme.css.js"
 
@@ -46,5 +47,6 @@ export function prepareComponents({
 		NamakaComments: NamakaComments
 			.withContext({auth, commenting})
 			.withSubscriptions(subscribe),
+		NamakaReview: NamakaReview
 	})
 }
