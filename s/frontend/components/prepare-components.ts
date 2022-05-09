@@ -12,7 +12,8 @@ import {themeComponents} from "../framework/theme-components.js"
 import {NamakaDeleteReview} from "./modal/delete-review/index.js"
 import {NamakaEmptyReview} from "./reviews/empty-review/index.js"
 import {NamakaReviewComment} from "./review/namaka-review-comment.js"
-import {NamakaValidatedInput} from "./validated-input/namaka-validated-input.js"
+import {NamakaTextInput} from "./namaka-text-input/namaka-text-input.js"
+import {NamakaAuthorReply} from "./namaka-author-reply/namaka-author-reply.js"
 import {NamakaHorizontalReview} from "./reviews/horizontal-five-star-review/index.js"
 
 import themeCss from "./theme.css.js"
@@ -26,7 +27,8 @@ export function prepareComponents({
 	}) {
 
 	return themeComponents(themeCss, {
-		NamakaValidatedInput,
+		NamakaTextInput,
+		NamakaAuthorReply,
 		NamakaMyReview,
 		NamakaHorizontalReview,
 		NamakaEmptyReview,

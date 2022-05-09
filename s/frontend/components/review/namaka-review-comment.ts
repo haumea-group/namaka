@@ -41,7 +41,6 @@ export class NamakaReviewComment extends mixinStandard<{
 	timePosted: string = "1 hour ago"
 
 	async firstUpdated() {
-		console.log(this.topicId)
 		if (!this.topicId)
 			throw new Error("topic attribute is required")
 			await this.context.commenting.downloadComments(this.topicId)
