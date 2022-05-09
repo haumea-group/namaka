@@ -9,7 +9,6 @@ export class NamakaReview extends LitElement {
  @property()
 	private fiveStarState: FiveStarState = {
 		rating: 50,
-		clicked: false,
 	}
 
 	private setState = (state: FiveStarState) => {

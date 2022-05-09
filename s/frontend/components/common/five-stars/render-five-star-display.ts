@@ -3,7 +3,6 @@ import { html, render, TemplateResult } from 'lit';
 import './render-five-star-display.css.js';
 export interface FiveStarState {
 	rating: number;
-	clicked: boolean | undefined;
 }
 
 export function renderFiveStarRating(
@@ -11,19 +10,10 @@ export function renderFiveStarRating(
 	setState: (newState: FiveStarState) => void
 ) {
 	function updateRating(rating: number, e?: Event) {
-		const clicked = state.clicked;
-		if (e?.type == 'click') {
-			let clicked = !state.clicked;
-			return setState({ rating, clicked });
-		} else {
-			return setState({ rating, clicked });
-		}
+			return setState({ rating });
 	}
 	function renderStar(rating: number) {
 		return html` <span
-			@mouseover=${() => {
-				if (!state.clicked) updateRating(rating);
-			}}
 			@click=${(e: Event) => updateRating(rating, e)}
 			class=${state.rating >= rating ? 'star-full' : 'star-empty'}
 			>${starSvg}</span
