@@ -1,28 +1,7 @@
 import starSvg from '../../../icons/iconify/star.svg.js';
 import { html, render, TemplateResult } from 'lit';
 import './render-five-star-display.css.js';
-
-export function stateBuddy<T>(
-	element: HTMLElement,
-	initialState: T,
-	renderer: (state: T, setState: (s: T) => void) => TemplateResult
-) {
-	let state: T;
-	function setState(newState: T) {
-		state = newState;
-		render(renderer(state, setState), element);
-	}
-
-	setState(initialState);
-
-	return {
-		setState,
-		get state() {
-			return state;
-		},
-	};
-}
-interface FiveStarState {
+export interface FiveStarState {
 	rating: number;
 	clicked: boolean | undefined;
 }
