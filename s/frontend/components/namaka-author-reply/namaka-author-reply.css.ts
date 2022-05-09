@@ -26,15 +26,6 @@ img {
 	flex-direction: column;
 }
 
-textarea {
-	background-color: var(--bg-input, transparent);
-	border: 1px solid;
-	border-color: var(--input-border-color, #DDE2E5);
-	padding: 1.5rem 1rem;
-	border-radius: 4px;
-	color: var(--input-txt-color, inherit);
-}
-
 .action-btns {
 	margin-top: 1.5rem;
 }
