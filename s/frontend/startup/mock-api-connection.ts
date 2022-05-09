@@ -7,6 +7,7 @@ import {AppSnap} from "../models/app-snap.js"
 import {AuthDevice} from "../frontend-types.js"
 import {AppRemote} from "../../api/types/remote.js"
 import {databaseShape} from "../../api/types/schema.js"
+import {randomNickname} from "../../toolbox/randomly.js"
 import {MockMeta, Permissions, User} from "../../api/types/auth.js"
 import {mockUserFetching} from "../models/commenting/testing/mock-user-fetching.js"
 
@@ -44,7 +45,7 @@ export async function mockApiConnection({snap}: {
 			permissions,
 			userId: rando.randomId().string,
 			profile: {
-				nickname: "Francesca" + id.slice(0, 5),
+				nickname: randomNickname(),
 				avatar: "",
 				joinedTime: Date.now() * (1000 * 60 * 60),
 			},

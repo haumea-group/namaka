@@ -36,7 +36,14 @@ export class NamakaDemoAuth extends mixinStandard<{
 			</button>
 
 			${auth.user
-				? html`<p>logged in: ${auth.user.userId.slice(0, 7)} ${isAdmin ?"(admin)" :null}</p>`
+				? html`
+					<p>
+						logged in:
+						${auth.user.userId.slice(0, 7)}
+						${isAdmin ?"(admin)" :null}
+						"${auth.user.profile.nickname}"
+					</p>
+				`
 				: html`<p>logged out</p>`}
 		`
 	}

@@ -31,6 +31,9 @@ export const makeCommentReadingService: ServiceProvider = ({
 				: limit,
 		})
 
+		if (rows.length === 0)
+			return {comments: [], users: []}
+
 		const userIds = new Map<string, dbmage.Id>()
 		for (const {authorId} of rows)
 			userIds.set(authorId.string, authorId)

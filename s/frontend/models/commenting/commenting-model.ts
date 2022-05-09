@@ -19,6 +19,10 @@ export function makeCommentingModel({state, remote}: {
 			stateActions.wipeComments()
 		},
 
+		getUser(id: string) {
+			return state.users.find(u => u.userId === id)
+		},
+
 		getComments(topicId: string) {
 			return state.nestedComments.filter(
 				comment => comment.topicId === topicId && !comment.archived

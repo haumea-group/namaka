@@ -1,7 +1,8 @@
 
 import * as dbmage from "dbmage"
-import {JsonStore, makeJsonStore, makeMemoryStorage, SimpleStorage} from "../../../../toolbox/json-storage.js"
+
 import {User, UserIntegration} from "../../../../api/types/auth.js"
+import {makeJsonStore, makeMemoryStorage, SimpleStorage} from "../../../../toolbox/json-storage.js"
 
 export function mockUserFetching(
 		storage: SimpleStorage = makeMemoryStorage()

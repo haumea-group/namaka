@@ -43,7 +43,6 @@ export class NamakaReviewComment extends mixinStandard<{
 	async firstUpdated() {
 		if (!this.topicId)
 			throw new Error("topic attribute is required")
-			await this.context.commenting.downloadComments(this.topicId)
 	}
 
 	#postRandomComment = async() => {
@@ -100,13 +99,16 @@ export class NamakaReviewComment extends mixinStandard<{
 	`}
 
 	render() {
+		const user = this.authorId && this.context.commenting.getUser(this.authorId)
+		if (!user)
+			return null
 		return html`
 			<div class="outer-div">
 				<div class="avatar"></div>
 				<div class="inner-div">
 					<div class="header">
 						<div class="header__txt">
-							<p>Username</p>
+							<p>${user.profile.nickname}</p>
 							<li><span>${this.subject}</span></li>
 						</div>
 						<div class="header__btn">

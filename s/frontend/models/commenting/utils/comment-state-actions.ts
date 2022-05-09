@@ -19,13 +19,14 @@ export function makeCommentStateActions({state}: {
 		)
 	}
 
+	const userIsNew = (user: User) => !state.users.find(u => u.userId === user.userId)
+
 	const actions = {
 		wipeComments() {
 			map.clear()
 		},
 		addUsers(users: User[]) {
-			const newUsers = users
-				.filter(user => state.users.find(u => u.userId === user.userId))
+			const newUsers = users.filter(userIsNew)
 			state.users = [...state.users, ...newUsers]
 		},
 		addComments(comments: CommentPost[]) {
