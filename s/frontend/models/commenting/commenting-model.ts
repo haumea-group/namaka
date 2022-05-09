@@ -26,12 +26,13 @@ export function makeCommentingModel({state, remote}: {
 		},
 
 		async downloadComments(topicId: string) {
-			const comments = await remote.commentReading.getComments({
+			const {comments, users} = await remote.commentReading.getComments({
 				topicId,
 				limit: 100,
 				offset: 0,
 			})
 			stateActions.addComments(comments)
+			stateActions.addUsers(users)
 		},
 
 		async postComment(draft: CommentPostDraft) {

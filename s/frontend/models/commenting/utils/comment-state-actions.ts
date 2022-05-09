@@ -5,6 +5,7 @@ import {AppState} from "../../app-snap.js"
 import {hitch} from "../../../../toolbox/hitch.js"
 import {CommentPost, CommentEditDraft} from "../../../../api/types/concepts.js"
 import {computeCommentTree as computeNestedComments} from "./compute-nested-comments.js"
+import {User} from "../../../../api/types/auth.js"
 
 export function makeCommentStateActions({state}: {
 		state: AppState
@@ -21,6 +22,11 @@ export function makeCommentStateActions({state}: {
 	const actions = {
 		wipeComments() {
 			map.clear()
+		},
+		addUsers(users: User[]) {
+			const newUsers = users
+				.filter(user => state.users.find(u => u.userId === user.userId))
+			state.users = [...state.users, ...newUsers]
 		},
 		addComments(comments: CommentPost[]) {
 			for (const comment of comments)

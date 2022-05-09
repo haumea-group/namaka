@@ -4,6 +4,7 @@ import * as dbmage from "dbmage"
 import * as renraku from "renraku"
 
 import {Auth} from "../types/auth.js"
+import {ServiceProvider} from "../types/service.js"
 import {rowToComment} from "./utils/row-to-comment.js"
 import {newCommentRow} from "./utils/new-comment-row.js"
 import {enforceValidation} from "./utils/enforce-validation.js"
@@ -11,9 +12,11 @@ import {validateCommentPostDraft} from "./validators/validators.js"
 import {CommentPostDraft, CommentPost, CommentEditDraft} from "../types/concepts.js"
 
 
-export const makeCommentWritingService = () => ({
-		user, rando, database,
-	}: Auth) => ({
+export const makeCommentWritingService: ServiceProvider = ({
+		rando, database, fetchUsers,
+	}) => ({
+		user,
+	}) => ({
 
 	async postComment(rawDraft: CommentPostDraft): Promise<CommentPost> {
 		const draft = enforceValidation(rawDraft, validateCommentPostDraft)

@@ -27,6 +27,9 @@ export async function namakaExpress({
 	type Meta = {user: User}
 
 	const api = makeApi<Meta>({
+		rando,
+		database,
+		fetchUsers,
 		policy: async meta => ({
 			user: meta.user,
 			rando,
