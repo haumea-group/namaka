@@ -1,6 +1,5 @@
 
 import * as dbmage from "dbmage"
-import {AppDatabase} from "./schema.js"
 
 export interface Permissions {
 	canPost: boolean
@@ -26,11 +25,9 @@ export interface Profile {
 }
 
 export interface MockMeta {
-	user?: User
+	user: User | undefined
 }
 
 export interface Auth {
 	user: User | undefined
-	rando: dbmage.Rando
-	database: AppDatabase
 }

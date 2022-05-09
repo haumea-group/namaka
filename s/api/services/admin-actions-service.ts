@@ -2,11 +2,13 @@
 import * as dbmage from "dbmage"
 import * as renraku from "renraku"
 
-import {Auth} from "../types/auth.js"
+import {ServiceProvider} from "../types/service.js"
 
-export const makeAdminActionsService = () => ({
-		user, rando, database,
-	}: Auth) => ({
+export const makeAdminActionsService: ServiceProvider = ({
+		database, rando, fetchUsers,
+	}) => ({
+		user,
+	}) => ({
 
 	async banUser({userId, until}: {
 			userId: string
