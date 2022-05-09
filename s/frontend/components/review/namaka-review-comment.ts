@@ -102,25 +102,11 @@ export class NamakaReviewComment extends mixinStandard<{
 	render() {
 		return html`
 			<div class="outer-div">
-				<div class="box">
-					<div class="avatar"></div>
-					<div class="header">
-						<div class="header__txt">
-							<p>Francesca20</p>
-							<li><span>${this.subject}</span></li>
-						</div>
-						<div class="header__btn">
-							<button @click=${this.#toggleDropDown} class="drop-down__btn">
-								&bull;&bull;&bull;
-							</button>
-						</div>
-					</div>
-				</div>
-				
+				<div class="avatar"></div>
 				<div class="inner-div">
 					<div class="header">
 						<div class="header__txt">
-							<p>Francesca20</p>
+							<p>Username</p>
 							<li><span>${this.subject}</span></li>
 						</div>
 						<div class="header__btn">

@@ -5,9 +5,10 @@ export default css`
 :host {
 	display: block;
 	width: 100%;
-	/* max-width: 62.75rem; */
+	max-width: 62.75rem;
 	border-top: 1px solid #EDEFF5;
 	position: relative;
+	text-align:left;
 }
 
 li span {
@@ -20,39 +21,10 @@ button:hover {
 }
 
 .outer-div {
-	padding: 2rem 0rem;
+	padding: 2rem 1rem;
 	display: flex;
 	gap: 1.5rem;
-	flex-direction: column;
-}
-
-.inner-div .header {
-	display: none;
-}
-
-.outer-div .box {
-	display: flex;
-	justify-content: space-between;
-	align-items: center;
-	text-align: left;
-}
-
-.outer-div .header {
-	width: 100%;
-}
-
-@media screen and (min-width: 768px) {
-	.outer-div {
-		flex-direction: row;
-	}
-
-	.outer-div .box .header {
-		display: none;
-	}
-
-	.inner-div .header {
-		display: flex;
-	}
+	gap: calc(0.7rem + 1vw);
 }
 
 .avatar {
@@ -66,31 +38,24 @@ button:hover {
 .header {
 	display: flex;
 	justify-content: space-between;
-	margin-bottom: 20px;
+	align-items: flex-start;
 }
 
 .header__txt {
 	display: flex;
 	align-items: flex-start;
-	gap: 0.5rem;
-	font-style: normal;
-	font-weight: 500;
-	font-size: 14px;
-	line-height: 24px;
-	flex-direction: column;
-	text-align: left;
+	flex-wrap: wrap;
 }
 
-@media screen and (min-width: 768px) {
-	.header__txt {
-		flex-direction: row;
-		align-items: center;
-	}
+.header__txt > p {
+	margin-right: 0.5rem;
 }
+
 
 .header__btn {
 	display: flex;
 	align-items: center;
+	padding-top: 0.3rem;
 }
 
 .drop-down__btn {
@@ -102,13 +67,13 @@ button:hover {
 	align-content: center;
 }
 
+.inner-div {
+	width: 100%;
+}
+
 .inner-div > p {
-	font-style: normal;
-	font-weight: 400;
-	font-size: 14px;
-	line-height: 24px;
 	opacity: 0.8;
-	text-align: left;
+	margin-top: 0.2em;
 }
 
 .footer {
@@ -118,10 +83,6 @@ button:hover {
 }
 
 .time-stamp {
-	font-style: normal;
-	font-weight: 400;
-	font-size: 12px;
-	line-height: 20px;
 	opacity: 0.5;
 }
 
@@ -132,16 +93,11 @@ button:hover {
 	line-height: 20px;
 }
 
-.footer button, .drop-down button {
-	border: none;
-	background: none;
-}
-
 .drop-down {
 	padding: 16px;
 	position: absolute;
 	min-width: 157px;
-	background: rgb(255, 255, 255);
+	/* background: rgb(255, 255, 255); */
 	box-shadow: rgb(162 161 183 / 10%) 0px 6px 20px;
 	border-radius: 8px;
 	top: 52px;
@@ -157,31 +113,8 @@ button:hover {
 	gap: 0.7rem;
 }
 
-svg {
+ svg {
 	width: 14px;
 	height: 14px;
-}
-
-.report, .report button {
-	color: var(--report-btn-color, #1A202C);
-}
-
-.suspend, .suspend button {
-	color: var(--suspend-btn-color, #F2994A);
-}
-
-.delete, .delete button {
-	color: var(--delete-btn-color, #EB0000);
-}
-
-.drop-down button {
-	font-style: normal;
-	font-weight: 400;
-	font-size: 16px;
-	line-height: 19px;
-}
-
-.footer button {
-	color: #fff;
 }
 `

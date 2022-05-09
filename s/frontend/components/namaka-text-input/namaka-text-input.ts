@@ -14,6 +14,9 @@ export class NamakaTextInput extends LitElement {
 	@property({type: Boolean})
 	private validInput: boolean = false
 
+	@property({type: Number})
+	maxCharacters: number = 1000
+
 	
 	#validateInput = () => {
 		if(!this.inputValue.match(/(\w){5,}/)) {
@@ -39,7 +42,15 @@ export class NamakaTextInput extends LitElement {
 				placeholder="Enter your text here..."
 				@input=${this.#handleInput}
 			></textarea>
-			${this.validInput ? html`<p>too short</p>` : html`<p>${this.inputValue.length} / 1000</p>`}
+			<div>
+				${this.validInput
+					? html`<p>too short</p>`
+					: html`
+						<p>Text count 
+							<span>${this.inputValue.length}/${this.maxCharacters}</span>
+							characters
+						</p>`}
+			</div>
 		`
 	}
 }
