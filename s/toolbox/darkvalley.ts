@@ -77,6 +77,21 @@ export function each<xValue>(
 	}
 }
 
+export function objectValues<xValue>(
+		...conditions: Validator<xValue>[]
+	): Validator<{[key: string]: xValue}> {
+	return obj => {
+		if (typeof obj !== "object" || obj === undefined || obj === null)
+			return ["must be object"]
+		const validate = validator<xValue>(...conditions)
+		const problems: string[] = []
+		for (const [key, value] of Object.entries(obj))
+			for (const problem of validate(value))
+				problems.push(`(${key}) ${problem}`)
+		return problems
+	}
+}
+
 export const is = <X>(x: X): Validator<X> => value =>
 	value === x
 		? []
@@ -105,6 +120,11 @@ export const number = (): Validator<number> => value =>
 export const boolean = (): Validator<boolean> => value =>
 	typeof value !== "boolean"
 		? ["must be a boolean"]
+		: []
+
+export const object = (): Validator<{}> => value =>
+	typeof value !== "object" || value === undefined || value === null
+		? ["must be an object"]
 		: []
 
 export const min = (threshold: number): Validator<number> => value =>

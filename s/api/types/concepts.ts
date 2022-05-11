@@ -11,25 +11,40 @@ export interface CommentPost {
 	rating?: number
 }
 
+export interface Score {
+	id: string
+	commentId: string
+	aspect: string
+	score: number
+}
+
+export interface ScoreDraft {
+	aspect: string
+	score: number
+}
+
 export interface CommentPostDraft {
 	parentCommentId: undefined | string
 	topicId: string
 	subject: string
 	body: string
-	rating?: number
+	scores?: ScoreDraft[]
 }
 
 export interface CommentEditDraft {
 	id: string
 	subject: string
 	body: string
-	rating?: number
+	scores?: ScoreDraft[]
 }
 
 export interface TopicStats {
 	topicId: string
 	numberOfRootComments: number
 	numberOfReplyComments: number
-	averageRating?: number
-	ratingBreakdown?: number[]
+	scoring?: {
+		averageScore: number
+		averageScoreBreakdown: number[]
+		scoreAspectAverages: {[key: string]: number}
+	}
 }
