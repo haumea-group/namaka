@@ -26,6 +26,7 @@ export function newServer() {
 					policy: async() => {throw new Error("nope")},
 					rando,
 					database,
+					scoreAspects: ["a", "b"],
 					fetchUsers,
 				}))
 				.withAuthMap({

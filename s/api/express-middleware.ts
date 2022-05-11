@@ -12,12 +12,14 @@ export {Id} from "dbmage"
 export {megabytes} from "renraku"
 
 export async function expressMiddleware({
-		exposeErrors, maxPayloadSize,
-		database, authUser, fetchUsers,
+		exposeErrors, maxPayloadSize, scoreAspects, database,
+		authUser, fetchUsers,
 	}: {
 		database: AppDatabase
 		exposeErrors: boolean
 		maxPayloadSize: number
+		scoreAspects: string[]
+		canUserPostToTopic: (user: User, topicId: dbmage.Id) => Promise<boolean>
 		authUser: (req: express.Request) => Promise<undefined | UserIntegration>
 		fetchUsers: (ids: dbmage.Id[]) => Promise<UserIntegration[]>
 	}) {
@@ -29,6 +31,7 @@ export async function expressMiddleware({
 	const api = makeApi<Meta>({
 		rando,
 		database,
+		scoreAspects,
 		fetchUsers,
 		policy: async meta => ({
 			user: meta.user,
@@ -43,10 +46,7 @@ export async function expressMiddleware({
 		const userIntegration = await authUser(req)
 		const meta: Meta = {
 			user: userIntegration
-				? {
-					...userIntegration,
-					id: userIntegration.id.string,
-				}
+				? {...userIntegration, id: userIntegration.id.string}
 				: undefined,
 		}
 		const listener = makeRequestListener({

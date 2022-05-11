@@ -40,7 +40,7 @@ export function makeCommentingModel({state, remote}: {
 		},
 
 		async postComment(draft: CommentPostDraft) {
-			const comment = await remote.commentWriting.postComment(draft)
+			const {comment, scores} = await remote.commentWriting.postComment(draft)
 			stateActions.addComments([comment])
 			return comment
 		},

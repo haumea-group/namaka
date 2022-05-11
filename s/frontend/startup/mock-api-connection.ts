@@ -25,6 +25,7 @@ export async function mockApiConnection({snap}: {
 	const api = makeApi<MockMeta>({
 		rando,
 		database,
+		scoreAspects: ["a", "b"],
 		fetchUsers,
 		policy: async meta => ({user: meta.user}),
 	})
@@ -40,7 +41,6 @@ export async function mockApiConnection({snap}: {
 		})
 
 	function mockLogin(permissions: Permissions) {
-		const id = rando.randomId().string
 		const user: User = {
 			permissions,
 			id: rando.randomId().string,
