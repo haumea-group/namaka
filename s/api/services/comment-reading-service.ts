@@ -40,7 +40,7 @@ export const makeCommentReadingService: ServiceProvider = ({
 
 		const users = (await fetchUsers([...userIds.values()]))
 			.map(user => (<User>{
-				userId: user.userId.string,
+				id: user.id.string,
 				permissions: user.permissions,
 				profile: user.profile,
 			}))

@@ -20,7 +20,7 @@ export function makeCommentingModel({state, remote}: {
 		},
 
 		getUser(id: string) {
-			return state.users.find(u => u.userId === id)
+			return state.users.find(u => u.id === id)
 		},
 
 		getComments(topicId: string) {

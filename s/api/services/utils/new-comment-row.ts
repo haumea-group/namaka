@@ -3,15 +3,15 @@ import * as dbmage from "dbmage"
 import {CommentRow} from "../../types/schema.js"
 import {CommentPostDraft} from "../../types/concepts.js"
 
-export function newCommentRow({userId, rando, draft}: {
-		userId: string
+export function newCommentRow({id, rando, draft}: {
+		id: string
 		rando: dbmage.Rando
 		draft: CommentPostDraft
 	}): CommentRow {
 
 	return {
 		id: rando.randomId(),
-		authorId: dbmage.Id.fromString(userId),
+		authorId: dbmage.Id.fromString(id),
 		parentCommentId: draft.parentCommentId
 			? dbmage.Id.fromString(draft.parentCommentId)
 			: undefined,

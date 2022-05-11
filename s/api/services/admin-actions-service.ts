@@ -10,14 +10,14 @@ export const makeAdminActionsService: ServiceProvider = ({
 		user,
 	}) => ({
 
-	async banUser({userId, until}: {
-			userId: string
+	async banUser({id, until}: {
+			id: string
 			until: number
 		}): Promise<void> {
 		throw new Error("todo implement")
 	},
 
-	async unbanUser({userId}: {userId: string}) {
+	async unbanUser({id}: {id: string}) {
 		throw new Error("todo implement")
 	}
 })
