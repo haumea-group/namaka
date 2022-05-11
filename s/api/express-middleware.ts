@@ -11,7 +11,7 @@ import {User, UserIntegration} from "./types/auth.js"
 export {Id} from "dbmage"
 export {megabytes} from "renraku"
 
-export async function namakaExpress({
+export async function expressMiddleware({
 		exposeErrors, maxPayloadSize,
 		database, authUser, fetchUsers,
 	}: {
