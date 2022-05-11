@@ -43,7 +43,7 @@ export async function mockApiConnection({snap}: {
 		const id = rando.randomId().string
 		const user: User = {
 			permissions,
-			userId: rando.randomId().string,
+			id: rando.randomId().string,
 			profile: {
 				nickname: randomNickname(),
 				avatar: "",

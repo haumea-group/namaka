@@ -19,7 +19,7 @@ export async function expressMiddleware({
 		exposeErrors: boolean
 		maxPayloadSize: number
 		authUser: (req: express.Request) => Promise<undefined | UserIntegration>
-		fetchUsers: (userIds: dbmage.Id[]) => Promise<UserIntegration[]>
+		fetchUsers: (ids: dbmage.Id[]) => Promise<UserIntegration[]>
 	}) {
 
 	const rando = await dbmage.getRando()
@@ -45,7 +45,7 @@ export async function expressMiddleware({
 			user: userIntegration
 				? {
 					...userIntegration,
-					userId: userIntegration.userId.string,
+					id: userIntegration.id.string,
 				}
 				: undefined,
 		}

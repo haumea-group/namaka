@@ -30,7 +30,7 @@ export const makeCommentWritingService: ServiceProvider = ({
 		const newRow = newCommentRow({
 			rando,
 			draft,
-			userId: user.userId,
+			id: user.id,
 		})
 
 		await database.tables.comments.create(newRow)
@@ -48,7 +48,7 @@ export const makeCommentWritingService: ServiceProvider = ({
 			throw new renraku.ApiError(404, "cannot edit, comment not found")
 		}
 			
-		const userIsTheAuthor = user.userId === specificComment.authorId.string
+		const userIsTheAuthor = user.id === specificComment.authorId.string
 		const userHasAdminRights = user.permissions.canEditAnyComment
 		const userIsAllowedToEdit = userIsTheAuthor || userHasAdminRights
 
@@ -74,7 +74,7 @@ export const makeCommentWritingService: ServiceProvider = ({
 		if (!specificComment)
 			throw new renraku.ApiError(404, "cannot archive, comment not found")
 
-		const userIsTheAuthor = user.userId === specificComment.authorId.string
+		const userIsTheAuthor = user.id === specificComment.authorId.string
 		const userHasAdminRights = user.permissions.canArchiveAnyComment
 		const userIsAllowedToArchive = userIsTheAuthor || userHasAdminRights
 

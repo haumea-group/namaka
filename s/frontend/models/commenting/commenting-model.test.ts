@@ -5,7 +5,7 @@ import {newServer, randomId} from "./testing/commenting-test-setups.js"
 
 export function makeRegularUser(): User {
 	return {
-		userId: randomId(),
+		id: randomId(),
 		permissions: {
 			canPost: true,
 			canBanUsers: false,
@@ -22,7 +22,7 @@ export function makeRegularUser(): User {
 
 export function makeAdminUser(): User {
 	return {
-		userId: randomId(),
+		id: randomId(),
 		permissions: {
 			canPost: true,
 			canBanUsers: true,

@@ -19,7 +19,7 @@ export function makeCommentStateActions({state}: {
 		)
 	}
 
-	const userIsNew = (user: User) => !state.users.find(u => u.userId === user.userId)
+	const userIsNew = (user: User) => !state.users.find(u => u.id === user.id)
 
 	const actions = {
 		wipeComments() {
