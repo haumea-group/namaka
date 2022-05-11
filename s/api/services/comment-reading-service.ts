@@ -1,12 +1,13 @@
 
 import * as dbmage from "dbmage"
+import * as renraku from "renraku"
 
 import {User} from "../types/auth.js"
-import {ServiceProvider} from "../types/service.js"
 import {rowToComment} from "./utils/row-to-comment.js"
 import {CommentPost, Score, TopicStats} from "../types/concepts.js"
+import {asServiceProvider} from "./utils/as-service-provider.js"
 
-export const makeCommentReadingService: ServiceProvider = ({
+export const makeCommentReadingService = asServiceProvider(({
 		database, scoreAspects, fetchUsers,
 	}) => ({}) => ({
 
@@ -99,4 +100,4 @@ export const makeCommentReadingService: ServiceProvider = ({
 			},
 		}
 	}
-})
+}))
