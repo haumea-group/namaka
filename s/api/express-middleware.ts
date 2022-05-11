@@ -18,13 +18,13 @@ export async function expressMiddleware({
 		database: AppDatabase
 		exposeErrors: boolean
 		maxPayloadSize: number
-		authUser: (req: express.Request) => Promise<UserIntegration>
+		authUser: (req: express.Request) => Promise<undefined | UserIntegration>
 		fetchUsers: (userIds: dbmage.Id[]) => Promise<UserIntegration[]>
 	}) {
 
 	const rando = await dbmage.getRando()
 
-	type Meta = {user: User}
+	type Meta = {user: undefined | User}
 
 	const api = makeApi<Meta>({
 		rando,
@@ -42,10 +42,12 @@ export async function expressMiddleware({
 	const middleware: express.RequestHandler = async(req, res, next) => {
 		const userIntegration = await authUser(req)
 		const meta: Meta = {
-			user: {
-				...userIntegration,
-				userId: userIntegration.userId.string,
-			},
+			user: userIntegration
+				? {
+					...userIntegration,
+					userId: userIntegration.userId.string,
+				}
+				: undefined,
 		}
 		const listener = makeRequestListener({
 			exposeErrors,
