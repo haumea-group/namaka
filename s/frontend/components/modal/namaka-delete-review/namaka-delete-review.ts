@@ -1,6 +1,6 @@
 import {html, LitElement} from "lit"
+import infoSvg from "../../../../icons/feather-Icons/info.svg.js"
 import closeIconSvg from "../../../../icons/iconify/close-icon.svg.js"
-import dangerSvg from "../../../../icons/iconify/danger.svg.js"
 import {mixinStyles} from "../../../framework/mixins/mixin-styles.js"
 import namakaDeleteReviewCss from "./namaka-delete-review.css.js"
 
@@ -12,12 +12,12 @@ export class NamakaDeleteReview extends LitElement {
 				<div class="border-b">
 					<div class="heading">
 						<div class="heading__text">
-							<div class="info">${dangerSvg}</div>
+							<div class="info">${infoSvg}</div>
 							<h1 class="title" part="title">Delete Review</h1>
 						</div>
 						<div class="close">${closeIconSvg}</div>
 					</div>
-					<p class="gray">Are you sure you want to delete this review for <span class="name">Francesca20</span>?</p>
+					<p class="gray">Are you sure you want to delete this review for <span class="name" part="bold">Francesca20</span>?</p>
 				</div>
 
 				<div class="action">

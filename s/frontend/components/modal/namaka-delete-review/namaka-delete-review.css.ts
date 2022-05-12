@@ -53,7 +53,6 @@ p {
 }
 
 .name {
-	color: #000;
 	font-weight: bold;
 }
 

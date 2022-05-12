@@ -1,6 +1,6 @@
 import {html, LitElement} from "lit"
+import cautionSvg from "../../../../icons/feather-Icons/caution.svg.js"
 import closeIconSvg from "../../../../icons/iconify/close-icon.svg.js"
-import suspendSvg from "../../../../icons/iconify/suspend.svg.js"
 import {mixinStyles} from "../../../framework/mixins/mixin-styles.js"
 import namakaSuspendUserCss from "./namaka-suspend-user.css.js"
 
@@ -12,28 +12,28 @@ export class NamakaSuspendUser extends LitElement {
 				<div class="border-b">
 					<div class="heading">
 						<div class="heading__text">
-							<div class="info">${suspendSvg}</div>
+							<div class="info">${cautionSvg}</div>
 							<h1 class="title" part="title">Suspend User</h1>
 						</div>
 						<div class="close">${closeIconSvg}</div>
 					</div>
-					<p class="gray">Are you sure you want to suspend <span class="name">Francesca20</span> from the platform?</p>
+					<p class="gray">Are you sure you want to suspend <span class="name" part="bold">Francesca20</span> from the platform?</p>
 				</div>
 
-				<div class="selection">
+				<form class="selection">
 					<div>
-						<input type="radio" name="24hrs" />
+						<input type="radio" name="time" value="24hrs" />
 						<label for="24hrs" part="label">24 hrs</label>
 					</div>
 					<div>
-						<input type="radio" name="7days" />
+						<input type="radio" name="time" value="7days" />
 						<label for="7days" part="label">7  days</label>
 					</div>
 					<div>
-						<input type="radio" name="indefinitely" />
+						<input type="radio" name="time" value="indefinitely" />
 						<label for="indefinitely" part="label">Indefinitely</label>
 					</div>
-				</div>
+				</form>
 
 				<div class="action">
 					<button part="dangerBtn button">

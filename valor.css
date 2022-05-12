@@ -106,6 +106,9 @@ namaka-banned-users::part(tag) {
 	border-radius: 10px;
 }
 
-namaka-suspend-user::part(label) {
+namaka-suspend-user::part(label),
+namaka-delete-review::part(bold),
+namaka-suspend-user::part(bold),
+namaka-delete-user::part(bold) {
 	color: #000;
 }

@@ -1,6 +1,6 @@
 import {html, LitElement} from "lit"
+import infoSvg from "../../../../icons/feather-Icons/info.svg.js"
 import closeIconSvg from "../../../../icons/iconify/close-icon.svg.js"
-import infoSvg from "../../../../icons/iconify/info.svg.js"
 import {mixinStyles} from "../../../framework/mixins/mixin-styles.js"
 import namakaUnbanUserCss from "./namaka-unban-user.css.js"
 
