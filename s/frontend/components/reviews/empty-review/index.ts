@@ -1,5 +1,5 @@
 import {html, LitElement} from "lit"
-import noDataSvg from "../../../../icons/iconify/no-data.svg.js"
+import noDataSvg from "../../../../icons/tabler/no-data.svg.js"
 import {mixinStyles} from "../../../framework/mixins/mixin-styles.js"
 import namakaEmptyReviewCss from "./index.css.js"
 
