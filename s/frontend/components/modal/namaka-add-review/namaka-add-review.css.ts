@@ -1,7 +1,7 @@
 import {css} from "lit"
 export default css`
 
-.edit-review {
+.add-review {
 	width: 100%;
 	max-width: 700px;
 	margin: 0 auto;
