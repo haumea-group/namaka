@@ -94,24 +94,33 @@ button:hover {
 	line-height: 20px;
 }
 
+.blanket {
+	position: fixed;
+	inset: 0px;
+	background: rgba(0, 0, 0, 0.5);
+	z-index: 1;
+	backdrop-filter: var(--drop-down-backdrop, blur(5px));
+}
+
 .drop-down {
 	padding: 16px;
 	position: absolute;
-	min-width: 157px;
-	/* background: rgb(255, 255, 255); */
+	background: var(--bg-drop-down, white);
 	box-shadow: rgb(162 161 183 / 10%) 0px 6px 20px;
 	border-radius: 8px;
 	top: 52px;
 	right: 22px;
-	z-index: 1;
+	z-index: 2;
 	display: grid;
 	gap: 1rem;
 }
 
-.drop-down > div {
+.drop-down > button {
 	display: flex;
-	align-items: flex-end;
-	gap: 0.7rem;
+	align-items: center;
+	background: none;
+	border: none;
+	column-gap: 0.2rem;
 }
 
  svg {
