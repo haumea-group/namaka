@@ -1,11 +1,24 @@
 import {html, LitElement} from "lit"
-import closeIconSvg from "../../../../icons/iconify/close-icon.svg.js"
-import starSvg from "../../../../icons/iconify/star.svg.js"
-import {mixinStyles} from "../../../framework/mixins/mixin-styles.js"
-import namakaEditReviewCss from "./index.css.js"
+import {property} from "lit/decorators.js"
 
-@mixinStyles(namakaEditReviewCss)
+import {mixinStyles} from "../../../framework/mixins/mixin-styles.js"
+import {FiveStarState, renderFiveStarRating} from "../../common/five-stars/render-five-star-display.js"
+
+import namakaEditReviewCss from "./index.css.js"
+import starSvg from "../../../../icons/iconify/star.svg.js"
+import closeIconSvg from "../../../../icons/iconify/close-icon.svg.js"
+import renderFiveStarDisplayCss from "../../common/five-stars/render-five-star-display.css.js"
+@mixinStyles(namakaEditReviewCss, renderFiveStarDisplayCss)
 export class NamakaEditReview extends LitElement {
+	@property()
+	private fiveStarState: FiveStarState = {
+			rating: 0,
+	}
+
+	private setFiveStarState = (state: FiveStarState) => {
+			this.fiveStarState = state
+	}
+
 	render() {
 		return html`
 			<div class="edit-review">
@@ -22,13 +35,14 @@ export class NamakaEditReview extends LitElement {
 							<p>Share Review?</p>
 							<p class="gray">Please choose a review to rate this particular user.</p>
 						</div>
-						<div class="flex">
+						<!-- <div class="flex">
 							${starSvg}
 							${starSvg}
 							${starSvg}
 							${starSvg}
 							${starSvg}
-						</div>
+						</div> -->
+						${renderFiveStarRating(this.fiveStarState, this.setFiveStarState)}
 					</div>
 					<div class="edit-feedback">
 						<p><span class="black">Edit your feedback to this user</span> <span class="gray">(This will be made public)</span></p>
