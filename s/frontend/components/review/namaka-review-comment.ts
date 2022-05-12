@@ -83,27 +83,27 @@ export class NamakaReviewComment extends mixinStandard<{
 			|| userIsTheAuthorOfThisComment
 
 		const archiveThisComment = async() => {
+			this.#toggleDropDown()
 			return this.context.commenting.archiveComment(this.id)
 		}
 
 		return html`
-			<div class="drop-down">
-				<div class="report">
+			<div class="blanket" @click=${this.#toggleDropDown}></div>
+			<div class="drop-down" part="drop-down">
+				<button part="report">
 					${infoSquareSvg}
-					<button>Report user</button>
-				</div>
-				<div class="suspend">
-					<span>${dangerSvg}</span>
-					<button>Suspend user</button>
-				</div>
+					Report user
+				</button>
+				<button part="suspend">
+					${dangerSvg}
+					Suspend user
+				</button>
 				${deleteButtonIsAvailable
 					? html`
-						<div class="delete">
-							<span>${binSvg}</span>
-							<button @click=${archiveThisComment}>
-								Delete Review
-							</button>
-						</div>
+						<button part="delete" @click=${archiveThisComment}>
+							${binSvg}
+							Delete Review
+						</button>
 					`
 					: null}
 			</div>
