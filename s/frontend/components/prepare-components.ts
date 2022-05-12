@@ -2,7 +2,7 @@
 import {AppSnap} from "../models/app-snap.js"
 import {NamakaLoadMore} from "./load-more/index.js"
 import {NamakaBanUser} from "./modal/unban/index.js"
-import {NamakaModals} from "./modals/namaka-modals.js"
+import {ModalControls} from "./modals/modal-types.js"
 import {NamakaBannedUsers} from "./banned-users/index.js"
 import {prepareModels} from "../models/prepare-models.js"
 import {NamakaMyReview} from "./reviews/my-review/index.js"
@@ -21,15 +21,16 @@ import {NamakaReview} from "./common/five-stars/namaka-review.js";
 import themeCss from "./theme.css.js"
 
 export function prepareComponents({
+		modals,
 		snap: {subscribe},
 		models: {auth, commenting},
 	}: {
 		snap: AppSnap
+		modals: ModalControls
 		models: ReturnType<typeof prepareModels>
 	}) {
 
 	return themeComponents(themeCss, {
-		NamakaModals,
 		NamakaTextInput,
 		NamakaAuthorReply,
 		NamakaMyReview,
@@ -44,7 +45,7 @@ export function prepareComponents({
 			.withContext({auth, commenting})
 			.withSubscriptions(subscribe),
 		NamakaDemoAuth: NamakaDemoAuth
-			.withContext({auth})
+			.withContext({modals, auth})
 			.withSubscriptions(subscribe),
 		NamakaComments: NamakaComments
 			.withContext({auth, commenting})

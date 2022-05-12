@@ -1,8 +1,8 @@
 
 import {html, LitElement} from "lit"
 
-import {ModalControls, Popup, PopupOptions} from "./modal-types.js"
 import {mixinStyles} from "../../framework/mixins/mixin-styles.js"
+import {ModalControls, Popup, PopupOptions} from "./modal-types.js"
 
 import namakaModalsCss from "./namaka-modals.css.js"
 
