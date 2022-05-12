@@ -3,7 +3,6 @@ export default css`
 
 .five-star {
 	display: flex;
-	align-content: center;
 	align-items: center;
 }
 
@@ -19,6 +18,4 @@ svg {
 .star-empty svg path {
 	fill: none;
 }
-
-
 `;

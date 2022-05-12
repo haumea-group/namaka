@@ -20,10 +20,12 @@ export function renderFiveStarRating(
 		>`;
 	}
 	return html`
-		${renderStar(20)}
-		${renderStar(40)}
-		${renderStar(60)}
-		${renderStar(80)}
-		${renderStar(100)}
+		<div class="five-star">
+			${renderStar(20)}
+			${renderStar(40)}
+			${renderStar(60)}
+			${renderStar(80)}
+			${renderStar(100)}
+		</div>
 	`;
 }

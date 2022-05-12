@@ -7,13 +7,15 @@ import {mixinStyles} from "../../framework/mixins/mixin-styles.js"
 import {mixinStandard} from "../../framework/mixins/mixin-standard.js"
 import {randomComment, randomSubject} from "../../../toolbox/randomly.js"
 import {makeCommentingModel} from "../../models/commenting/commenting-model.js"
+import {FiveStarState, renderFiveStarRating} from "../common/five-stars/render-five-star-display.js"
 
 import binSvg from "../../../icons/feather-Icons/bin.svg.js"
 import infoSquareSvg from "../../../icons/info-square.svg.js"
 import dangerSvg from "../../../icons/feather-Icons/danger.svg.js"
 import namakaReviewCommentCss from "./namaka-review-comment.css.js"
+import renderFiveStarDisplayCss from "../common/five-stars/render-five-star-display.css.js"
 
-@mixinStyles(namakaReviewCommentCss)
+@mixinStyles(namakaReviewCommentCss, renderFiveStarDisplayCss)
 export class NamakaReviewComment extends mixinStandard<{
 		auth: ReturnType<typeof makeAuthModel>
 		commenting: ReturnType<typeof makeCommentingModel>
@@ -39,6 +41,15 @@ export class NamakaReviewComment extends mixinStandard<{
 
 	@property({type: String})
 	timePosted: string = "1 hour ago"
+
+	@property()
+	private fiveStarState: FiveStarState = {
+			rating: 0,
+	}
+
+	private setFiveStarState = (state: FiveStarState) => {
+			this.fiveStarState = state
+	}
 
 	async firstUpdated() {
 		if (!this.topicId)
@@ -112,6 +123,7 @@ export class NamakaReviewComment extends mixinStandard<{
 							<li><span>${this.subject}</span></li>
 						</div>
 						<div class="header__btn">
+							${renderFiveStarRating(this.fiveStarState, this.setFiveStarState)}
 							<button @click=${this.#toggleDropDown} class="drop-down__btn">
 								&bull;&bull;&bull;
 							</button>

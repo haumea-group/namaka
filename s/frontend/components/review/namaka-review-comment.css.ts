@@ -56,6 +56,7 @@ button:hover {
 	display: flex;
 	align-items: center;
 	padding-top: 0.3rem;
+	gap:0.5rem;
 }
 
 .drop-down__btn {
