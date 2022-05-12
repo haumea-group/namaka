@@ -48,3 +48,18 @@ export interface TopicStats {
 		scoreAspectAverages: {[key: string]: number}
 	}
 }
+
+export interface BanUser {
+    userId: string
+    until: number
+}
+
+export interface UnBanUser {
+    userId: string
+}
+
+export interface CommentGet {
+	topicId: string
+	limit: number
+	offset: number
+}

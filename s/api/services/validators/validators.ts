@@ -28,6 +28,13 @@ export const validateScore = validator(
 	max(100),
 )
 
+export const validateNumber = validator(
+	number(),
+)
+
+export const validateString = validator(
+	string(),
+)
 export const validateScoresDraft = validator(
 	object(),
 	objectValues(validateScore),
