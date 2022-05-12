@@ -2,16 +2,16 @@ import {html, LitElement} from "lit"
 import closeIconSvg from "../../../../icons/iconify/close-icon.svg.js"
 import starSvg from "../../../../icons/iconify/star.svg.js"
 import {mixinStyles} from "../../../framework/mixins/mixin-styles.js"
-import namakaEditReviewCss from "./index.css.js"
+import namakaAddReviewCss from "./namaka-add-review.css.js"
 
-@mixinStyles(namakaEditReviewCss)
-export class NamakaEditReview extends LitElement {
+@mixinStyles(namakaAddReviewCss)
+export class NamakaAddReview extends LitElement {
 	render() {
 		return html`
-			<div class="edit-review" part="container">
+			<div class="add-review" part="container">
 				<div class="box1">
 					<div class="heading">
-						<span part="title" part="title">Edit Review</span>
+						<span part="title" part="title">Leave a Review</span>
 						<div class="close">${closeIconSvg}</div>
 					</div>
 					<p class="gray">Share your experience with the ValorExchange community, to help make better decisions</p>
@@ -31,7 +31,7 @@ export class NamakaEditReview extends LitElement {
 						</div>
 					</div>
 					<div class="edit-feedback">
-						<p><span part="bold">Edit your feedback to this user</span> <span class="gray">(This will be made public)</span></p>
+						<p><span part="bold">Leave a feedback to this user</span> <span class="gray">(This will be made public)</span></p>
 						<namaka-text-input></namaka-text-input	xt-input>
 						<!-- <textarea name="message" id="message" rows="10"></textarea> -->
 					</div>

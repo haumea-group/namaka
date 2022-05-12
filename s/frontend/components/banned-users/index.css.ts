@@ -1,18 +1,9 @@
 import {css} from "lit"
 export default css`
 
-/* :host {
-	width: 100%;
-} */
-
 .banned-users {
 	width: 100%;
-	/* overflow-x: hidden; */
-	/* max-width: 400px; */
-	/* margin: 0 auto; */
 	padding: 20px;
-	border: 1px solid #F5F5FA;
-	box-shadow: 0px 1px 5px rgba(0, 0, 0, 0.05);
 }
 
 .heading {
@@ -78,15 +69,12 @@ input:focus {
 }
 
 .heading button {
-	background: #FFAF02;
-	color: #fff;
-	padding: 10px 8px;
-	border-radius: 10px;
+	padding: 5px;
 	border: none;
 }
 
 .overflow {
-	max-width: 100%;
+	width: 100%;
 	overflow-x: auto;
 }
 
@@ -94,19 +82,12 @@ table {
 	width: 100%;
 	margin-top: 50px;
 	border-radius: 8px;
-	table-layout: fixed;
-	/* overflow-x: auto; */
-}
-
-table thead {
-	background: #F5F8FC;
-	color: #000;
-	border-radius: 5px;
 }
 
 table th {
 	padding: 10px;
 	text-align: left;
+	border-bottom: 1px solid rgba(255,255,255,0.5);
 }
 
 table th:first-child {
