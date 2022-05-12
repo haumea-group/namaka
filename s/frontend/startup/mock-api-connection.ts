@@ -5,9 +5,11 @@ import * as renraku from "renraku"
 import {makeApi} from "../../api/api.js"
 import {AppSnap} from "../models/app-snap.js"
 import {AuthDevice} from "../frontend-types.js"
-import {MockMeta, Permissions} from "../../api/types/auth.js"
 import {AppRemote} from "../../api/types/remote.js"
 import {databaseShape} from "../../api/types/schema.js"
+import {randomNickname} from "../../toolbox/randomly.js"
+import {MockMeta, Permissions, User} from "../../api/types/auth.js"
+import {mockUserFetching} from "../models/commenting/testing/mock-user-fetching.js"
 
 export async function mockApiConnection({snap}: {
 		snap: AppSnap
@@ -18,13 +20,14 @@ export async function mockApiConnection({snap}: {
 
 	const rando = await dbmage.getRando()
 	const database = dbmage.localStorage({shape: databaseShape})
+	const {addUser, fetchUsers} = mockUserFetching(localStorage)
 
 	const api = makeApi<MockMeta>({
-		policy: async meta => ({
-			user: meta.user,
-			rando,
-			database,
-		}),
+		rando,
+		database,
+		scoreAspects: ["a", "b"],
+		fetchUsers,
+		policy: async meta => ({user: meta.user}),
 	})
 
 	const getMeta = async() => (<MockMeta>{user: snap.state.user})
@@ -38,16 +41,17 @@ export async function mockApiConnection({snap}: {
 		})
 
 	function mockLogin(permissions: Permissions) {
-		const id = rando.randomId().string
-		snap.state.user = {
+		const user: User = {
 			permissions,
-			userId: rando.randomId().string,
+			id: rando.randomId().string,
 			profile: {
-				nickname: "Francesca" + id.slice(0, 5),
+				nickname: randomNickname(),
 				avatar: "",
 				joinedTime: Date.now() * (1000 * 60 * 60),
 			},
 		}
+		addUser(user)
+		snap.state.user = user
 	}
 
 	return {
@@ -58,7 +62,7 @@ export async function mockApiConnection({snap}: {
 					canPost: true,
 					canBanUsers: true,
 					canEditAnyComment: true,
-					canDeleteAnyComment: true,
+					canArchiveAnyComment: true,
 				})
 			},
 			async logout() {

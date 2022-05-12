@@ -5,6 +5,7 @@ import {AppState} from "../../app-snap.js"
 import {hitch} from "../../../../toolbox/hitch.js"
 import {CommentPost, CommentEditDraft} from "../../../../api/types/concepts.js"
 import {computeCommentTree as computeNestedComments} from "./compute-nested-comments.js"
+import {User} from "../../../../api/types/auth.js"
 
 export function makeCommentStateActions({state}: {
 		state: AppState
@@ -18,9 +19,15 @@ export function makeCommentStateActions({state}: {
 		)
 	}
 
+	const userIsNew = (user: User) => !state.users.find(u => u.id === user.id)
+
 	const actions = {
 		wipeComments() {
 			map.clear()
+		},
+		addUsers(users: User[]) {
+			const newUsers = users.filter(userIsNew)
+			state.users = [...state.users, ...newUsers]
 		},
 		addComments(comments: CommentPost[]) {
 			for (const comment of comments)
@@ -32,7 +39,14 @@ export function makeCommentStateActions({state}: {
 				throw new Error(`cannot edit missing comment ${draft.id}`)
 			comment.body = draft.body
 			comment.subject = draft.subject
-			comment.rating = draft.rating
+			// TODO scoring???
+			// comment.rating = draft.rating
+		},
+		archiveComment(id: string) {
+			const comment = map.get(id)
+			if (!comment)
+				throw new Error(`cannot archive missing comment ${id}`)
+			comment.archived = true
 		},
 		deleteComment(id: string) {
 			map.delete(id)

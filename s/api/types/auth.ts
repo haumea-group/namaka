@@ -1,22 +1,21 @@
 
 import * as dbmage from "dbmage"
-import {AppDatabase} from "./schema.js"
 
 export interface Permissions {
 	canPost: boolean
 	canBanUsers: boolean
 	canEditAnyComment: boolean
-	canDeleteAnyComment: boolean
+	canArchiveAnyComment: boolean
 }
 
 export interface User {
-	userId: string
+	id: string
 	profile: Profile
 	permissions: Permissions
 }
 
-export interface UserIntegration extends Omit<User, "userId"> {
-	userId: dbmage.Id
+export interface UserIntegration extends Omit<User, "id"> {
+	id: dbmage.Id
 }
 
 export interface Profile {
@@ -26,11 +25,9 @@ export interface Profile {
 }
 
 export interface MockMeta {
-	user?: User
+	user: User | undefined
 }
 
 export interface Auth {
 	user: User | undefined
-	rando: dbmage.Rando
-	database: AppDatabase
 }

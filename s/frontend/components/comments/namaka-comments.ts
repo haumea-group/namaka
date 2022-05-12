@@ -46,6 +46,8 @@ export class NamakaComments extends mixinStandard<{
 
 		const isLoggedIn = !!this.context.auth.user
 		const comments = this.context.commenting.getComments(this.topic)
+		
+		
 
 		return html`
 			<div>

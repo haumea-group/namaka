@@ -28,6 +28,9 @@ const word = {
 }
 
 const constructions = {
+	nickname: hatPuller([
+		() => `${word.adjective} ${word.person}`,
+	]),
 	comment: hatPuller([
 		() => `i encountered a ${word.noun}, which had a ${word.adjective} appearance. i ${word.how} ${word.verb} this.`,
 		() => `my ${word.noun} is literally a ${word.adjective} ${word.noun} who ${word.verb} the ${word.noun} and ${word.how} ${word.verb} my last ${word.noun}.`,
@@ -41,6 +44,10 @@ const constructions = {
 		() => `${word.adjective}? a ${word.adjective} ${word.noun} ${word.verb} ${word.person}!`,
 		() => `${word.person} ${word.how} ${word.verb} ${word.person}`,
 	])
+}
+
+export function randomNickname() {
+	return constructions.nickname()()
 }
 
 export function randomComment() {

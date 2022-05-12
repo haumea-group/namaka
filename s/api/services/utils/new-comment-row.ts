@@ -18,7 +18,6 @@ export function newCommentRow({userId, rando, draft}: {
 		topicId: dbmage.Id.fromString(draft.topicId),
 		timePosted: Date.now(),
 		subject: draft.subject,
-		rating: draft.rating,
 		body: draft.body,
 		archived: false,
 	}

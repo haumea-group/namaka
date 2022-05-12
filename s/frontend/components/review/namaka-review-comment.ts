@@ -1,21 +1,80 @@
+
 import {html, LitElement} from "lit"
 import {property} from "lit/decorators.js"
+
+import {makeAuthModel} from "../../models/auth/auth-model.js"
+import {mixinStyles} from "../../framework/mixins/mixin-styles.js"
+import {mixinStandard} from "../../framework/mixins/mixin-standard.js"
+import {randomComment, randomSubject} from "../../../toolbox/randomly.js"
+import {makeCommentingModel} from "../../models/commenting/commenting-model.js"
+
 import binSvg from "../../../icons/feather-Icons/bin.svg.js"
 import infoSquareSvg from "../../../icons/info-square.svg.js"
 import dangerSvg from "../../../icons/feather-Icons/danger.svg.js"
-import {mixinStyles} from "../../framework/mixins/mixin-styles.js"
 import namakaReviewCommentCss from "./namaka-review-comment.css.js"
 
 @mixinStyles(namakaReviewCommentCss)
-export class NamakaReviewComment extends LitElement {
+export class NamakaReviewComment extends mixinStandard<{
+		auth: ReturnType<typeof makeAuthModel>
+		commenting: ReturnType<typeof makeCommentingModel>
+	}>()(LitElement) {
+	
 	@property()
-	showDropDown = false
+	private showDropDown: boolean = false
+
+	@property({type: String})
+	id: string = undefined as any
+
+	@property({type: String})
+	authorId: string = undefined as any
+
+	@property({type: String})
+	topicId: string = undefined as any
+
+	@property({type: String})
+	subject: string = randomSubject()
+	
+	@property({type: String})
+	body: string = randomComment()
+
+	@property({type: String})
+	timePosted: string = "1 hour ago"
+
+	async firstUpdated() {
+		if (!this.topicId)
+			throw new Error("topic attribute is required")
+	}
+
+	#postRandomComment = async() => {
+		await this.context.commenting.postComment({
+			topicId: this.topicId,
+			parentCommentId: this.id,
+			subject: randomSubject(),
+			body: [randomComment(), randomComment(), randomComment()].join(" "),
+		})
+	}
 
 	#toggleDropDown = () => {
 		this.showDropDown = !this.showDropDown
 	}
 
 	#renderDropDown = () => {
+		const {user} = this.context.auth
+
+		const isUserLoggedIn = !!user
+		const userCanArchiveAnyComment
+			= !!user?.permissions.canArchiveAnyComment
+
+		const userIsTheAuthorOfThisComment = isUserLoggedIn
+			&& user?.id === this.authorId
+
+		const deleteButtonIsAvailable = userCanArchiveAnyComment
+			|| userIsTheAuthorOfThisComment
+
+		const archiveThisComment = async() => {
+			return this.context.commenting.archiveComment(this.id)
+		}
+
 		return html`
 			<div class="drop-down">
 				<div class="report">
@@ -26,36 +85,31 @@ export class NamakaReviewComment extends LitElement {
 					<span>${dangerSvg}</span>
 					<button>Suspend user</button>
 				</div>
-				<div class="delete">
-					<span>${binSvg}</span>
-					<button>Delete Review</button>
-				</div>
+				${deleteButtonIsAvailable
+					? html`
+						<div class="delete">
+							<span>${binSvg}</span>
+							<button @click=${archiveThisComment}>
+								Delete Review
+							</button>
+						</div>
+					`
+					: null}
 			</div>
 	`}
 
 	render() {
+		const user = this.authorId && this.context.commenting.getUser(this.authorId)
+		if (!user)
+			return null
 		return html`
 			<div class="outer-div">
-				<div class="box">
-					<div class="avatar"></div>
-					<div class="header">
-						<div class="header__txt">
-							<p>Francesca20</p>
-							<li><span>Buy BTC - Bank Transfer</span></li>
-						</div>
-						<div class="header__btn">
-							<button @click=${this.#toggleDropDown} class="drop-down__btn">
-								&bull;&bull;&bull;
-							</button>
-						</div>
-					</div>
-				</div>
-				
+				<div class="avatar"></div>
 				<div class="inner-div">
 					<div class="header">
 						<div class="header__txt">
-							<p>Francesca20</p>
-							<li><span>Buy BTC - Bank Transfer</span></li>
+							<p>${user.profile.nickname}</p>
+							<li><span>${this.subject}</span></li>
 						</div>
 						<div class="header__btn">
 							<button @click=${this.#toggleDropDown} class="drop-down__btn">
@@ -63,14 +117,15 @@ export class NamakaReviewComment extends LitElement {
 							</button>
 						</div>
 					</div>
-					<p>Aut sunt tempore eligendi. Eum corrupti voluptatem et qui excepturi officia. Debitis quae voluptates dolorum tempora laborum blanditiis ut fugiat. Consectetur perferendis sed et molestiae consequuntur culpa.</p>
+					<p>${this.body}</p>
 					<div class="footer">
-						<p class="time-stamp">1 hour ago</p>
+						<p class="time-stamp">${this.timePosted}</p>
 						<li><span>12 comments</span></li>
-						<button>Reply</button>
+						<button @click=${this.#postRandomComment}>Reply</button>
 					</div>
 				</div>
 			</div>
+			<slot></slot>
 			${this.showDropDown ? this.#renderDropDown() : null}
 		`
 	}

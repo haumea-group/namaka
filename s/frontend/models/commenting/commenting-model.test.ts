@@ -5,12 +5,12 @@ import {newServer, randomId} from "./testing/commenting-test-setups.js"
 
 export function makeRegularUser(): User {
 	return {
-		userId: randomId(),
+		id: randomId(),
 		permissions: {
 			canPost: true,
 			canBanUsers: false,
 			canEditAnyComment: false,
-			canDeleteAnyComment: false,
+			canArchiveAnyComment: false,
 		},
 		profile: {
 			nickname: "Jimmy",
@@ -22,12 +22,12 @@ export function makeRegularUser(): User {
 
 export function makeAdminUser(): User {
 	return {
-		userId: randomId(),
+		id: randomId(),
 		permissions: {
 			canPost: true,
 			canBanUsers: true,
 			canEditAnyComment: true,
-			canDeleteAnyComment: true,
+			canArchiveAnyComment: true,
 		},
 		profile: {
 			nickname: "Jimmy Admin",
@@ -153,6 +153,7 @@ export default <Suite>{
 	},
 	"editing comments": {
 		"a regular user": {
+
 			async "can edit their own comment, instantly sees change"() {
 				const {commenting} = newServer()
 					.newUser(makeRegularUser())
@@ -199,6 +200,21 @@ export default <Suite>{
 					expect(commenting.getComments(topicId)[0].body).equals("world!")
 				}
 			},
+			async "cannot edit non-existent comment"() {
+				const server = newServer()
+				const topicId = randomId()
+				const {commenting} = server
+					.newUser(makeRegularUser())
+					.newBrowserTab()
+				const fakeCommentId = randomId()
+				await expect(async() => commenting.editComment({
+					id: fakeCommentId,
+					subject: "hello",
+					body: "world",
+				})).throws()
+				await commenting.downloadComments(topicId)
+				expect(commenting.getComments(topicId).length).equals(0)
+			},
 			async "cannot edit another person's comment"() {
 				const server = newServer()
 				const topicId = randomId()
@@ -227,8 +243,10 @@ export default <Suite>{
 					})).throws()
 				}
 			},
+
 		},
 		"a logged-out user": {
+
 			async "cannot edit comments"() {
 				const server = newServer()
 				const topicId = randomId()
@@ -257,8 +275,10 @@ export default <Suite>{
 					})).throws()
 				}
 			},
+
 		},
 		"an 'admin' user": {
+
 			async "can edit anybody's comment"() {
 				const server = newServer()
 				const topicId = randomId()
@@ -289,14 +309,109 @@ export default <Suite>{
 					expect(editedComment.body).equals("world!")
 				}
 			},
+			async "cannot edit non-existent comment"() {
+				const server = newServer()
+				const topicId = randomId()
+				const {commenting} = server
+					.newUser(makeAdminUser())
+					.newBrowserTab()
+				const fakeCommentId = randomId()
+				await expect(async() => commenting.editComment({
+					id: fakeCommentId,
+					subject: "hello",
+					body: "world",
+				})).throws()
+				await commenting.downloadComments(topicId)
+				expect(commenting.getComments(topicId).length).equals(0)
+			},
+
 		},
 	},
-
 	"archiving comments": {
 		"a regular user": {
-			async "can archive their own comment"() {
 
+			async "can archive their own comment, sees it disappear"() {
+				const server = newServer()
+				const topicId = randomId()
+				{
+					const {commenting} = server
+						.newUser(makeRegularUser())
+						.newBrowserTab()
+					await commenting.downloadComments(topicId)
+					const {id} = await commenting.postComment({
+						topicId,
+						parentCommentId: undefined,
+						subject: "hello",
+						body: "world",
+					})
+					expect(commenting.getComments(topicId).length).equals(1)
+					await commenting.archiveComment(id)
+				}
+				{
+					// other users also see the comment is gone
+					const {commenting} = server
+						.newUser(makeRegularUser())
+						.newBrowserTab()
+					await commenting.downloadComments(topicId)
+					expect(commenting.getComments(topicId).length).equals(0)
+				}
 			},
+
+			async "cannot archive non-existent comment"() {
+				const server = newServer()
+				const {commenting} = server
+					.newUser(makeRegularUser())
+					.newBrowserTab()
+				const fakeCommentId = randomId()
+				await expect(async() => commenting.archiveComment(fakeCommentId)).throws()
+			},
+
 		},
+		"an admin user": {
+
+			async "can archive somebody else's comment"() {
+				const server = newServer()
+				const topicId = randomId()
+				{
+					const {commenting} = server
+						.newUser(makeRegularUser())
+						.newBrowserTab()
+					await commenting.downloadComments(topicId)
+					await commenting.postComment({
+						topicId,
+						parentCommentId: undefined,
+						subject: "hello",
+						body: "world",
+					})
+					expect(commenting.getComments(topicId).length).equals(1)
+				}
+				{
+					const {commenting} = server
+						.newUser(makeAdminUser())
+						.newBrowserTab()
+					await commenting.downloadComments(topicId)
+					const [comment] = commenting.getComments(topicId)
+					expect(comment).ok()
+					await commenting.archiveComment(comment.id)
+					expect(commenting.getComments(topicId).length).equals(0)
+				}
+				{
+					const {commenting} = server
+						.newUser(makeRegularUser())
+						.newBrowserTab()
+					await commenting.downloadComments(topicId)
+					expect(commenting.getComments(topicId).length).equals(0)
+				}
+			},
+			async "cannot archive non-existent comment"() {
+				const server = newServer()
+				const {commenting} = server
+					.newUser(makeAdminUser())
+					.newBrowserTab()
+				const fakeCommentId = randomId()
+				await expect(async() => commenting.archiveComment(fakeCommentId)).throws()
+			},
+
+		}
 	},
 }

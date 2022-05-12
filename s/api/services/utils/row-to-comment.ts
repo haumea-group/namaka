@@ -12,7 +12,7 @@ export function rowToComment(row: CommentRow): CommentPost {
 		topicId: row.topicId.string,
 		timePosted: row.timePosted,
 		subject: row.subject,
-		rating: row.rating,
 		body: row.body,
+		archived: row.archived
 	}
 }
