@@ -66,7 +66,6 @@ button:hover {
 	border: none;
 	display: grid;
 	align-content: center;
-	z-index: 2;
 }
 
 .inner-div {
