@@ -11,24 +11,27 @@ import {User, UserIntegration} from "./types/auth.js"
 export {Id} from "dbmage"
 export {megabytes} from "renraku"
 
-export async function namakaExpress({
-		exposeErrors, maxPayloadSize,
-		database, authUser, fetchUsers,
+export async function expressMiddleware({
+		exposeErrors, maxPayloadSize, scoreAspects, database,
+		authUser, fetchUsers,
 	}: {
 		database: AppDatabase
 		exposeErrors: boolean
 		maxPayloadSize: number
-		authUser: (req: express.Request) => Promise<UserIntegration>
-		fetchUsers: (userIds: dbmage.Id[]) => Promise<UserIntegration[]>
+		scoreAspects: string[]
+		canUserPostToTopic: (user: User, topicId: dbmage.Id) => Promise<boolean>
+		authUser: (req: express.Request) => Promise<undefined | UserIntegration>
+		fetchUsers: (ids: dbmage.Id[]) => Promise<UserIntegration[]>
 	}) {
 
 	const rando = await dbmage.getRando()
 
-	type Meta = {user: User}
+	type Meta = {user: undefined | User}
 
 	const api = makeApi<Meta>({
 		rando,
 		database,
+		scoreAspects,
 		fetchUsers,
 		policy: async meta => ({
 			user: meta.user,
@@ -42,10 +45,9 @@ export async function namakaExpress({
 	const middleware: express.RequestHandler = async(req, res, next) => {
 		const userIntegration = await authUser(req)
 		const meta: Meta = {
-			user: {
-				...userIntegration,
-				userId: userIntegration.userId.string,
-			},
+			user: userIntegration
+				? {...userIntegration, id: userIntegration.id.string}
+				: undefined,
 		}
 		const listener = makeRequestListener({
 			exposeErrors,

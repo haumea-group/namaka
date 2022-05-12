@@ -23,12 +23,12 @@ export function mockUserFetching(
 			): Promise<UserIntegration[]> {
 
 			return ids.map(id => {
-				const user = users.find(u => u.userId === id.string)
+				const user = users.find(u => u.id === id.string)
 				if (!user)
 					throw new Error(`user missing ${id.string}`)
 				return {
 					...user,
-					userId: id,
+					id,
 				}
 			})
 		},

@@ -2,22 +2,22 @@
 import * as dbmage from "dbmage"
 import * as renraku from "renraku"
 
-import {ServiceProvider} from "../types/service.js"
+import {asServiceProvider} from "./utils/as-service-provider.js"
 
-export const makeAdminActionsService: ServiceProvider = ({
+export const makeAdminActionsService = asServiceProvider(({
 		database, rando, fetchUsers,
 	}) => ({
 		user,
 	}) => ({
 
-	async banUser({userId, until}: {
-			userId: string
+	async banUser({id, until}: {
+			id: string
 			until: number
 		}): Promise<void> {
 		throw new Error("todo implement")
 	},
 
-	async unbanUser({userId}: {userId: string}) {
+	async unbanUser({id}: {id: string}) {
 		throw new Error("todo implement")
 	}
-})
+}))

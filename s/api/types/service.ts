@@ -7,6 +7,7 @@ import {Auth, UserIntegration} from "./auth.js"
 export interface ServiceOptions {
 	rando: dbmage.Rando
 	database: AppDatabase
+	scoreAspects: string[]
 	fetchUsers: (ids: dbmage.Id[]) => Promise<UserIntegration[]>
 }
 

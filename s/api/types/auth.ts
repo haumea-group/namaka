@@ -9,13 +9,13 @@ export interface Permissions {
 }
 
 export interface User {
-	userId: string
+	id: string
 	profile: Profile
 	permissions: Permissions
 }
 
-export interface UserIntegration extends Omit<User, "userId"> {
-	userId: dbmage.Id
+export interface UserIntegration extends Omit<User, "id"> {
+	id: dbmage.Id
 }
 
 export interface Profile {

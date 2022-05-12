@@ -66,7 +66,7 @@ export class NamakaReviewComment extends mixinStandard<{
 			= !!user?.permissions.canArchiveAnyComment
 
 		const userIsTheAuthorOfThisComment = isUserLoggedIn
-			&& user?.userId === this.authorId
+			&& user?.id === this.authorId
 
 		const deleteButtonIsAvailable = userCanArchiveAnyComment
 			|| userIsTheAuthorOfThisComment

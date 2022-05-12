@@ -19,7 +19,7 @@ export function makeCommentStateActions({state}: {
 		)
 	}
 
-	const userIsNew = (user: User) => !state.users.find(u => u.userId === user.userId)
+	const userIsNew = (user: User) => !state.users.find(u => u.id === user.id)
 
 	const actions = {
 		wipeComments() {
@@ -39,7 +39,8 @@ export function makeCommentStateActions({state}: {
 				throw new Error(`cannot edit missing comment ${draft.id}`)
 			comment.body = draft.body
 			comment.subject = draft.subject
-			comment.rating = draft.rating
+			// TODO scoring???
+			// comment.rating = draft.rating
 		},
 		archiveComment(id: string) {
 			const comment = map.get(id)
