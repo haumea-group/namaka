@@ -120,7 +120,7 @@ export class NamakaReviewComment extends mixinStandard<{
 					<div class="header">
 						<div class="header__txt">
 							<p>${user.profile.nickname}</p>
-							<li><span>${this.subject}</span></li>
+							<span>&bull; ${this.subject}</span>
 						</div>
 						<div class="header__btn">
 							${renderFiveStarRating(this.fiveStarState, this.setFiveStarState)}
@@ -132,7 +132,7 @@ export class NamakaReviewComment extends mixinStandard<{
 					<p>${this.body}</p>
 					<div class="footer">
 						<p class="time-stamp">${this.timePosted}</p>
-						<li><span>12 comments</span></li>
+						<span>&bull; 12 comments</span>
 						<button @click=${this.#postRandomComment}>Reply</button>
 					</div>
 				</div>
