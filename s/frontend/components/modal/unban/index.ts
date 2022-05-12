@@ -1,6 +1,6 @@
 import {html, LitElement} from "lit"
-import closeIconSvg from "../../../../icons/iconify/close-icon.svg.js"
-import infoSvg from "../../../../icons/iconify/info.svg.js"
+import closeIconSvg from "../../../../icons/material-design/close-icon.svg.js"
+import infoCircleSvg from "../../../../icons/tabler/info-circle.svg.js"
 import {mixinStyles} from "../../../framework/mixins/mixin-styles.js"
 import namakaBanUserCss from "./index.css.js"
 
@@ -12,7 +12,7 @@ export class NamakaBanUser extends LitElement {
 				<div class="border-b">
 					<div class="heading">
 						<div class="heading__text">
-							<div class="info">${infoSvg}</div>
+							<div class="info">${infoCircleSvg}</div>
 							<h1 class="title">Unban User</h1>
 						</div>
 						<div class="close">${closeIconSvg}</div>

@@ -1,13 +1,16 @@
+
 import {html, LitElement} from "lit"
 import {property} from "lit/decorators.js"
 
 import {mixinStyles} from "../../../framework/mixins/mixin-styles.js"
 import {FiveStarState, renderFiveStarRating} from "../../common/five-stars/render-five-star-display.js"
 
+import starSvg from "../../../../icons/tabler/star.svg.js"
+import closeIconSvg from "../../../../icons/material-design/close-icon.svg.js"
+
 import namakaEditReviewCss from "./index.css.js"
-import starSvg from "../../../../icons/iconify/star.svg.js"
-import closeIconSvg from "../../../../icons/iconify/close-icon.svg.js"
 import renderFiveStarDisplayCss from "../../common/five-stars/render-five-star-display.css.js"
+
 @mixinStyles(namakaEditReviewCss, renderFiveStarDisplayCss)
 export class NamakaEditReview extends LitElement {
 	@property()
@@ -51,6 +54,6 @@ export class NamakaEditReview extends LitElement {
 					<button>Submit</button>
 				</div>
 			</div>
-        `
-    }
+		`
+	}
 }

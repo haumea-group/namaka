@@ -6,7 +6,7 @@ import {Validator} from "../../../toolbox/darkvalley.js"
 import {mixinStyles} from "../../framework/mixins/mixin-styles.js"
 
 import NamakaTextareaCss from "./namaka-textarea.css.js"
-import dangerSvg from "../../../icons/feather-Icons/danger.svg.js"
+import dangerSvg from "../../../icons/feather/danger.svg.js"
 
 @mixinStyles(NamakaTextareaCss)
 export class NamakaTextarea extends LitElement {
