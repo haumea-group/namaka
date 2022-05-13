@@ -1,16 +1,13 @@
 import {css} from "lit"
 export default css`
 
-.ban-user {
+.delete-review {
 	width: 100%;
 	max-width: 540px;
 	margin: 0 auto;
-	padding: 20px;
-	padding: 30px;
-	border: 0.5px solid #776e62;
-	border-radius: 25px;
+	padding: 20px;	
 	text-align: left;
-	background: #fff;
+	border: 1px solid #DDE2E5;
 }
 
 .heading {
@@ -33,7 +30,6 @@ export default css`
 	font-size: 20px;
 	font-weight: 700;
 	line-height: 24px;
-	color: #000;
 }
 
 p {
@@ -42,8 +38,8 @@ p {
 }
 
 .close {
-	width: 48px;
-	height: 48px;
+	width: 30px;
+	height: 30px;
 	background-color: #fff;
 	border-radius: 50%;
 	display: flex;
@@ -57,12 +53,11 @@ p {
 }
 
 .name {
-	color: #000;
 	font-weight: bold;
 }
 
 .border-b {
-	padding: 15px 0;
+	padding: 0 0 15px;
 	border-bottom: 1px solid #EDEFF5;
 }
 
@@ -72,21 +67,12 @@ p {
 }
 
 .action button {
-	padding: 15px 0;
-	width: 100%;
-	max-width: 180px;
-	border-radius: 40px;
 	border: none;
+	padding: 5px;
 }
 
-.action button.pry {
-	background: #FFAF02;
-	color: #fff;
+.action button:first-child {
 	margin-right: 15px;
 }
 
-.action button.light {
-	background: #FFFAF0;
-	color: #FFAF02;
-}
 `

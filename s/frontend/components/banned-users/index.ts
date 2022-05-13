@@ -8,10 +8,10 @@ import namakaLoadMoreCss from "./index.css.js"
 export class NamakaBannedUsers extends LitElement {
 	render() {
 		return html`
-			<div class="banned-users">
+			<div class="banned-users" part="container">
 				<div class="heading top">
 					<h1>Banned Users</h1>
-					<button>1,234</button>
+					<button part="tag">1,234</button>
 				</div>
 
 				<div class="container">
@@ -29,7 +29,7 @@ export class NamakaBannedUsers extends LitElement {
 					
 					<div class="overflow">
 						<table>
-							<thead>
+							<thead part="tableHeading">
 								<tr>
 									<th>User</th>
 									<th>Email</th>

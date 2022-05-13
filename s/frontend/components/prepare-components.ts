@@ -1,8 +1,10 @@
-
+import {NamakaSuspendUser} from './modal/namaka-suspend-user/namaka-suspend-user.js'
+import {NamakaDeleteUser} from './modal/namaka-delete-user/namaka-delete-user.js'
+import {NamakaAddReview} from './modal/namaka-add-review/namaka-add-review.js'
 import {AppSnap} from "../models/app-snap.js"
 import {NamakaLoadMore} from "./load-more/index.js"
-import {NamakaBanUser} from "./modal/unban/index.js"
 import {ModalControls} from "./modals/modal-types.js"
+import {NamakaUnbanUser} from "./modal/namaka-unban-user/namaka-unban-user.js"
 import {NamakaBannedUsers} from "./banned-users/index.js"
 import {prepareModels} from "../models/prepare-models.js"
 import {NamakaMyReview} from "./reviews/my-review/index.js"
@@ -10,7 +12,7 @@ import {NamakaComments} from "./comments/namaka-comments.js"
 import {NamakaDemoAuth} from "./demo-auth/namaka-demo-auth.js"
 import {NamakaEditReview} from "./reviews/edit-review/index.js"
 import {themeComponents} from "../framework/theme-components.js"
-import {NamakaDeleteReview} from "./modal/delete-review/index.js"
+import {NamakaDeleteReview} from "./modal/namaka-delete-review/namaka-delete-review.js"
 import {NamakaEmptyReview} from "./reviews/empty-review/index.js"
 import {NamakaReviewComment} from "./review/namaka-review-comment.js"
 import {NamakaTextarea} from "./namaka-textarea/namaka-textarea.js"
@@ -39,8 +41,11 @@ export function prepareComponents({
 		NamakaEditReview,
 		NamakaBannedUsers,
 		NamakaLoadMore,
-		NamakaBanUser,
+		NamakaUnbanUser,
+		NamakaSuspendUser,
+		NamakaDeleteUser,
 		NamakaDeleteReview,
+		NamakaAddReview,
 		NamakaReviewComment: NamakaReviewComment
 			.withContext({auth, commenting})
 			.withSubscriptions(subscribe),
