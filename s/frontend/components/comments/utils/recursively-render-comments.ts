@@ -15,7 +15,7 @@ export function recursivelyRenderComments(
 				.subject="${comment.subject}"
 				.body="${comment.body}"
 				.timePosted="${comment.timePosted}">
-					${recursivelyRenderComments(comment.children)}
+					<div slot="child-slot">${recursivelyRenderComments(comment.children)}</div>
 			</namaka-review-comment>
 		`)}
 	`

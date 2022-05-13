@@ -11,11 +11,6 @@ export default css`
 	text-align:left;
 }
 
-li span {
-	position: relative;
-	left: -8px;
-}
-
 button:hover {
 	cursor: pointer;
 }

@@ -42,6 +42,10 @@ export class NamakaReviewComment extends mixinStandard<{
 	@property({type: String})
 	timePosted: string = "1 hour ago"
 
+	get #canPost() {
+		return !!this.context.auth.user?.permissions.canPost
+	}
+
 	@property()
 	private fiveStarState: FiveStarState = {
 			rating: 0,
@@ -56,13 +60,15 @@ export class NamakaReviewComment extends mixinStandard<{
 			throw new Error("topic attribute is required")
 	}
 
-	#postRandomComment = async() => {
-		await this.context.commenting.postComment({
-			topicId: this.topicId,
-			parentCommentId: this.id,
-			subject: randomSubject(),
-			body: [randomComment(), randomComment(), randomComment()].join(" "),
-		})
+	#postRandomReply = async() => {
+		if (this.#canPost) {
+			await this.context.commenting.postComment({
+				topicId: this.topicId,
+				parentCommentId: this.id,
+				subject: randomSubject(),
+				body: [randomComment(), randomComment(), randomComment()].join(" "),
+			})
+		}
 	}
 
 	#toggleDropDown = () => {
@@ -120,7 +126,7 @@ export class NamakaReviewComment extends mixinStandard<{
 					<div class="header">
 						<div class="header__txt">
 							<p>${user.profile.nickname}</p>
-							<li><span>${this.subject}</span></li>
+							<span>&bull; ${this.subject}</span>
 						</div>
 						<div class="header__btn">
 							${renderFiveStarRating(this.fiveStarState, this.setFiveStarState)}
@@ -132,12 +138,14 @@ export class NamakaReviewComment extends mixinStandard<{
 					<p>${this.body}</p>
 					<div class="footer">
 						<p class="time-stamp">${this.timePosted}</p>
-						<li><span>12 comments</span></li>
-						<button @click=${this.#postRandomComment}>Reply</button>
+						<span>&bull; 12 comments</span>
+						${this.#canPost
+							? html`<button @click=${this.#postRandomReply}>Reply</button>`
+							: null}
 					</div>
 				</div>
+				<slot name="child-slot">nested comments appear here</slot>
 			</div>
-			<slot></slot>
 			${this.showDropDown ? this.#renderDropDown() : null}
 		`
 	}
