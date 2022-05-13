@@ -13,11 +13,15 @@ export class NamakaUnbanUser extends LitElement {
 					<div class="heading">
 						<div class="heading__text">
 							<div class="info">${infoSvg}</div>
-							<h1 part="title">Unban User</h1>
+							<h1 part="title" part="title">
+								<slot name="title">Title</slot>
+							</h1>
 						</div>
 						<div class="close">${closeIconSvg}</div>
 					</div>
-					<p class="gray">Are you sure you want to unban <span part="name">Francesca20</span>? This user will be able to use this platform again when unbanned </p>
+					<p class="gray">
+						<slot name="text">You can edit this text</slot>
+					</p>
 				</div>
 
 				<div class="action">

@@ -13,11 +13,15 @@ export class NamakaSuspendUser extends LitElement {
 					<div class="heading">
 						<div class="heading__text">
 							<div class="info">${cautionSvg}</div>
-							<h1 class="title" part="title">Suspend User</h1>
+							<h1 class="title" part="title">
+								<slot name="title">Title</slot>	
+							</h1>
 						</div>
 						<div class="close">${closeIconSvg}</div>
 					</div>
-					<p class="gray">Are you sure you want to suspend <span class="name" part="bold">Francesca20</span> from the platform?</p>
+					<p class="gray">
+						<slot name="text">You can edit this text</slot>	
+					</p>
 				</div>
 
 				<form class="selection">

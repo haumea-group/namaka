@@ -13,11 +13,15 @@ export class NamakaDeleteUser extends LitElement {
 					<div class="heading">
 						<div class="heading__text">
 							<div class="info">${infoSvg}</div>
-							<h1 class="title" part="title">Delete User</h1>
+							<h1 class="title" part="title">
+								<slot name="title">Title</slot>
+							</h1>
 						</div>
 						<div class="close">${closeIconSvg}</div>
 					</div>
-					<p class="gray">Are you sure you want to delete <span class="name" part="bold">Francesca20</span> from the platform?</p>
+					<p class="gray">
+						<slot name="text">You can edit this text</slot>
+					</p>
 				</div>
 
 				<div class="action">

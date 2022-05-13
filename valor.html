@@ -38,13 +38,25 @@
 	<div class="container">
 		<h1 class="title review-title">My reviews</h1>
 
-		<namaka-delete-review></namaka-delete-review>
+		<namaka-delete-review>
+			<span slot="title">Delete Review</span>
+			<span slot="text">Are you sure you want to delete this review for <span class="name" part="bold">Francesca20</span>?</span>
+		</namaka-delete-review>
 
-		<namaka-delete-user></namaka-delete-user>
+		<namaka-delete-user>
+			<span slot="title">Delete User</span>
+			<span slot="text">Are you sure you want to delete <span class="name" part="bold">Francesca20</span> from the platform?</span>
+		</namaka-delete-user>
 
-		<namaka-suspend-user></namaka-suspend-user>
+		<namaka-suspend-user>
+			<span slot="title">Suspend User</span>
+			<span slot="text">Are you sure you want to suspend <span class="name" part="bold">Francesca20</span> from the platform?</span>
+		</namaka-suspend-user>
 
-		<namaka-unban-user></namaka-unban-user>
+		<namaka-unban-user>
+			<span slot="title">Unban User</span>
+			<span slot="text">Are you sure you want to unban <span part="name">Francesca20</span>? This user will be able to use this platform again when unbanned</span>
+		</namaka-unban-user>
 
 		<div class="banned-users">
 			<namaka-banned-users></namaka-banned-users>
