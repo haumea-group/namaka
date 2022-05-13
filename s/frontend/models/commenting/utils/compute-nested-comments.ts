@@ -14,7 +14,7 @@ function recursivelyAttachChildrenToComment(
 	): NestedComment {
 
 	const children = allComments
-		.filter(comment => comment.parentCommentId === comment.id)
+		.filter(c => c.parentCommentId === comment.id)
 		.map(child => recursivelyAttachChildrenToComment(child, allComments))
 
 	return {...comment, children}
