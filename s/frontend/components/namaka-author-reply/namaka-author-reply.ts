@@ -13,7 +13,7 @@ export class NamakaAuthorReply extends LitElement {
 				<img src="/assets/profile-img.png" />
 				<div class="inner-div">
 					<p>You may reply to this review here (This will be made public)</p>
-					<namaka-text-input maxCharacters="160"></namaka-text-input>
+					<namaka-textarea maxCharacters="160"></namaka-textarea>
 					<div class="action-btns">
 						<button>Reply</button>
 						<button>Close</button>
