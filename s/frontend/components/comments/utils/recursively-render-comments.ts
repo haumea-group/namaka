@@ -6,6 +6,8 @@ export function recursivelyRenderComments(
 		comments: NestedComment[]
 	): TemplateResult {
 
+		console.log(comments)
+
 	return html `
 		${comments.map(comment => html`
 			<namaka-review-comment
@@ -14,8 +16,9 @@ export function recursivelyRenderComments(
 				.id="${comment.id}"
 				.subject="${comment.subject}"
 				.body="${comment.body}"
+				.commentCount=${comment.children.length}
 				.timePosted="${comment.timePosted}">
-					<div slot="child-slot">${recursivelyRenderComments(comment.children)}</div>
+					${recursivelyRenderComments(comment.children)}
 			</namaka-review-comment>
 		`)}
 	`
