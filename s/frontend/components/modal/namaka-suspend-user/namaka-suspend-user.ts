@@ -1,5 +1,5 @@
 import {html, LitElement} from "lit"
-import cautionSvg from "../../../../icons/feather-Icons/caution.svg.js"
+import alertTriangleSvg from "../../../../icons/feather/alert-triangle.svg.js"
 import closeIconSvg from "../../../../icons/material-design/close-icon.svg.js"
 import {mixinStyles} from "../../../framework/mixins/mixin-styles.js"
 import namakaSuspendUserCss from "./namaka-suspend-user.css.js"
@@ -12,7 +12,7 @@ export class NamakaSuspendUser extends LitElement {
 				<div class="border-b">
 					<div class="heading">
 						<div class="heading__text">
-							<div class="info">${cautionSvg}</div>
+							<div class="info">${alertTriangleSvg}</div>
 							<h1 class="title" part="title">
 								<slot name="title">Title</slot>	
 							</h1>

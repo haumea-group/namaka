@@ -9,9 +9,10 @@ import {randomComment, randomSubject} from "../../../toolbox/randomly.js"
 import {makeCommentingModel} from "../../models/commenting/commenting-model.js"
 import {FiveStarState, renderFiveStarRating} from "../common/five-stars/render-five-star-display.js"
 
-import binSvg from "../../../icons/feather/bin.svg.js"
+import trash2Svg from "../../../icons/feather/trash2.svg.js"
 import infoSquareSvg from "../../../icons/tabler/info-square.svg.js"
-import dangerSvg from "../../../icons/feather/danger.svg.js"
+import alertTriangleSvg from "../../../icons/feather/alert-triangle.svg.js"
+
 import namakaReviewCommentCss from "./namaka-review-comment.css.js"
 import renderFiveStarDisplayCss from "../common/five-stars/render-five-star-display.css.js"
 
@@ -101,13 +102,13 @@ export class NamakaReviewComment extends mixinStandard<{
 					Report user
 				</button>
 				<button part="suspend">
-					${dangerSvg}
+					${alertTriangleSvg}
 					Suspend user
 				</button>
 				${deleteButtonIsAvailable
 					? html`
 						<button part="delete" @click=${archiveThisComment}>
-							${binSvg}
+							${trash2Svg}
 							Delete Review
 						</button>
 					`

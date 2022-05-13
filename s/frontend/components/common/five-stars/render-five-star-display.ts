@@ -1,4 +1,4 @@
-import starSvg from '../../../icons/iconify/star.svg.js';
+import starSvg from '../../../../icons/akar/star.svg.js';
 import { html, render, TemplateResult } from 'lit';
 import './render-five-star-display.css.js';
 export interface FiveStarState {

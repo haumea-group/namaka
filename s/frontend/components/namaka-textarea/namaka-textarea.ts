@@ -1,12 +1,12 @@
 
 import {html, LitElement} from "lit"
 import {property} from "lit/decorators.js"
+import alertTriangleSvg from "../../../icons/feather/alert-triangle.svg.js"
 
 import {Validator} from "../../../toolbox/darkvalley.js"
 import {mixinStyles} from "../../framework/mixins/mixin-styles.js"
 
 import NamakaTextareaCss from "./namaka-textarea.css.js"
-import dangerSvg from "../../../icons/feather/danger.svg.js"
 
 @mixinStyles(NamakaTextareaCss)
 export class NamakaTextarea extends LitElement {
@@ -39,7 +39,7 @@ export class NamakaTextarea extends LitElement {
 			></textarea>
 			<div>
 				<span class=${valid ? "valid" : "invalid"}>
-					${dangerSvg}
+					${alertTriangleSvg}
 				</span>
 				${!valid
 					? html`

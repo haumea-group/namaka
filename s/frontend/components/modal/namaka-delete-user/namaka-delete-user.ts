@@ -1,5 +1,5 @@
 import {html, LitElement} from "lit"
-import infoSvg from "../../../../icons/feather-Icons/info.svg.js"
+import infoSvg from "../../../../icons/feather/info.svg.js"
 import closeIconSvg from "../../../../icons/material-design/close-icon.svg.js"
 import {mixinStyles} from "../../../framework/mixins/mixin-styles.js"
 import namakaDeleteUserCss from "./namaka-delete-user.css.js"
