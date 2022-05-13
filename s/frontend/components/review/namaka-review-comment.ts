@@ -136,8 +136,8 @@ export class NamakaReviewComment extends mixinStandard<{
 						<button @click=${this.#postRandomComment}>Reply</button>
 					</div>
 				</div>
+				<slot name="child-slot">nested comments appear here</slot>
 			</div>
-			<slot></slot>
 			${this.showDropDown ? this.#renderDropDown() : null}
 		`
 	}
