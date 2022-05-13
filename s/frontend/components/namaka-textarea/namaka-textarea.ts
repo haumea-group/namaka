@@ -2,10 +2,11 @@
 import {html, LitElement} from "lit"
 import {property} from "lit/decorators.js"
 
+import {Validator} from "../../../toolbox/darkvalley.js"
 import {mixinStyles} from "../../framework/mixins/mixin-styles.js"
 
-import dangerSvg from "../../../icons/feather-Icons/danger.svg.js"
 import NamakaTextareaCss from "./namaka-textarea.css.js"
+import dangerSvg from "../../../icons/feather-Icons/danger.svg.js"
 
 @mixinStyles(NamakaTextareaCss)
 export class NamakaTextarea extends LitElement {
@@ -19,7 +20,7 @@ export class NamakaTextarea extends LitElement {
 	private problems: string[] = []
 
 	@property({type: Function})
-	validator = undefined as any
+	validator: Validator<string> = () => []
 
 	#handleInput = (event: Event) => {
 		const input = event.target as HTMLTextAreaElement;
