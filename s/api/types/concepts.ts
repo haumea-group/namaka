@@ -50,12 +50,12 @@ export interface TopicStats {
 }
 
 export interface BanUser {
-    userId: string
-    until: number
+	userId: string
+	until: number
 }
 
 export interface UnBanUser {
-    userId: string
+	userId: string
 }
 
 export interface CommentGet {

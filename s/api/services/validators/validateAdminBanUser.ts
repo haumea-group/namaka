@@ -4,6 +4,6 @@ import { schema } from "../../../toolbox/darkvalley.js"
 import { validateId, validateNumber } from "./validators.js"
 
 export const validateAdminBanUser = schema<BanUser>({
-  	userId: validateId,
-  	until: validateNumber,
+	userId: validateId,
+	until: validateNumber,
 })

@@ -23,7 +23,7 @@ export const makeCommentReadingService = asServiceProvider(({
 		const { topicId: topicIdString, limit, offset } = enforceValidation(rawData, validateGetCommennts)
 
 		const topicId = dbmage.Id.fromString(topicIdString)
- 
+
 		const rows = await database.tables.comments.read({
 			...dbmage.find({topicId, archived: false}),
 			offset,
