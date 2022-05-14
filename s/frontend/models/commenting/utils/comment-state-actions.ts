@@ -4,7 +4,7 @@ import {objectMap} from "@chasemoskal/snapstate"
 import {AppState} from "../../app-snap.js"
 import {User} from "../../../../api/types/auth.js"
 import {hitch} from "../../../../toolbox/hitch.js"
-import {computeCommentTree as computeNestedComments} from "./compute-nested-comments.js"
+import {computeNestedComments as computeNestedComments} from "./compute-nested-comments/compute-nested-comments.js"
 import {CommentPost, CommentEditDraft, Score, ScoreDraft} from "../../../../api/types/concepts.js"
 
 export function makeCommentStateActions({state}: {

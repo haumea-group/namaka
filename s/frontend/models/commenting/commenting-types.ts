@@ -23,3 +23,8 @@ export interface CompiledComment extends CommentCompiledParts {
 export interface NestedComment extends Omit<CompiledComment, "parentCommentId"> {
 	children: NestedComment[]
 }
+
+export type NestingExternals = {
+	users: User[]
+	scores: Score[]
+}

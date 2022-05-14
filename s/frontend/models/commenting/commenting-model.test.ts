@@ -3,7 +3,7 @@ import {Suite, expect} from "cynic"
 import {User} from "../../../api/types/auth.js"
 import {newServer, randomId} from "./testing/commenting-test-setups.js"
 
-import computeNestedCommentsTest from "./utils/compute-nested-comments.test.js"
+import computeNestedCommentsTest from "./utils/compute-nested-comments/compute-nested-comments.test.js"
 
 export function makeRegularUser(): User {
 	return {

@@ -1,10 +1,10 @@
 
 import {Suite, expect} from "cynic"
-import {User} from "../../../../api/types/auth.js"
+import {User} from "../../../../../api/types/auth.js"
 
-import {CommentPost} from "../../../../api/types/concepts.js"
-import {randomId} from "../testing/commenting-test-setups.js"
-import {computeCommentTree} from "./compute-nested-comments.js"
+import {CommentPost} from "../../../../../api/types/concepts.js"
+import {randomId} from "../../testing/commenting-test-setups.js"
+import {computeNestedComments} from "./compute-nested-comments.js"
 
 function makeUser(): User {
 	return {
@@ -45,7 +45,7 @@ export default <Suite>{
 	async "same comments come out, as went in"() {
 		const topicId = randomId()
 		const user = makeUser()
-		const tree = computeCommentTree([
+		const tree = computeNestedComments([
 			makeComment(user.id, topicId),
 			makeComment(user.id, topicId),
 			makeComment(user.id, topicId),
@@ -57,7 +57,7 @@ export default <Suite>{
 		const topicId = randomId()
 		const userA = makeUser()
 		const userB = makeUser()
-		const tree = computeCommentTree([
+		const tree = computeNestedComments([
 			makeComment(userA.id, topicId),
 			makeComment(userB.id, topicId),
 		], {users: [userA, userB], scores: []})
@@ -73,7 +73,7 @@ export default <Suite>{
 		const user = makeUser()
 		const parentComment = makeComment(user.id, topicId)
 		const childComment = makeComment(user.id, topicId, parentComment.id)
-		const tree = computeCommentTree([
+		const tree = computeNestedComments([
 			parentComment,
 			childComment,
 		], {users: [user], scores: []})
