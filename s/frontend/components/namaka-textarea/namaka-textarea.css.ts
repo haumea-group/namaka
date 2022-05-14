@@ -20,6 +20,10 @@ div {
 	align-items: center;
 }
 
+ol {
+	list-style-type: none;
+}
+
 .valid {
 	display: flex;
 	color: var(--icon-valid-color, green)

@@ -122,4 +122,16 @@ button:hover {
 	width: 14px;
 	height: 14px;
 }
+
+.nested-reply {
+	margin-left: calc(2em + 3vw)
+}
+
+@media (max-width: 600px) {
+	.outer-div {
+		flex-direction: column;
+		padding-inline: 0;
+	}
+}
+
 `

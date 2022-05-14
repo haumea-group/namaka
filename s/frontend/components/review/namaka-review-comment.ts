@@ -40,6 +40,9 @@ export class NamakaReviewComment extends mixinStandard<{
 	@property({type: String})
 	body: string = randomComment()
 
+	@property({type: Number})
+	commentCount: number = undefined as any
+
 	@property({type: String})
 	timePosted: string = "1 hour ago"
 
@@ -139,13 +142,15 @@ export class NamakaReviewComment extends mixinStandard<{
 					<p>${this.body}</p>
 					<div class="footer">
 						<p class="time-stamp">${this.timePosted}</p>
-						<span>&bull; 12 comments</span>
+						<span>&bull; ${this.commentCount} ${this.commentCount === 1 ? "comment" : "comments"}</span>
 						${this.#canPost
 							? html`<button @click=${this.#postRandomReply}>Reply</button>`
 							: null}
 					</div>
 				</div>
-				<slot name="child-slot">nested comments appear here</slot>
+			</div>
+			<div class="nested-reply" part="nested-reply">
+				<slot></slot>
 			</div>
 			${this.showDropDown ? this.#renderDropDown() : null}
 		`
