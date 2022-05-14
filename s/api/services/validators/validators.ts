@@ -8,14 +8,14 @@ export const validateId = validator(
 	regex(/^[a-z0-f]+$/),
 )
 
-export const validateSubject = validator(
+export const validateCommentSubject = validator(
 	string(),
 	minLength(1),
 	maxLength(140),
 	notAllWhitespace(),
 )
 
-export const validateBody = validator(
+export const validateCommentBody = validator(
 	string(),
 	minLength(1),
 	maxLength(580),
@@ -36,7 +36,7 @@ export const validateScoresDraft = validator(
 export const validateCommentPostDraft = schema<CommentPostDraft>({
 	topicId: validateId,
 	parentCommentId: optional(validateId),
-	subject: validateSubject,
-	body: validateBody,
+	subject: validateCommentSubject,
+	body: validateCommentBody,
 	scores: optional(validateScoresDraft),
 })
