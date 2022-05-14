@@ -83,6 +83,51 @@ export default <Suite>{
 					expect(helpers.nestedComments.length).equals(1)
 				}
 			},
+			async "comment limit doesn't cut off children"() {
+				const topicId = randomId()
+				// a user posts 10 comments, and then 10 replies on the last comment
+				{
+					const {commenting} = newServer()
+						.newUser(makeRegularUser())
+						.newBrowserTab()
+					for (let i = 0; i < 10; i++) {
+						await commenting.postComment({
+							topicId,
+							parentCommentId: undefined,
+							subject: "whatever",
+							body: "something",
+							scores: undefined,
+						})
+					}
+					const lastComment = commenting.getComments(topicId).pop()
+					if (!lastComment)
+						throw Error("no last comment")
+					for (let i = 0; i < 10; i++) {
+						await commenting.postComment({
+							topicId,
+							parentCommentId: lastComment.id,
+							subject: "whatever",
+							body: "something",
+							scores: undefined,
+						})
+					}
+					expect(commenting.getComments(topicId).length).equals(10)
+					expect(commenting.getComments(topicId).pop()?.children.length).equals(10)
+				}
+				// a second user requests to download the 15 latest comment **threads**,
+				// but should receive all of the replies
+				{
+					const {commenting} = newServer()
+						.newUser(makeRegularUser())
+						.newBrowserTab()
+					await commenting.downloadComments(topicId, {
+						limit: 15,
+						offset: 0,
+					})
+					expect(commenting.getComments(topicId).length).equals(10)
+					expect(commenting.getComments(topicId).pop()?.children.length).equals(10)
+				}
+			},
 	
 		},
 		"a logged-out user": {
