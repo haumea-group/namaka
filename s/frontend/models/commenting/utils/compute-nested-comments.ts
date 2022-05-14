@@ -11,6 +11,7 @@ type ExternalData = {
 export function computeCommentTree(allComments: CommentPost[], options: ExternalData) {
 
 	const compiledComments = allComments
+		.filter(comment => !comment.archived)
 		.map(comment => compileComment(comment, options))
 
 	const threadRoots = compiledComments

@@ -61,9 +61,6 @@ export function makeCommentStateActions({state}: {
 				throw new Error(`cannot archive missing comment ${id}`)
 			comment.archived = true
 		},
-		deleteComment(id: string) {
-			map.delete(id)
-		},
 		setScoreAspects(aspects: string[]) {
 			state.comments.scoreAspects = [...aspects]
 		},

@@ -24,9 +24,8 @@ export function makeCommentingModel({state, remote}: {
 		},
 
 		getComments(topicId: string) {
-			return state.comments.nestedComments.filter(
-				comment => !comment.archived && comment.topicId === topicId
-			)
+			return state.comments.nestedComments
+				.filter(comment => comment.topicId === topicId)
 		},
 
 		async downloadComments(topicId: string) {
