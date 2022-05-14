@@ -460,5 +460,33 @@ export default <Suite>{
 
 		}
 	},
+
+	"posting reviews with scores, and reading them": {
+		"a logged-in user": {
+
+			async "can post a review, with a score, and see it"() {
+				const {commenting} = newServer()
+					.newUser(makeRegularUser())
+					.newBrowserTab()
+				const topicId = randomId()
+				expect(commenting.getComments(topicId).length).equals(0)
+				await commenting.postComment({
+					topicId,
+					parentCommentId: undefined,
+					subject: "hello",
+					body: "world",
+					scores: [
+						{aspect: "flavor", score: 50},
+						{aspect: "presentation", score: 60},
+					],
+				})
+				expect(commenting.getComments(topicId).length).equals(1)
+				expect(commenting.getComments(topicId)[0].scoring).ok()
+				expect(commenting.getComments(topicId)[0].scoring?.scores).ok()
+				expect(commenting.getComments(topicId)[0].scoring?.average).equals(55)
+			},
+		},
+	},
+
 	utils: {computeNestedCommentsTest},
 }
