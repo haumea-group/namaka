@@ -8,15 +8,8 @@ export function recursivelyRenderComments(
 
 	return html `
 		${comments.map(comment => html`
-			<namaka-review-comment
-				.authorId="${comment.user.id}"
-				.topicId="${comment.topicId}"
-				.id="${comment.id}"
-				.subject="${comment.subject}"
-				.body="${comment.body}"
-				.commentCount=${comment.children.length}
-				.timePosted="${comment.timePosted}">
-					${recursivelyRenderComments(comment.children)}
+			<namaka-review-comment .comment="${comment}">
+				${recursivelyRenderComments(comment.children)}
 			</namaka-review-comment>
 		`)}
 	`

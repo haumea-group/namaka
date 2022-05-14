@@ -15,36 +15,25 @@ import alertTriangleSvg from "../../../icons/feather/alert-triangle.svg.js"
 
 import namakaReviewCommentCss from "./namaka-review-comment.css.js"
 import renderFiveStarDisplayCss from "../common/five-stars/render-five-star-display.css.js"
+import {NestedComment} from "../../models/commenting/commenting-types.js"
 
 @mixinStyles(namakaReviewCommentCss, renderFiveStarDisplayCss)
 export class NamakaReviewComment extends mixinStandard<{
 		auth: ReturnType<typeof makeAuthModel>
 		commenting: ReturnType<typeof makeCommentingModel>
 	}>()(LitElement) {
-	
+
+	@property({type: Object})
+	comment?: NestedComment = undefined
+
+	#getComment() {
+		if (!this.comment)
+			throw new Error("comment property is required, but not set")
+		return this.comment
+	}
+
 	@property()
 	private showDropDown: boolean = false
-
-	@property({type: String})
-	id: string = undefined as any
-
-	@property({type: String})
-	authorId: string = undefined as any
-
-	@property({type: String})
-	topicId: string = undefined as any
-
-	@property({type: String})
-	subject: string = randomSubject()
-	
-	@property({type: String})
-	body: string = randomComment()
-
-	@property({type: Number})
-	commentCount: number = undefined as any
-
-	@property({type: String})
-	timePosted: string = "1 hour ago"
 
 	get #canPost() {
 		return !!this.context.auth.user?.permissions.canPost
@@ -52,23 +41,28 @@ export class NamakaReviewComment extends mixinStandard<{
 
 	@property()
 	private fiveStarState: FiveStarState = {
-			rating: 0,
+		rating: 0,
 	}
 
 	private setFiveStarState = (state: FiveStarState) => {
-			this.fiveStarState = state
+		this.fiveStarState = state
 	}
 
 	async firstUpdated() {
-		if (!this.topicId)
-			throw new Error("topic attribute is required")
+		const comment = this.#getComment()
+		this.setFiveStarState({
+			rating: comment.scoring
+				? comment.scoring.average
+				: 0,
+		})
 	}
 
 	#postRandomReply = async() => {
 		if (this.#canPost) {
+			const {id, topicId} = this.#getComment()
 			await this.context.commenting.postComment({
-				topicId: this.topicId,
-				parentCommentId: this.id,
+				topicId: topicId,
+				parentCommentId: id,
 				subject: randomSubject(),
 				body: [randomComment(), randomComment(), randomComment()].join(" "),
 			})
@@ -80,6 +74,7 @@ export class NamakaReviewComment extends mixinStandard<{
 	}
 
 	#renderDropDown = () => {
+		const comment = this.#getComment()
 		const {user} = this.context.auth
 
 		const isUserLoggedIn = !!user
@@ -87,7 +82,7 @@ export class NamakaReviewComment extends mixinStandard<{
 			= !!user?.permissions.canArchiveAnyComment
 
 		const userIsTheAuthorOfThisComment = isUserLoggedIn
-			&& user?.id === this.authorId
+			&& user?.id === comment.user.id
 
 		const deleteButtonIsAvailable = userCanArchiveAnyComment
 			|| userIsTheAuthorOfThisComment
@@ -120,8 +115,8 @@ export class NamakaReviewComment extends mixinStandard<{
 	`}
 
 	render() {
-		const user = this.authorId && this.context.commenting.getUser(this.authorId)
-		if (!user)
+		const comment = this.#getComment()
+		if (!comment.user)
 			return null
 		return html`
 			<div class="outer-div">
@@ -129,20 +124,22 @@ export class NamakaReviewComment extends mixinStandard<{
 				<div class="inner-div">
 					<div class="header">
 						<div class="header__txt">
-							<p>${user.profile.nickname}</p>
-							<span>&bull; ${this.subject}</span>
+							<p>${comment.user.profile.nickname}</p>
+							<span>&bull; ${comment.subject}</span>
 						</div>
 						<div class="header__btn">
-							${renderFiveStarRating(this.fiveStarState, this.setFiveStarState)}
+							${comment.scoring
+								? renderFiveStarRating(this.fiveStarState, this.setFiveStarState)
+								: undefined}
 							<button @click=${this.#toggleDropDown} class="drop-down__btn">
 								&bull;&bull;&bull;
 							</button>
 						</div>
 					</div>
-					<p>${this.body}</p>
+					<p>${comment.body}</p>
 					<div class="footer">
-						<p class="time-stamp">${this.timePosted}</p>
-						<span>&bull; ${this.commentCount} ${this.commentCount === 1 ? "comment" : "comments"}</span>
+						<p class="time-stamp">${comment.timePosted}</p>
+						<span>&bull; ${comment.children.length} ${comment.children.length === 1 ? "comment" : "comments"}</span>
 						${this.#canPost
 							? html`<button @click=${this.#postRandomReply}>Reply</button>`
 							: null}
