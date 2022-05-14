@@ -2,8 +2,8 @@
 import * as dbmage from "dbmage"
 import * as renraku from "renraku"
 
+import {makeAppSnap} from "../../app-snap.js"
 import {makeApi} from "../../../../api/api.js"
-import {AppState, makeAppSnap} from "../../app-snap.js"
 import {mockUserFetching} from "./mock-user-fetching.js"
 import {AppRemote} from "../../../../api/types/remote.js"
 import {makeCommentingModel} from "../commenting-model.js"
@@ -36,26 +36,14 @@ export function newServer() {
 				})
 			return {
 				newBrowserTab: () => {
-					const {state, readable} = makeAppSnap()
+					const {state} = makeAppSnap()
 					state.user = user
+					if (user)
+						state.users = [...state.users, user]
 					const commenting = makeCommentingModel({state, remote})
-					return withTestingHelpers(readable, commenting)
+					return {commenting}
 				}
 			}
 		}
-	}
-}
-
-function withTestingHelpers(
-		state: AppState,
-		commenting: ReturnType<typeof makeCommentingModel>,
-	) {
-	return {
-		commenting,
-		helpers: {
-			get nestedComments() {
-				return state.nestedComments
-			},
-		},
 	}
 }

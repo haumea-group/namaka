@@ -2,10 +2,10 @@
 import {objectMap} from "@chasemoskal/snapstate"
 
 import {AppState} from "../../app-snap.js"
-import {hitch} from "../../../../toolbox/hitch.js"
-import {CommentPost, CommentEditDraft} from "../../../../api/types/concepts.js"
-import {computeCommentTree as computeNestedComments} from "./compute-nested-comments.js"
 import {User} from "../../../../api/types/auth.js"
+import {hitch} from "../../../../toolbox/hitch.js"
+import {computeNestedComments as computeNestedComments} from "./compute-nested-comments/compute-nested-comments.js"
+import {CommentPost, CommentEditDraft, Score, ScoreDraft} from "../../../../api/types/concepts.js"
 
 export function makeCommentStateActions({state}: {
 		state: AppState
@@ -14,8 +14,12 @@ export function makeCommentStateActions({state}: {
 	const map = new Map<string, CommentPost>()
 
 	function recomputeNestedComments() {
-		state.nestedComments = computeNestedComments(
-			[...map.values()]
+		state.comments.nestedComments = computeNestedComments(
+			[...map.values()],
+			{
+				scores: [...state.comments.scores],
+				users: [...state.users],
+			},
 		)
 	}
 
@@ -39,8 +43,17 @@ export function makeCommentStateActions({state}: {
 				throw new Error(`cannot edit missing comment ${draft.id}`)
 			comment.body = draft.body
 			comment.subject = draft.subject
-			// TODO scoring???
-			// comment.rating = draft.rating
+		},
+		updateScores(commentId: string, scoreDrafts: undefined | ScoreDraft[]) {
+			const scores: undefined | Score[] = scoreDrafts
+				? scoreDrafts.map(s => ({...s, commentId} as Score))
+				: undefined
+			const existingScoresRemoved = state.comments.scores
+				.filter(s => s.commentId !== commentId)
+			state.comments.scores = [
+				...existingScoresRemoved,
+				...(scores ?scores :[]),
+			]
 		},
 		archiveComment(id: string) {
 			const comment = map.get(id)
@@ -48,8 +61,8 @@ export function makeCommentStateActions({state}: {
 				throw new Error(`cannot archive missing comment ${id}`)
 			comment.archived = true
 		},
-		deleteComment(id: string) {
-			map.delete(id)
+		setScoreAspects(aspects: string[]) {
+			state.comments.scoreAspects = [...aspects]
 		},
 	}
 

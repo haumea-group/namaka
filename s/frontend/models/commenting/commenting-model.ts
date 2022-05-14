@@ -24,13 +24,12 @@ export function makeCommentingModel({state, remote}: {
 		},
 
 		getComments(topicId: string) {
-			return state.nestedComments.filter(
-				comment => comment.topicId === topicId && !comment.archived
-			)
+			return state.comments.nestedComments
+				.filter(comment => comment.topicId === topicId)
 		},
 
 		async downloadComments(topicId: string) {
-			const {comments, users} = await remote.commentReading.getComments({
+			const {comments, users} = await remote.commentReading.fetchComments({
 				topicId,
 				limit: 100,
 				offset: 0,
@@ -42,6 +41,7 @@ export function makeCommentingModel({state, remote}: {
 		async postComment(draft: CommentPostDraft) {
 			const {comment, scores} = await remote.commentWriting.postComment(draft)
 			stateActions.addComments([comment])
+			stateActions.updateScores(comment.id, scores)
 			return comment
 		},
 
@@ -53,6 +53,7 @@ export function makeCommentingModel({state, remote}: {
 		async editComment(draft: CommentEditDraft) {
 			await remote.commentWriting.editComment(draft)
 			stateActions.updateComment(draft)
+			stateActions.updateScores(draft.id, draft.scores)
 		},
 
 		async archiveComment(id: string) {

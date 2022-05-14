@@ -32,6 +32,10 @@ export class NamakaComments extends mixinStandard<{
 			parentCommentId: undefined,
 			subject: randomSubject(),
 			body: [randomComment(), randomComment(), randomComment()].join(" "),
+			scores: [
+				{aspect: "flavor", score: Math.random() * 100},
+				{aspect: "presentation", score: Math.random() * 100},
+			],
 		})
 	}
 

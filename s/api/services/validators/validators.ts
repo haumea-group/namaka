@@ -1,6 +1,6 @@
 
 import {CommentPostDraft} from "../../types/concepts.js"
-import {maxLength, minLength, number, length, schema, string, validator, regex, notAllWhitespace, max, min, optional, object, objectValues} from "../../../toolbox/darkvalley.js"
+import {maxLength, minLength, number, length, schema, string, validator, regex, notAllWhitespace, max, min, optional, object, objectValues, array, each} from "../../../toolbox/darkvalley.js"
 
 export const validateId = validator(
 	string(),
@@ -28,9 +28,19 @@ export const validateScore = validator(
 	max(100),
 )
 
+export const validateScoreAspect = validator(
+	string(),
+	minLength(1),
+	maxLength(64),
+	notAllWhitespace(),
+)
+
 export const validateScoresDraft = validator(
-	object(),
-	objectValues(validateScore),
+	array(),
+	each(schema({
+		score: validateScore,
+		aspect: validateScoreAspect,
+	})),
 )
 
 export const validateCommentPostDraft = schema<CommentPostDraft>({

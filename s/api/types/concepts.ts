@@ -1,14 +1,13 @@
 
 export interface CommentPost {
-	archived: boolean
 	id: string
+	topicId: string
 	parentCommentId: undefined | string
 	authorId: string
-	topicId: string
 	timePosted: number
 	subject: string
 	body: string
-	rating?: number
+	archived: boolean
 }
 
 export interface Score {

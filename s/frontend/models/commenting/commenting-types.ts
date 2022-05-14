@@ -1,7 +1,30 @@
 
 import {User} from "../../../api/types/auth.js"
-import {CommentPost} from "../../../api/types/concepts.js"
+import {Score} from "../../../api/types/concepts.js"
 
-export interface NestedComment extends CommentPost {
+export interface CommentCompiledParts {
+	user: User
+	scoring: undefined | {
+		scores: Score[]
+		average: number
+	}
+}
+
+export interface CompiledComment extends CommentCompiledParts {
+	id: string
+	topicId: string
+	parentCommentId: undefined | string
+	timePosted: number
+	subject: string
+	body: string
+	archived: boolean
+}
+
+export interface NestedComment extends Omit<CompiledComment, "parentCommentId"> {
 	children: NestedComment[]
+}
+
+export type NestingExternals = {
+	users: User[]
+	scores: Score[]
 }
