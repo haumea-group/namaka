@@ -5,15 +5,15 @@ import * as renraku from "renraku"
 import {User} from "../types/auth.js"
 import {rowToComment} from "./utils/row-to-comment.js"
 import {enforceValidation} from "./utils/enforce-validation.js"
-import {validateGetCommennts} from "./validators/validateGetComments.js"
-import {CommentPost, Score, TopicStats, CommentGet} from "../types/concepts.js"
+import {validateGetCommennts} from "./validators/validate-fetch-threads-params.js"
+import {CommentPost, Score, TopicStats, FetchThreadsParams} from "../types/concepts.js"
 import {asServiceProvider} from "./utils/as-service-provider.js"
 
 export const makeCommentReadingService = asServiceProvider(({
 		database, scoreAspects, fetchUsers,
 	}) => ({}) => ({
 
-	async getComments(rawData : CommentGet): Promise<{
+	async getComments(rawData: FetchThreadsParams): Promise<{
 			users: User[]
 			scores: Score[]
 			scoreAspects: string[]

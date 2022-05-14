@@ -3,10 +3,10 @@ import * as dbmage from "dbmage"
 import * as renraku from "renraku"
 
 import {Auth} from "../types/auth.js"
-import {BanUser, UnBanUser} from "../types/concepts.js"
+import {BanParams, UnbanParams} from "../types/concepts.js"
 import {enforceValidation} from "./utils/enforce-validation.js"
-import {validateAdminBanUser} from "./validators/validateAdminBanUser.js"
-import {validateAdminUnBanUser} from "./validators/validateAdminUnbanUser.js"
+import {validateBanParams} from "./validators/validate-ban-params.js"
+import {validateUnbanParams} from "./validators/validate-admin-unban-params.js"
 import {asServiceProvider} from "./utils/as-service-provider.js"
 
 export const makeAdminActionsService = asServiceProvider(({
@@ -15,14 +15,14 @@ export const makeAdminActionsService = asServiceProvider(({
 		user,
 	}) => ({
 
-	async banUser(rawData: BanUser): Promise<void> {
-		const { userId, until } = enforceValidation(rawData, validateAdminBanUser)
+	async banUser(rawData: BanParams): Promise<void> {
+		const { userId, until } = enforceValidation(rawData, validateBanParams)
 		
 		throw new Error("todo implement")
 	},
 
-	async unbanUser(rawData: UnBanUser) {
-		const data = enforceValidation(rawData, validateAdminUnBanUser)
+	async unbanUser(rawData: UnbanParams) {
+		const data = enforceValidation(rawData, validateUnbanParams)
 		const {userId} = data
 
 		throw new Error("todo implement")

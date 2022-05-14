@@ -1,6 +1,6 @@
-import {CommentEditDraft} from "../../types/concepts.js"
-import { schema, optional} from "../../../toolbox/darkvalley.js"
 
+import {schema} from "../../../toolbox/darkvalley.js"
+import {CommentEditDraft} from "../../types/concepts.js"
 import {validateId, validateBody, validateSubject} from "./validators.js"
 
 export const validateCommentEditDraft = schema<CommentEditDraft>({

@@ -49,16 +49,16 @@ export interface TopicStats {
 	}
 }
 
-export interface BanUser {
+export interface BanParams {
 	userId: string
 	until: number
 }
 
-export interface UnBanUser {
+export interface UnbanParams {
 	userId: string
 }
 
-export interface CommentGet {
+export interface FetchThreadsParams {
 	topicId: string
 	limit: number
 	offset: number
