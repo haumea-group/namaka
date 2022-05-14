@@ -48,3 +48,18 @@ export interface TopicStats {
 		scoreAspectAverages: {[key: string]: number}
 	}
 }
+
+export interface BanParams {
+	userId: string
+	until: number
+}
+
+export interface UnbanParams {
+	userId: string
+}
+
+export interface FetchThreadsParams {
+	topicId: string
+	limit: number
+	offset: number
+}

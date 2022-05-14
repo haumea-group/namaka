@@ -4,23 +4,23 @@ import * as renraku from "renraku"
 
 import {User} from "../types/auth.js"
 import {rowToComment} from "./utils/row-to-comment.js"
-import {CommentPost, Score, TopicStats} from "../types/concepts.js"
+import {enforceValidation} from "./utils/enforce-validation.js"
+import {validateGetCommennts} from "./validators/validate-fetch-threads-params.js"
+import {CommentPost, Score, TopicStats, FetchThreadsParams} from "../types/concepts.js"
 import {asServiceProvider} from "./utils/as-service-provider.js"
 
 export const makeCommentReadingService = asServiceProvider(({
 		database, scoreAspects, fetchUsers,
 	}) => ({}) => ({
 
-	async getComments({topicId: topicIdString, limit, offset}: {
-			topicId: string
-			limit: number
-			offset: number
-		}): Promise<{
+	async getComments(rawData: FetchThreadsParams): Promise<{
 			users: User[]
 			scores: Score[]
 			scoreAspects: string[]
 			comments: CommentPost[]
 		}> {
+
+		const { topicId: topicIdString, limit, offset } = enforceValidation(rawData, validateGetCommennts)
 
 		const topicId = dbmage.Id.fromString(topicIdString)
 

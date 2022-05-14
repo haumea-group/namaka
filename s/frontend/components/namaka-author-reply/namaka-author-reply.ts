@@ -2,7 +2,7 @@
 import {html, LitElement} from "lit"
 import namakaAuthorReplyCss from "./namaka-author-reply.css.js"
 import {mixinStyles} from "../../framework/mixins/mixin-styles.js"
-import {validateBody} from "../../../api/services/validators/validators.js"
+import {validateCommentBody} from "../../../api/services/validators/validators.js"
 
 @mixinStyles(namakaAuthorReplyCss)
 export class NamakaAuthorReply extends LitElement {
@@ -13,7 +13,7 @@ export class NamakaAuthorReply extends LitElement {
 				<img src="/assets/profile-img.png" />
 				<div class="inner-div">
 					<p>You may reply to this review here (This will be made public)</p>
-					<namaka-textarea .validator=${validateBody} maxCharacters="580"></namaka-textarea>
+					<namaka-textarea .validator=${validateCommentBody} maxCharacters="580"></namaka-textarea>
 					<div class="action-btns">
 						<button>Reply</button>
 						<button>Close</button>
