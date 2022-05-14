@@ -9,7 +9,7 @@ export function recursivelyRenderComments(
 	return html `
 		${comments.map(comment => html`
 			<namaka-review-comment
-				.authorId="${comment.authorId}"
+				.authorId="${comment.user.id}"
 				.topicId="${comment.topicId}"
 				.id="${comment.id}"
 				.subject="${comment.subject}"

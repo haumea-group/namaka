@@ -45,26 +45,26 @@ export default <Suite>{
 		"a logged-in user": {
 
 			async "can post a comment, and see it appear"() {
-				const {commenting, helpers} = newServer()
+				const {commenting} = newServer()
 					.newUser(makeRegularUser())
 					.newBrowserTab()
 				const topicId = randomId()
-				expect(helpers.nestedComments.length).equals(0)
+				expect(commenting.getComments(topicId).length).equals(0)
 				await commenting.postComment({
 					topicId,
 					parentCommentId: undefined,
 					subject: "hello",
 					body: "world",
 				})
-				expect(helpers.nestedComments.length).equals(1)
-				expect(helpers.nestedComments[0].subject).equals("hello")
-				expect(helpers.nestedComments[0].body).equals("world")
+				expect(commenting.getComments(topicId).length).equals(1)
+				expect(commenting.getComments(topicId)[0].subject).equals("hello")
+				expect(commenting.getComments(topicId)[0].body).equals("world")
 			},
 			async "can post a comment that another user can see"() {
 				const server = newServer()
 				const topicId = randomId()
 				{
-					const {commenting, helpers} = server
+					const {commenting} = server
 						.newUser(makeRegularUser())
 						.newBrowserTab()
 					await commenting.postComment({
@@ -73,22 +73,66 @@ export default <Suite>{
 						subject: "hello",
 						body: "world",
 					})
-					expect(helpers.nestedComments.length).equals(1)
+					expect(commenting.getComments(topicId).length).equals(1)
 				}
 				{
-					const {commenting, helpers} = server
+					const {commenting} = server
 						.newUser(makeRegularUser())
 						.newBrowserTab()
 					await commenting.downloadComments(topicId)
-					expect(helpers.nestedComments.length).equals(1)
+					expect(commenting.getComments(topicId).length).equals(1)
 				}
 			},
-	
+			async "can post and see a reply"() {
+				const {commenting} = newServer()
+					.newUser(makeRegularUser())
+					.newBrowserTab()
+				const topicId = randomId()
+				expect(commenting.getComments(topicId).length).equals(0)
+				const comment1 = await commenting.postComment({
+					topicId,
+					parentCommentId: undefined,
+					subject: "hello",
+					body: "world",
+				})
+				await commenting.postComment({
+					topicId,
+					parentCommentId: comment1.id,
+					subject: "hello2",
+					body: "world2",
+				})
+				// thread comment
+				expect(commenting.getComments(topicId).length).equals(1)
+				expect(commenting.getComments(topicId)[0].subject).equals("hello")
+				expect(commenting.getComments(topicId)[0].body).equals("world")
+				// child comment
+				expect(commenting.getComments(topicId)[0].children.length).equals(1)
+				expect(commenting.getComments(topicId)[0].children[0].subject).equals("hello2")
+				expect(commenting.getComments(topicId)[0].children[0].body).equals("world2")
+			},
+			async "sees the user object attached to a comment"() {
+				const user = makeRegularUser()
+				const {commenting} = newServer()
+					.newUser(user)
+					.newBrowserTab()
+				const topicId = randomId()
+				expect(commenting.getComments(topicId).length).equals(0)
+				await commenting.postComment({
+					topicId,
+					parentCommentId: undefined,
+					subject: "hello",
+					body: "world",
+				})
+				expect(commenting.getComments(topicId).length).equals(1)
+				expect(commenting.getComments(topicId)[0].user).ok()
+				expect(commenting.getComments(topicId)[0].user.id).equals(user.id)
+			},
+
 		},
 		"a logged-out user": {
 
 			async "cannot post a comment, and does not see it appear"() {
-				const {commenting, helpers} = newServer()
+				const {commenting} = newServer()
 					.newUser(undefined)
 					.newBrowserTab()
 				const topicId = randomId()
@@ -98,13 +142,13 @@ export default <Suite>{
 					subject: "hello",
 					body: "world",
 				})).throws()
-				expect(helpers.nestedComments.length).equals(0)
+				expect(commenting.getComments(topicId).length).equals(0)
 			},
 			async "can comment posted by other users"() {
 				const server = newServer()
 				const topicId = randomId()
 				{
-					const {commenting, helpers} = server
+					const {commenting} = server
 						.newUser(makeRegularUser())
 						.newBrowserTab()
 					await commenting.postComment({
@@ -113,7 +157,7 @@ export default <Suite>{
 						subject: "hello",
 						body: "world",
 					})
-					expect(helpers.nestedComments.length).equals(1)
+					expect(commenting.getComments(topicId).length).equals(1)
 				}
 				{
 					const {commenting} = server
@@ -131,7 +175,7 @@ export default <Suite>{
 				const server = newServer()
 				const topicId = randomId()
 				{
-					const {commenting, helpers} = server
+					const {commenting} = server
 						.newUser(makeRegularUser())
 						.newBrowserTab()
 					await commenting.postComment({
@@ -140,14 +184,14 @@ export default <Suite>{
 						subject: "hello",
 						body: "world",
 					})
-					expect(helpers.nestedComments.length).equals(1)
+					expect(commenting.getComments(topicId).length).equals(1)
 				}
 				{
-					const {commenting, helpers} = server
+					const {commenting} = server
 						.newUser(undefined)
 						.newBrowserTab()
 					await commenting.downloadComments(topicId)
-					expect(helpers.nestedComments.length).equals(1)
+					expect(commenting.getComments(topicId).length).equals(1)
 				}
 			},
 
@@ -232,11 +276,11 @@ export default <Suite>{
 					})
 				}
 				{
-					const {commenting, helpers} = server
+					const {commenting} = server
 						.newUser(makeRegularUser())
 						.newBrowserTab()
 					await commenting.downloadComments(topicId)
-					expect(helpers.nestedComments.length).equals(1)
+					expect(commenting.getComments(topicId).length).equals(1)
 					const [comment] = commenting.getComments(topicId)
 					await expect(async() => commenting.editComment({
 						id: comment.id,
@@ -296,7 +340,7 @@ export default <Suite>{
 					})
 				}
 				{
-					const {commenting, helpers} = server
+					const {commenting} = server
 						.newUser(makeAdminUser())
 						.newBrowserTab()
 					await commenting.downloadComments(topicId)
