@@ -5,22 +5,26 @@ import * as renraku from "renraku"
 import {User} from "../types/auth.js"
 import {rowToComment} from "./utils/row-to-comment.js"
 import {enforceValidation} from "./utils/enforce-validation.js"
+import {asServiceProvider} from "./utils/as-service-provider.js"
 import {validateGetCommennts} from "./validators/validate-fetch-threads-params.js"
 import {CommentPost, Score, TopicStats, FetchThreadsParams} from "../types/concepts.js"
-import {asServiceProvider} from "./utils/as-service-provider.js"
 
 export const makeCommentReadingService = asServiceProvider(({
 		database, scoreAspects, fetchUsers,
 	}) => ({}) => ({
 
-	async getComments(rawData: FetchThreadsParams): Promise<{
+	async fetchComments(rawData: FetchThreadsParams): Promise<{
 			users: User[]
 			scores: Score[]
 			scoreAspects: string[]
 			comments: CommentPost[]
 		}> {
 
-		const { topicId: topicIdString, limit, offset } = enforceValidation(rawData, validateGetCommennts)
+		const {
+			limit,
+			offset,
+			topicId: topicIdString,
+		} = enforceValidation(rawData, validateGetCommennts)
 
 		const topicId = dbmage.Id.fromString(topicIdString)
 
@@ -38,7 +42,7 @@ export const makeCommentReadingService = asServiceProvider(({
 				comments: [],
 				users: [],
 				scores: [],
-				scoreAspects: [],
+				scoreAspects,
 			}
 
 		const userIds = new Map<string, dbmage.Id>()
@@ -72,6 +76,10 @@ export const makeCommentReadingService = asServiceProvider(({
 
 		const comments = rows.map(rowToComment)
 		return {comments, users, scores, scoreAspects}
+	},
+
+	async fetchScoreAspects() {
+		return {scoreAspects}
 	},
 
 	async getTopicStats({topicId: topicIdString}: {topicId: string}): Promise<TopicStats> {
