@@ -9,7 +9,7 @@ import {rowToComment} from "./utils/row-to-comment.js"
 import {newCommentRow} from "./utils/new-comment-row.js"
 import {enforceValidation} from "./utils/enforce-validation.js"
 import {asServiceProvider} from "./utils/as-service-provider.js"
-import {validateCommentPostDraft} from "./validators/validators.js"
+import {validateCommentPostDraft, validateId} from "./validators/validators.js"
 import {CommentPostDraft, CommentPost, CommentEditDraft, Score} from "../types/concepts.js"
 
 export const makeCommentWritingService = asServiceProvider(({
@@ -99,11 +99,15 @@ export const makeCommentWritingService = asServiceProvider(({
 		})
 	},
 
-	async archiveComment(id: string): Promise<void> {
-		const specificComment = await database.tables.comments.readOne(find({id: dbmage.Id.fromString(id)}))
+	async archiveComment(rawId: string): Promise<void> {
+		const id = enforceValidation(rawId, validateId)
 
 		if (!user)
-			throw new renraku.ApiError(403, "cannot archive, not logged in")	
+			throw new renraku.ApiError(403, "cannot archive, not logged in")
+
+		const specificComment = await database.tables.comments.readOne(
+			find({id: dbmage.Id.fromString(id)})
+		)
 
 		if (!specificComment)
 			throw new renraku.ApiError(404, "cannot archive, comment not found")

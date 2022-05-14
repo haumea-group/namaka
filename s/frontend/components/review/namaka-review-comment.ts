@@ -89,7 +89,8 @@ export class NamakaReviewComment extends mixinStandard<{
 
 		const archiveThisComment = async() => {
 			this.#toggleDropDown()
-			return this.context.commenting.archiveComment(this.id)
+			const comment = this.#getComment()
+			return this.context.commenting.archiveComment(comment.id)
 		}
 
 		return html`
