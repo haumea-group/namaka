@@ -6,13 +6,15 @@ import {NamakaDemoAuth} from "./frontend/components/demo-auth/namaka-demo-auth.j
 import {NamakaReview} from "./frontend/components/common/five-stars/namaka-review.js"
 import {NamakaTextarea} from "./frontend/components/namaka-textarea/namaka-textarea.js"
 
-export declare module JSX {
-	interface IntrinsicElements {
-		"namaka-banned-users": NamakaBannedUsers
-		"namaka-comments": NamakaComments
-		"namaka-demo-auth": NamakaDemoAuth
-		"namaka-modals": NamakaModals
-		"namaka-textarea": NamakaTextarea
-		"namaka-review": NamakaReview
+declare global {
+	namespace JSX {
+		interface IntrinsicElements {
+			"namaka-banned-users": NamakaBannedUsers
+			"namaka-comments": NamakaComments
+			"namaka-demo-auth": NamakaDemoAuth
+			"namaka-modals": NamakaModals
+			"namaka-textarea": NamakaTextarea
+			"namaka-review": NamakaReview
+		}
 	}
 }
