@@ -14,119 +14,51 @@ namaka is a fullstack user comments and 5-star reviews system for web applicatio
 
 <br/>
 
-# <center>Components Description</center>
+## components and renderers
 
-`<namaka-textarea>`
+### first-class components
 
-- A text input component that has validation functionanlity.
-  
+- `<namaka-board>`  
+  a board that lists comments or reviews. every comment or review "belongs" to a board. each board has a "load more" button at the bottom, and sorting functionality.
 
----
+- `<namaka-comment>`  
+  display a comment. it might be a thread or a reply. it might also have a score (we call comments that have scores "reviews").
 
-`<namaka-author-reply> ` (probably should be renamed to `<namaka-reply>`)
+- `<namaka-write-a-comment>`  
+  a user can author a new comment or review thread, and post it onto the board.
 
-- A componet that provides the interface to reply a thread.
-  
-- A component that displays the reply to a thread.
-  
+- `<namaka-edit-comment>`  
+  a user can edit an existing comment or review, whether it be a thread, or a reply.
 
----
+- `<namaka-board-stats>`  
+  display interesting statistics about the given board's comments and reviews. statistics like the average review score, total number of comments, things like that.
 
-`<namaka-my-review>` (probably should be renamed to `<namaka-user-stats>`)
+- `<namaka-bans>`  
+  displays a list of banned users (for admins).
 
-- A component that displays the overall rating of a user (also display the breakdown of the rating?).
-  
+- `<namaka-demo>`  
+  helps developers test and work on namaka in "mock mode", without a real auth integration.
 
----
+### modal components
 
-`<namaka-horizontal-review>` (probably should be wrapped inside `<namaka-user-stats>`)
+- `<namaka-modals>`  
+  in-viewport popups. these grab the user's attention, and requires them to take an action before allowing them to get back to the rest of the page.
 
-- A component that displays user 5 star rating in form of a horizontal progress bar.
-  
+- `<namaka-ban>`  
+  confirm whether you want to ban a specific user, and provide a timeframe for how long you want the ban to last.
 
----
+- `<namaka-unban>`  
+  confirm whether you want to repeal a ban for a specific user.
 
-`<namaka-empty-review>` (should probably be wrapped in `<namaka-comment-list>` as a representation of it's empty state)
+- `<namaka-archive-comment>`  
+  confirm whether you want to archive a specific comment. this appears to delete a comment.
 
-- A component that communicates an *empty comment* state.
-  
+### utility components
 
----
+- `<namaka-textarea>`  
+  a smart textarea input with validation functionality.
 
-`<namaka-edit-review>`
+### render functions
 
-- A component that allows the author of a review to edit their review text and 5 star rating.
-  
-
----
-
-`<namaka-banned-users>` (should probably be renamed to `<namaka-bans>`, although the current name is kinda more descriptive)
-
-- A component that displays the list of banned users for an admin user.
-  
-- Allows the admin user to search, filter and unban a user.
-  
-
----
-
-`<namaka-comments>` (should probably be renamed to `<namaka-comment-list>`)
-
-- A component that display the list of review threads(or comments) available for a user.
-  
-- Allow a user to load more comments/threads, and sort them.
-  
-
----
-
-`<namaka-unban-user>`
-
-- A component that displays a modal that prompts an admin user before they unban a user.
-  
-
----
-
-`<namaka-suspend-user>`
-
-- A component that displays a modal that prompts an admin user before they suspend a user.
-  
-- Allows the admin user select how long the suspension will last.
-  
-
----
-
-`<namaka-delete-user>`
-
-- A component that displays a modal that prompts an admin user before they delete a user.
-  do we really want this? I doubt
-  
-
----
-
-`<namaka-delete-review>`
-
-- A component that displays a modal that prompts a user (admin / review author) before they delete a review.
-  
-
----
-
-`<namaka-review-comment>` (should probably be renamed to `<namaka-comment>`)
-
-- A component that displays the review given to a user, also referred to as the root comment/thread
-  
-
----
-
-`<namaka-demo-auth>` (should probably be renamed to `<namaka-auth>`)
-
-- A component that handles authentication of a user (admin / regular user).
-  
-- Allows a user to login and log out. It's state determines the view and controls avaliable to a user
-  
-
----
-
-`<namaka-post-review>` (not avalable yet??)
-
-- A component (a modal most likely) that allows users to post a review
-  
-  - type text and leave a five-star rating
+- `renderFiveStarDisplay`  
+  renders a 0 to 100 score as a five-star-rating.
