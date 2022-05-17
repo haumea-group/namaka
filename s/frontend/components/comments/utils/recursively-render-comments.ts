@@ -8,9 +8,9 @@ export function recursivelyRenderComments(
 
 	return html `
 		${comments.map(comment => html`
-			<namaka-review-comment .comment="${comment}">
+			<namaka-comment .comment="${comment}">
 				${recursivelyRenderComments(comment.children)}
-			</namaka-review-comment>
+			</namaka-comment>
 		`)}
 	`
 }

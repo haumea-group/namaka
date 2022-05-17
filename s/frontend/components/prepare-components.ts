@@ -14,15 +14,15 @@ import {NamakaEditReview} from "./reviews/edit-review/index.js"
 import {themeComponents} from "../framework/theme-components.js"
 import {NamakaEmptyReview} from "./reviews/empty-review/index.js"
 import {NamakaTextarea} from "./namaka-textarea/namaka-textarea.js"
-import {NamakaReviewComment} from "./review/namaka-review-comment.js"
 import {NamakaUnbanUser} from "./modal/namaka-unban-user/namaka-unban-user.js"
-import {NamakaAddReview} from './modal/namaka-add-review/namaka-add-review.js'
+import {NamakaWriteAComment} from './modal/namaka-write-a-comment/namaka-write-a-comment.js'
 import {NamakaAuthorReply} from "./namaka-author-reply/namaka-author-reply.js"
 import {NamakaHorizontalReview} from "./reviews/horizontal-five-star-review/index.js"
 import {NamakaDeleteReview} from "./modal/namaka-delete-review/namaka-delete-review.js"
 
 import themeCss from "./theme.css.js"
 import {NamakaReview} from "./common/five-stars/namaka-review.js";
+import {NamakaComment} from './review/namaka-comment.js'
 
 export function prepareComponents({
 		modals,
@@ -48,9 +48,9 @@ export function prepareComponents({
 		NamakaSuspendUser,
 		NamakaDeleteUser,
 		NamakaDeleteReview,
-		NamakaAddReview,
 		NamakaBoardStats,
-		NamakaReviewComment: NamakaReviewComment
+		NamakaWriteAComment,
+		NamakaComment: NamakaComment
 			.withContext({modals, auth, commenting})
 			.withSubscriptions(subscribe),
 		NamakaDemoAuth: NamakaDemoAuth

@@ -15,12 +15,12 @@ import trash2Svg from "../../../icons/feather/trash2.svg.js"
 import infoSquareSvg from "../../../icons/tabler/info-square.svg.js"
 import alertTriangleSvg from "../../../icons/feather/alert-triangle.svg.js"
 
-import namakaReviewCommentCss from "./namaka-review-comment.css.js"
+import namakaCommentCss from "./namaka-comment.css.js"
 import renderFiveStarDisplayCss from "../common/five-stars/render-five-star-display.css.js"
 import {reportUserModalView} from "../modals/views/report-user/report-user-modal-view.js"
 
-@mixinStyles(namakaReviewCommentCss, renderFiveStarDisplayCss)
-export class NamakaReviewComment extends mixinStandard<{
+@mixinStyles(namakaCommentCss, renderFiveStarDisplayCss)
+export class NamakaComment extends mixinStandard<{
 		modals: ModalControls
 		auth: ReturnType<typeof makeAuthModel>
 		commenting: ReturnType<typeof makeCommentingModel>
