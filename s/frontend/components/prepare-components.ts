@@ -52,7 +52,7 @@ export function prepareComponents({
 			.withContext({modals, auth, commenting})
 			.withSubscriptions(subscribe),
 		NamakaDemoAuth: NamakaDemoAuth
-			.withContext({modals, auth})
+			.withContext({modals, auth,commenting})
 			.withSubscriptions(subscribe),
 		NamakaComments: NamakaComments
 			.withContext({auth, commenting})
