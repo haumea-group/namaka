@@ -14,17 +14,7 @@ export default css`
 	display: flex;
 	justify-content: space-between;
 	align-items: center;
-}
-
-.close {
-	width: 30px;
-	height: 30px;
-	background-color: #fff;
-	border-radius: 50%;
-	display: flex;
-	justify-content: center;
-	align-items: center;
-	border: 0.5px solid rgba(0,0,0,0.1);
+	margin-bottom: 15px;
 }
 
 .close img {
@@ -70,25 +60,10 @@ export default css`
 	margin-bottom: 10px;
 }
 
-/* textarea {
-	resize: none;
-	width: 100%;
-	border: 1px solid #DDE2E5;
-	margin-top: 10px;
-	border-radius: 20px;
-	padding: 20px;
-	background: transparent;
-	color: #fff;
-}
-
-textarea:focus {
-	outline: none;
-} */
-
 button {
 	border: none;
-	margin-top: 30px;
-	padding: 5px;
+	background: transparent;
+	color: rgba(255,255,255,0.8);
 }
 
 `

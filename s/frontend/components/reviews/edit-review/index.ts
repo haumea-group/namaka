@@ -1,15 +1,12 @@
 
 import {html, LitElement} from "lit"
 import {property} from "lit/decorators.js"
-
 import {mixinStyles} from "../../../framework/mixins/mixin-styles.js"
 import {FiveStarState, renderFiveStarRating} from "../../common/five-stars/render-five-star-display.js"
-
 import starSvg from "../../../../icons/tabler/star.svg.js"
-import closeIconSvg from "../../../../icons/material-design/close-icon.svg.js"
-
 import namakaEditReviewCss from "./index.css.js"
 import renderFiveStarDisplayCss from "../../common/five-stars/render-five-star-display.css.js"
+import xCircleSvg from "../../../../icons/feather/x-circle.svg.js"
 
 @mixinStyles(namakaEditReviewCss, renderFiveStarDisplayCss)
 export class NamakaEditReview extends LitElement {
@@ -28,7 +25,7 @@ export class NamakaEditReview extends LitElement {
 				<div class="box1">
 					<div class="heading">
 						<span part="title" part="title">Edit Review</span>
-						<div class="close">${closeIconSvg}</div>
+						<div>${xCircleSvg}</div>
 					</div>
 					<p class="gray">Share your experience with the ValorExchange community, to help make better decisions</p>
 				</div>
@@ -38,13 +35,6 @@ export class NamakaEditReview extends LitElement {
 							<p part="subtitle">Share Review?</p>
 							<p class="gray">Please choose a review to rate this particular user.</p>
 						</div>
-						<!-- <div class="flex">
-							${starSvg}
-							${starSvg}
-							${starSvg}
-							${starSvg}
-							${starSvg}
-						</div> -->
 						${renderFiveStarRating(this.fiveStarState, this.setFiveStarState)}
 					</div>
 					<div class="edit-feedback">

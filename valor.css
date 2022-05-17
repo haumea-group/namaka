@@ -3,7 +3,10 @@ namaka-delete-user::part(container),
 namaka-suspend-user::part(container),
 namaka-unban-user::part(container),
 namaka-edit-review::part(container),
-namaka-add-review::part(container) {	
+namaka-add-review::part(container),
+namaka-author-reply::part(container),	
+namaka-empty-review::part(container),	
+namaka-board-stats::part(container) {	
 	border-radius: 25px;
 	background: #fff;
 	padding: 30px;
@@ -34,7 +37,9 @@ namaka-unban-user::part(dangerBtn) {
 namaka-delete-review::part(cancelBtn),
 namaka-delete-user::part(cancelBtn),
 namaka-suspend-user::part(cancelBtn),
-namaka-unban-user::part(cancelBtn) {
+namaka-unban-user::part(cancelBtn),
+namaka-author-reply::part(cancelBtn),
+namaka-empty-review::part(cancelBtn) {
 	background: #FFFAF0;
 	color: #FFAF02;
 }
@@ -46,7 +51,8 @@ namaka-unban-user::part(name) {
 
 namaka-unban-user::part(pryColor),
 namaka-edit-review::part(pryColor),
-namaka-add-review::part(pryColor) {
+namaka-add-review::part(pryColor),
+namaka-author-reply::part(pryColor) {
 	background: #FFAF02;
 	color: #fff;
 }
@@ -54,7 +60,8 @@ namaka-add-review::part(pryColor) {
 namaka-delete-review::part(button),
 namaka-delete-user::part(button),
 namaka-suspend-user::part(button),
-namaka-unban-user::part(button) {
+namaka-unban-user::part(button),
+namaka-author-reply::part(button) {
 	padding: 15px 0;
 	width: 100%;
 	max-width: 180px;
@@ -91,6 +98,25 @@ namaka-add-review::part(bold) {
 namaka-banned-users::part(container) {
 	border: 1px solid #F5F5FA;
 	box-shadow: 0px 1px 5px rgba(0, 0, 0, 0.05);
+	background: white;
+	color: #1A202C;
+}
+
+namaka-banned-users::part(search) {
+	border-color: #EEEEEE;
+	border-radius: 5px;
+	width: 100%;
+	max-width: 435px;
+}
+
+namaka-banned-users::part(text),
+namaka-banned-users::part(filter) {
+	color: #000;
+	width: 100%
+}
+
+namaka-banned-users td {
+	border-bottom: 1px solid #000;
 }
 
 namaka-banned-users::part(tableHeading) {

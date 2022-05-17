@@ -47,9 +47,14 @@ export default css`
 	border-radius: 5px;
 }
 
+.heading svg {
+	width: 14px;
+	height: 14px;
+}
+
 input {
 	background: transparent;
-	color: #fff;
+	color: rgba(255,255,255,0.8);
 	border: none;
 }
 
@@ -105,9 +110,15 @@ td .box {
 	align-items: center;
 }
 
+td .delete svg {
+	width: 25px;
+	height: 25px;
+}
+
 td {
-	padding: 15px 5px;
+	padding: 10px;
 	border-bottom: 1px solid rgba(255,255,255,0.5);
+	text-align: left;
 }
 
 td .box img {
