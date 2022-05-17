@@ -83,7 +83,7 @@ export const makeCommentReadingService = asServiceProvider(({
 	},
 
 	async getTopicStats({topicId: topicIdString}: {topicId: string}): Promise<TopicStats> {
-		throw new Error("todo implement")
+		console.warn("TODO implement 'getTopicStats'")
 		return {
 			topicId: topicIdString,
 			numberOfRootComments: 10,
