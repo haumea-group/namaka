@@ -14,6 +14,7 @@ export default css`
 	display: flex;
 	justify-content: space-between;
 	align-items: center;
+	margin-bottom: 15px;
 }
 
 .heading__text {
@@ -35,17 +36,6 @@ export default css`
 p {
 	font-size: 16px;
 	line-height: 24px;
-}
-
-.close {
-	width: 30px;
-	height: 30px;
-	background-color: #fff;
-	border-radius: 50%;
-	display: flex;
-	justify-content: center;
-	align-items: center;
-	border: 0.5px solid rgba(0,0,0,0.1);
 }
 
 .gray {
@@ -84,7 +74,8 @@ p {
 
 .action button {
 	border: none;
-	padding: 5px;
+	background: transparent;
+	color: rgba(255,255,255,0.8);
 }
 
 .action button:first-child {

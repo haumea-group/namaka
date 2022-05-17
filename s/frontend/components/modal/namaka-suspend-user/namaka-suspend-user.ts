@@ -1,6 +1,6 @@
 import {html, LitElement} from "lit"
 import alertTriangleSvg from "../../../../icons/feather/alert-triangle.svg.js"
-import closeIconSvg from "../../../../icons/material-design/close-icon.svg.js"
+import xCircleSvg from "../../../../icons/feather/x-circle.svg.js"
 import {mixinStyles} from "../../../framework/mixins/mixin-styles.js"
 import namakaSuspendUserCss from "./namaka-suspend-user.css.js"
 
@@ -17,7 +17,7 @@ export class NamakaSuspendUser extends LitElement {
 								<slot name="title">Title</slot>	
 							</h1>
 						</div>
-						<div class="close">${closeIconSvg}</div>
+						<div>${xCircleSvg}</div>
 					</div>
 					<p class="gray">
 						<slot name="text">You can edit this text</slot>	

@@ -16,12 +16,14 @@ export class NamakaBannedUsers extends LitElement {
 
 				<div class="container">
 					<div class="heading">
-						<div class="search">
-							${searchSvg}
-							<input type="text" />
+						<div class="search" part="search">
+							<div part="icon">
+								${searchSvg}
+							</div>
+							<input type="text" part="text" />
 						</div>
 						<div class="filter">
-							<select name="filter" id="filter">
+							<select name="filter" id="filter" part="filter">
 								<option value="name">Name</option>
 							</select>
 						</div>
@@ -54,7 +56,9 @@ export class NamakaBannedUsers extends LitElement {
 									<td>5hr:12mins</td>
 									<td>11:42PM, 12th January 2022</td>
 									<td>
-										${deleteSvg}
+										<div class="delete">
+											${deleteSvg}
+										</div>
 									</td>
 								</tr>
 								<tr>
@@ -71,7 +75,9 @@ export class NamakaBannedUsers extends LitElement {
 									<td>5hr:12mins</td>
 									<td>11:42PM, 12th January 2022</td>
 									<td>
-										${deleteSvg}
+										<div class="delete">
+											${deleteSvg}
+										</div>
 									</td>
 								</tr>
 								<tr>
@@ -88,7 +94,9 @@ export class NamakaBannedUsers extends LitElement {
 									<td>5hr:12mins</td>
 									<td>11:42PM, 12th January 2022</td>
 									<td>
-										${deleteSvg}
+										<div class="delete">
+											${deleteSvg}
+										</div>
 									</td>
 								</tr>
 								<tr>
@@ -105,7 +113,9 @@ export class NamakaBannedUsers extends LitElement {
 									<td>5hr:12mins</td>
 									<td>11:42PM, 12th January 2022</td>
 									<td>
-										${deleteSvg}
+										<div class="delete">
+											${deleteSvg}
+										</div>
 									</td>
 								</tr>
 							</tbody>
