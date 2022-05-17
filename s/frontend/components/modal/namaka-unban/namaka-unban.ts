@@ -2,10 +2,10 @@ import {html, LitElement} from "lit"
 import xCircleSvg from "../../../../icons/feather/x-circle.svg.js"
 import infoCircleSvg from "../../../../icons/tabler/info-circle.svg.js"
 import {mixinStyles} from "../../../framework/mixins/mixin-styles.js"
-import namakaUnbanUserCss from "./namaka-unban-user.css.js"
+import NamakaUnbanCss from "./namaka-unban.css.js"
 
-@mixinStyles(namakaUnbanUserCss())
-export class NamakaUnbanUser extends LitElement {
+@mixinStyles(NamakaUnbanCss())
+export class NamakaUnban extends LitElement {
 	render() {
 		return html`
 			<div class="ban-user" part="container">

@@ -1,9 +1,9 @@
 
-namaka-delete-user::part(container),
-namaka-suspend-user::part(container),
-namaka-unban-user::part(container),
+namaka-ban::part(container),
+namaka-unban::part(container),
 namaka-edit-comment::part(container),
 namaka-author-reply::part(container),	
+namaka-archive-comment::part(container),
 namaka-board-stats::part(container),
 namaka-write-a-comment::part(container) {	
 	border-radius: 25px;
@@ -11,53 +11,48 @@ namaka-write-a-comment::part(container) {
 	padding: 30px;
 }
 
-namaka-delete-review::part(title),
-namaka-delete-user::part(title),
-namaka-suspend-user::part(title),
-namaka-unban-user::part(title) {
+namaka-archive-comment::part(title),
+namaka-ban::part(title),
+namaka-unban::part(title) {
 	color: #000;
 }
 
-namaka-delete-review::part(deleteBtn),
-namaka-delete-user::part(deleteBtn),
-namaka-suspend-user::part(deleteBtn) {
+namaka-archive-comment::part(deleteBtn),
+namaka-ban::part(deleteBtn) {
 	background: #EB5757;
 	color: #fff;
 }
 
-namaka-delete-review::part(dangerBtn),
-namaka-delete-user::part(dangerBtn),
-namaka-suspend-user::part(dangerBtn),
-namaka-unban-user::part(dangerBtn) {
+namaka-archive-comment::part(dangerBtn),
+namaka-ban::part(dangerBtn),
+namaka-unban::part(dangerBtn) {
 	background: #EB5757;
 	color: #fff;
 }
 
-namaka-delete-review::part(cancelBtn),
-namaka-delete-user::part(cancelBtn),
-namaka-suspend-user::part(cancelBtn),
-namaka-unban-user::part(cancelBtn),
+namaka-archive-comment::part(cancelBtn),
+namaka-ban::part(cancelBtn),
+namaka-unban::part(cancelBtn),
 namaka-author-reply::part(cancelBtn){
 	background: #FFFAF0;
 	color: #FFAF02;
 }
 
-namaka-unban-user::part(name) {
+namaka-unban::part(name) {
 	color: #000;
 	font-weight: bold;
 }
 
-namaka-unban-user::part(pryColor),
+namaka-unban::part(pryColor),
 namaka-edit-comment::part(pryColor),
 namaka-write-a-comment::part(pryColor) {
 	background: #FFAF02;
 	color: #fff;
 }
 
-namaka-delete-review::part(button),
-namaka-delete-user::part(button),
-namaka-suspend-user::part(button),
-namaka-unban-user::part(button),
+namaka-archive-comment::part(button),
+namaka-ban::part(button),
+namaka-unban::part(button),
 namaka-author-reply::part(button) {
 	padding: 15px 0;
 	width: 100%;
@@ -129,9 +124,8 @@ namaka-bans::part(tag) {
 	border-radius: 10px;
 }
 
-namaka-suspend-user::part(label),
-namaka-delete-review::part(bold),
-namaka-suspend-user::part(bold),
-namaka-delete-user::part(bold) {
+namaka-ban::part(label),
+namaka-archive-comment::part(bold),
+namaka-ban::part(bold) {
 	color: #000;
 }
