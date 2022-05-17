@@ -1,11 +1,13 @@
-import {html, LitElement} from "lit"
-import alertTriangleSvg from "../../../../icons/feather/alert-triangle.svg.js"
-import xCircleSvg from "../../../../icons/feather/x-circle.svg.js"
-import {mixinStyles} from "../../../framework/mixins/mixin-styles.js"
-import namakaSuspendUserCss from "./namaka-suspend-user.css.js"
 
-@mixinStyles(namakaSuspendUserCss)
-export class NamakaSuspendUser extends LitElement {
+import {html, LitElement} from "lit"
+
+import {mixinStyles} from "../../../framework/mixins/mixin-styles.js"
+
+import NamakaBanCss from "./namaka-ban.css.js"
+import xCircleSvg from "../../../../icons/feather/x-circle.svg.js"
+import alertTriangleSvg from "../../../../icons/feather/alert-triangle.svg.js"
+@mixinStyles(NamakaBanCss)
+export class NamakaBan extends LitElement {
 	render() {
 		return html`
 			<div class="suspend-user" part='container'>
@@ -48,6 +50,6 @@ export class NamakaSuspendUser extends LitElement {
 					</button>
 				</div>
 			</div>
-        `
-    }
+		`
+	}
 }

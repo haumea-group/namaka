@@ -1,11 +1,13 @@
-import {html, LitElement} from "lit"
-import xCircleSvg from "../../../../icons/feather/x-circle.svg.js"
-import infoCircleSvg from "../../../../icons/tabler/info-circle.svg.js"
-import {mixinStyles} from "../../../framework/mixins/mixin-styles.js"
-import namakaDeleteReviewCss from "./namaka-delete-review.css.js"
 
-@mixinStyles(namakaDeleteReviewCss)
-export class NamakaDeleteReview extends LitElement {
+import {html, LitElement} from "lit"
+
+import {mixinStyles} from "../../../framework/mixins/mixin-styles.js"
+
+import xCircleSvg from "../../../../icons/feather/x-circle.svg.js"
+import NamakaArchiveCommentCss from "./namaka-archive-comment.css.js"
+import infoCircleSvg from "../../../../icons/tabler/info-circle.svg.js"
+@mixinStyles(NamakaArchiveCommentCss)
+export class NamakaArchiveComment extends LitElement {
 	render() {
 		return html`
 			<div class="delete-review" part='container'>
@@ -33,6 +35,6 @@ export class NamakaDeleteReview extends LitElement {
 					</button>
 				</div>
 			</div>
-        `
-    }
+			`
+		}
 }
