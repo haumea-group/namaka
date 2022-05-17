@@ -1,18 +1,30 @@
 import {html, LitElement} from "lit"
-import closeIconSvg from "../../../../icons/material-design/close-icon.svg.js"
+import {property} from "lit/decorators.js"
+import {FiveStarState, renderFiveStarRating} from "../../common/five-stars/render-five-star-display.js"
+import xCircleSvg from "../../../../icons/feather/x-circle.svg.js"
 import starSvg from "../../../../icons/tabler/star.svg.js"
 import {mixinStyles} from "../../../framework/mixins/mixin-styles.js"
 import namakaAddReviewCss from "./namaka-add-review.css.js"
+import renderFiveStarDisplayCss from "../../common/five-stars/render-five-star-display.css.js"
 
-@mixinStyles(namakaAddReviewCss)
+@mixinStyles(namakaAddReviewCss, renderFiveStarDisplayCss)
 export class NamakaAddReview extends LitElement {
+	@property()
+	private fiveStarState: FiveStarState = {
+			rating: 0,
+	}
+
+	private setFiveStarState = (state: FiveStarState) => {
+			this.fiveStarState = state
+	}
+
 	render() {
 		return html`
 			<div class="add-review" part="container">
 				<div class="box1">
 					<div class="heading">
 						<span part="title" part="title">Leave a Review</span>
-						<div class="close">${closeIconSvg}</div>
+						<div>${xCircleSvg}</div>
 					</div>
 					<p class="gray">Share your experience with the ValorExchange community, to help make better decisions</p>
 				</div>
@@ -22,13 +34,7 @@ export class NamakaAddReview extends LitElement {
 							<p part="subtitle">Share Review?</p>
 							<p class="gray">Please choose a review to rate this particular user.</p>
 						</div>
-						<div class="flex">
-							${starSvg}
-							${starSvg}
-							${starSvg}
-							${starSvg}
-							${starSvg}
-						</div>
+						${renderFiveStarRating(this.fiveStarState, this.setFiveStarState)}
 					</div>
 					<div class="edit-feedback">
 						<p><span part="bold">Leave a feedback to this user</span> <span class="gray">(This will be made public)</span></p>
