@@ -2,9 +2,11 @@
 import {html, LitElement} from "lit"
 import {property} from "lit/decorators.js"
 
+import {ModalControls} from "../modals/modal-types.js"
 import {makeAuthModel} from "../../models/auth/auth-model.js"
 import {mixinStyles} from "../../framework/mixins/mixin-styles.js"
 import {mixinStandard} from "../../framework/mixins/mixin-standard.js"
+import {NestedComment} from "../../models/commenting/commenting-types.js"
 import {randomComment, randomSubject} from "../../../toolbox/randomly.js"
 import {makeCommentingModel} from "../../models/commenting/commenting-model.js"
 import {FiveStarState, renderFiveStarRating} from "../common/five-stars/render-five-star-display.js"
@@ -15,10 +17,11 @@ import alertTriangleSvg from "../../../icons/feather/alert-triangle.svg.js"
 
 import namakaReviewCommentCss from "./namaka-review-comment.css.js"
 import renderFiveStarDisplayCss from "../common/five-stars/render-five-star-display.css.js"
-import {NestedComment} from "../../models/commenting/commenting-types.js"
+import {reportUserModalView} from "../modals/views/report-user/report-user-modal-view.js"
 
 @mixinStyles(namakaReviewCommentCss, renderFiveStarDisplayCss)
 export class NamakaReviewComment extends mixinStandard<{
+		modals: ModalControls
 		auth: ReturnType<typeof makeAuthModel>
 		commenting: ReturnType<typeof makeCommentingModel>
 	}>()(LitElement) {
@@ -73,6 +76,13 @@ export class NamakaReviewComment extends mixinStandard<{
 		this.showDropDown = !this.showDropDown
 	}
 
+	#promptReportModal = () => {
+		const {modals} = this.context
+		const comment = this.#getComment()
+		this.#toggleDropDown()
+		reportUserModalView({modals, comment})
+	}
+
 	#renderDropDown = () => {
 		const comment = this.#getComment()
 		const {user} = this.context.auth
@@ -96,9 +106,11 @@ export class NamakaReviewComment extends mixinStandard<{
 		return html`
 			<div class="blanket" @click=${this.#toggleDropDown}></div>
 			<div class="drop-down" part="drop-down">
-				<button part="report">
-					${infoSquareSvg}
-					Report user
+				<button
+					part="report"
+					@click=${this.#promptReportModal}>
+						${infoSquareSvg}
+						Report user
 				</button>
 				<button part="suspend">
 					${alertTriangleSvg}

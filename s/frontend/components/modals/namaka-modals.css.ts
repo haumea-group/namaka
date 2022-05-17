@@ -10,7 +10,7 @@ export default css`
 
 .blanket {
 	position: fixed;
-	background: #0008;
+	background: var(--modal-blanket-background, #000a);
 	backdrop-filter: blur(1em);
 	inset: 0;
 }
@@ -21,9 +21,7 @@ export default css`
 	left: 0;
 	right: 0;
 	margin: 10vh auto;
-	border: 1px solid;
-	width: 100%;
-	max-width: 32em;
+	width: max-content;
 }
 
 `
