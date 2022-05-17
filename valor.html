@@ -13,6 +13,7 @@
 	<script defer src="/node_modules/es-module-shims/dist/es-module-shims.js"></script>
 </head>
 <body>
+	<namaka-modals></namaka-modals>
 	<div class="layout">
 		<h1>
 			<strong>⁓ 🌑 namaka ⁓</strong>
@@ -62,21 +63,7 @@
 			<namaka-banned-users></namaka-banned-users>
 		</div>
 
-		<div class="review-summary">
-			<!-- <namaka-my-review></namaka-my-review> -->
-			<div class="flex-container">
-				<div class="wrapper">
-					<div>
-						<span class="big">4.6</span>
-						<span class="small">/5</span>
-					</div>
-
-					<p>Based on 1,321 reviews</p>
-				</div>
-
-				<namaka-horizontal-review></namaka-horizontal-review>
-			</div>
-		</div>
+		<namaka-board-stats></namaka-board-stats>
 
 		<div class="all-comments">
 			<div class="heading">
@@ -97,6 +84,7 @@
 			<namaka-edit-review></namaka-edit-review>
 		</div>
 
+		<namaka-review></namaka-review>
 		<namaka-add-review></namaka-add-review>
 	</div>
 </body>

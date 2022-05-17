@@ -4,9 +4,6 @@ export default css`
 
 :host {
 	display: block;
-	max-width: 50em;
-	border: 1px solid #DDE2E5;
-	border-radius: 4px;
 	text-align: left;
 }
 
@@ -16,8 +13,11 @@ img {
 
 .outer-div {
 	display: flex;
-	padding: 1rem;
+	padding: 20px;
 	gap: 2rem;
+	max-width: 540px;
+	border: 1px solid #DDE2E5;
+	border-radius: 4px;
 }
 
 .inner-div {
@@ -28,6 +28,12 @@ img {
 
 .action-btns {
 	margin-top: 1.5rem;
+}
+
+button {
+	border: none;
+	background: transparent;
+	color: rgba(255,255,255,0.8);
 }
 
 `

@@ -2,7 +2,7 @@ import {css} from "lit"
 export default css`
 
 :host {
-	color: #000;
+	/* color: #000; */
 }
 
 .empty-review {
@@ -24,6 +24,7 @@ export default css`
 	font-size: 20px;
 	line-height: 24px;
 	font-weight: 700;
+	/* color: rgba(255,255,255,0.5); */
 }
 
 select {

@@ -9,14 +9,14 @@ export class NamakaAuthorReply extends LitElement {
 	
 	render() {
 		return html`
-			<div class="outer-div">
+			<div class="outer-div" part="container">
 				<img src="/assets/profile-img.png" />
 				<div class="inner-div">
 					<p>You may reply to this review here (This will be made public)</p>
 					<namaka-textarea .validator=${validateCommentBody} maxCharacters="580"></namaka-textarea>
 					<div class="action-btns">
-						<button>Reply</button>
-						<button>Close</button>
+						<button part="pryColor button">Reply</button>
+						<button part="cancelBtn button">Close</button>
 					</div>
 				</div>
 			</div>

@@ -7,7 +7,7 @@ import namakaEmptyReviewCss from "./index.css.js"
 export class NamakaEmptyReview extends LitElement {
 	render() {
 		return html`
-			<div class="empty-review">
+			<div class="empty-review" part="container">
 				<div class="heading">
 					<span class="bold">Reviews</span>
 					<select name="tag" id="tag">

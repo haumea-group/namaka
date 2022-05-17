@@ -1,3 +1,4 @@
+import {NamakaBoardStats} from './namaka-board-stats/namaka-board-stats.js'
 import {NamakaSuspendUser} from './modal/namaka-suspend-user/namaka-suspend-user.js'
 import {NamakaDeleteUser} from './modal/namaka-delete-user/namaka-delete-user.js'
 import {NamakaAddReview} from './modal/namaka-add-review/namaka-add-review.js'
@@ -46,6 +47,7 @@ export function prepareComponents({
 		NamakaDeleteUser,
 		NamakaDeleteReview,
 		NamakaAddReview,
+		NamakaBoardStats,
 		NamakaReviewComment: NamakaReviewComment
 			.withContext({modals, auth, commenting})
 			.withSubscriptions(subscribe),
