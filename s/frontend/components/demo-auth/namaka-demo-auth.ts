@@ -5,6 +5,7 @@ import {ModalControls} from "../modals/modal-types.js"
 import {makeAuthModel} from "../../models/auth/auth-model.js"
 import {mixinStyles} from "../../framework/mixins/mixin-styles.js"
 import {mixinStandard} from "../../framework/mixins/mixin-standard.js"
+import { makeCommentingModel } from "../../models/commenting/commenting-model.js"
 
 import namakaDemoAuthCss from "./namaka-demo-auth.css.js"
 
@@ -12,6 +13,7 @@ import namakaDemoAuthCss from "./namaka-demo-auth.css.js"
 export class NamakaDemoAuth extends mixinStandard<{
 		auth: ReturnType<typeof makeAuthModel>
 		modals: ModalControls
+		commenting: ReturnType<typeof makeCommentingModel>
 	}>()(LitElement) {
 
 	#modalTestCount = 0
@@ -26,6 +28,10 @@ export class NamakaDemoAuth extends mixinStandard<{
 			`,
 		})
 		console.log("modal", n, "returned", result)
+	}
+	#clearLocalStorage = () => {
+		window.localStorage.clear()
+		this.context.commenting.wipeComments()
 	}
 
 	render() {
@@ -60,6 +66,10 @@ export class NamakaDemoAuth extends mixinStandard<{
 						${isAdmin ?"(admin)" :null}
 						"${auth.user.profile.nickname}"
 					</p>
+					<button
+					@click=${this.#clearLocalStorage}>
+						wipe database
+					</button>
 				`
 				: html`<p>logged out</p>`}
 

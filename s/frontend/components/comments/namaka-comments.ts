@@ -39,11 +39,6 @@ export class NamakaComments extends mixinStandard<{
 		})
 	}
 
-	#clearLocalStorage = () => {
-		window.localStorage.clear()
-		this.context.commenting.wipeComments()
-	}
-
 	render() {
 		if (!this.topic)
 			return null
@@ -59,10 +54,6 @@ export class NamakaComments extends mixinStandard<{
 					@click=${this.#postRandomComment}
 					?disabled=${!isLoggedIn}>
 						post a comment
-				</button>
-				<button
-					@click=${this.#clearLocalStorage}>
-						wipe database
 				</button>
 			</div>
 			${recursivelyRenderComments(comments)}
