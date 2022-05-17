@@ -11,6 +11,7 @@ namaka is a fullstack user comments and 5-star reviews system for web applicatio
 🛠️ typescript library and nodejs server  
 🌐 universal web components  
 💖 made with open source love, just for you  
+👨‍🏫 [**namaka devboard**](https://github.com/orgs/haumea-group/projects/3/views/1) *for tracking work and priorities*  
 
 <br/>
 
