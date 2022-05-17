@@ -29,4 +29,17 @@ button:hover, select:hover {
 	cursor: pointer;
 }
 
+.box {
+	width: 100%;
+	max-width: 300px;
+	margin: 0 auto;
+	display: flex;
+	flex-direction: column;
+	justify-content: center;
+	align-items: center;
+	margin: 1rem auto;
+	padding: 1.5rem 0;
+	text-align-center;
+}
+
 `

@@ -6,10 +6,10 @@ import {makeAuthModel} from "../../models/auth/auth-model.js"
 import {mixinStyles} from "../../framework/mixins/mixin-styles.js"
 import {mixinStandard} from "../../framework/mixins/mixin-standard.js"
 
-import namakaDemoAuthCss from "./namaka-demo-auth.css.js"
+import NamakaDemoCss from "./namaka-demo.css.js"
 
-@mixinStyles(namakaDemoAuthCss)
-export class NamakaDemoAuth extends mixinStandard<{
+@mixinStyles(NamakaDemoCss)
+export class NamakaDemo extends mixinStandard<{
 		auth: ReturnType<typeof makeAuthModel>
 		modals: ModalControls
 	}>()(LitElement) {
