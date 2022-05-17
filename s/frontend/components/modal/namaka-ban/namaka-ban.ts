@@ -50,6 +50,6 @@ export class NamakaBan extends LitElement {
 					</button>
 				</div>
 			</div>
-        `
-    }
+		`
+	}
 }
