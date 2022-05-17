@@ -5,7 +5,7 @@ export default css`
 	width: 100%;
 	max-width: 540px;
 	margin: 0 auto;
-	padding: 20px;	
+	padding: 20px;
 	text-align: left;
 	border: 1px solid #DDE2E5;
 }
@@ -14,6 +14,7 @@ export default css`
 	display: flex;
 	justify-content: space-between;
 	align-items: center;
+	margin-bottom: 15px;
 }
 
 .heading__text {
@@ -37,17 +38,6 @@ p {
 	line-height: 24px;
 }
 
-.close {
-	width: 30px;
-	height: 30px;
-	background-color: #fff;
-	border-radius: 50%;
-	display: flex;
-	justify-content: center;
-	align-items: center;
-	border: 0.5px solid rgba(0,0,0,0.1);
-}
-
 .gray {
 	color: #777E90;
 }
@@ -68,7 +58,8 @@ p {
 
 .action button {
 	border: none;
-	padding: 5px;
+	background: transparent;
+	color: rgba(255,255,255,0.8);
 }
 
 .action button:first-child {
