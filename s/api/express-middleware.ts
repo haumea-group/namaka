@@ -48,7 +48,8 @@ export async function expressMiddleware({
 			res.setHeader("Content-Type", "text/plain; charset=utf-8")
 			res.statusCode = 200
 			res.end(Date.now().toString())
-		}else {
+		}
+		else {
 			const userIntegration = await authUser(req)
 			const meta: Meta = {
 				user: userIntegration
