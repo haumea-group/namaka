@@ -65,16 +65,9 @@
 
 		<namaka-board-stats></namaka-board-stats>
 
-		<div class="all-comments">
-			<div class="heading">
-				<h1 class="title">My reviews</h1>
-				<select name="tag" id="tag">
-					<option value="mostRecent">Most Recent</option>
-					<option value="all">All</option>
-				</select>
-			</div>
-			<namaka-load-more></namaka-load-more>
-		</div>
+		<namaka-board>
+			<h1 slot="header__text">My Reviews</h1>
+		</namaka-board>
 
 		<div class="empty-review">
 			<namaka-empty-review></namaka-empty-review>
@@ -84,12 +77,7 @@
 			<namaka-edit-comment></namaka-edit-comment>
 		</div>
 
-<<<<<<< HEAD
-		<namaka-review></namaka-review>
-		<namaka-add-review></namaka-add-review>
-=======
 		<namaka-write-a-comment></namaka-write-a-comment>
->>>>>>> fe81768 (rename: namaka-comment namaka-write-a-review)
 	</div>
 </body>
 </html>

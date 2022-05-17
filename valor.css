@@ -1,16 +1,11 @@
-namaka-delete-review::part(container),
+
 namaka-delete-user::part(container),
 namaka-suspend-user::part(container),
 namaka-unban-user::part(container),
 namaka-edit-comment::part(container),
-<<<<<<< HEAD
-namaka-add-review::part(container),
 namaka-author-reply::part(container),	
-namaka-empty-review::part(container),	
-namaka-board-stats::part(container) {	
-=======
+namaka-board-stats::part(container),
 namaka-write-a-comment::part(container) {	
->>>>>>> fe81768 (rename: namaka-comment namaka-write-a-review)
 	border-radius: 25px;
 	background: #fff;
 	padding: 30px;
@@ -42,8 +37,7 @@ namaka-delete-review::part(cancelBtn),
 namaka-delete-user::part(cancelBtn),
 namaka-suspend-user::part(cancelBtn),
 namaka-unban-user::part(cancelBtn),
-namaka-author-reply::part(cancelBtn),
-namaka-empty-review::part(cancelBtn) {
+namaka-author-reply::part(cancelBtn){
 	background: #FFFAF0;
 	color: #FFAF02;
 }
@@ -55,12 +49,7 @@ namaka-unban-user::part(name) {
 
 namaka-unban-user::part(pryColor),
 namaka-edit-comment::part(pryColor),
-<<<<<<< HEAD
-namaka-add-review::part(pryColor),
-namaka-author-reply::part(pryColor) {
-=======
 namaka-write-a-comment::part(pryColor) {
->>>>>>> fe81768 (rename: namaka-comment namaka-write-a-review)
 	background: #FFAF02;
 	color: #fff;
 }
