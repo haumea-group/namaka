@@ -1,15 +1,16 @@
 
 import {html, LitElement} from "lit"
 import {property} from "lit/decorators.js"
+
 import {mixinStyles} from "../../../framework/mixins/mixin-styles.js"
 import {FiveStarState, renderFiveStarRating} from "../../common/five-stars/render-five-star-display.js"
-import starSvg from "../../../../icons/tabler/star.svg.js"
-import namakaEditReviewCss from "./index.css.js"
-import renderFiveStarDisplayCss from "../../common/five-stars/render-five-star-display.css.js"
-import xCircleSvg from "../../../../icons/feather/x-circle.svg.js"
 
-@mixinStyles(namakaEditReviewCss, renderFiveStarDisplayCss)
-export class NamakaEditReview extends LitElement {
+import NamakaEditCommentCss from "./index.css.js"
+import xCircleSvg from "../../../../icons/feather/x-circle.svg.js"
+import renderFiveStarDisplayCss from "../../common/five-stars/render-five-star-display.css.js"
+
+@mixinStyles(NamakaEditCommentCss, renderFiveStarDisplayCss)
+export class NamakaEditComment extends LitElement {
 	@property()
 	private fiveStarState: FiveStarState = {
 			rating: 0,
@@ -39,7 +40,7 @@ export class NamakaEditReview extends LitElement {
 					</div>
 					<div class="edit-feedback">
 						<p><span part="bold">Edit your feedback to this user</span> <span class="gray">(This will be made public)</span></p>
-						<namaka-text-input></namaka-text-input	xt-input>
+						<namaka-textarea></namaka-textarea>
 						<!-- <textarea name="message" id="message" rows="10"></textarea> -->
 					</div>
 					<button part="pryColor">Submit</button>

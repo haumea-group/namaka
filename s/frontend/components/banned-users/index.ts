@@ -5,7 +5,7 @@ import {mixinStyles} from "../../framework/mixins/mixin-styles.js"
 import namakaLoadMoreCss from "./index.css.js"
 
 @mixinStyles(namakaLoadMoreCss)
-export class NamakaBannedUsers extends LitElement {
+export class NamakaBans extends LitElement {
 	render() {
 		return html`
 			<div class="banned-users" part="container">

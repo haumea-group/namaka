@@ -1,12 +1,11 @@
-namaka-delete-review::part(container),
+
 namaka-delete-user::part(container),
 namaka-suspend-user::part(container),
 namaka-unban-user::part(container),
-namaka-edit-review::part(container),
-namaka-add-review::part(container),
+namaka-edit-comment::part(container),
 namaka-author-reply::part(container),	
-namaka-empty-review::part(container),	
-namaka-board-stats::part(container) {	
+namaka-board-stats::part(container),
+namaka-write-a-comment::part(container) {	
 	border-radius: 25px;
 	background: #fff;
 	padding: 30px;
@@ -38,8 +37,7 @@ namaka-delete-review::part(cancelBtn),
 namaka-delete-user::part(cancelBtn),
 namaka-suspend-user::part(cancelBtn),
 namaka-unban-user::part(cancelBtn),
-namaka-author-reply::part(cancelBtn),
-namaka-empty-review::part(cancelBtn) {
+namaka-author-reply::part(cancelBtn){
 	background: #FFFAF0;
 	color: #FFAF02;
 }
@@ -50,9 +48,8 @@ namaka-unban-user::part(name) {
 }
 
 namaka-unban-user::part(pryColor),
-namaka-edit-review::part(pryColor),
-namaka-add-review::part(pryColor),
-namaka-author-reply::part(pryColor) {
+namaka-edit-comment::part(pryColor),
+namaka-write-a-comment::part(pryColor) {
 	background: #FFAF02;
 	color: #fff;
 }
@@ -68,64 +65,64 @@ namaka-author-reply::part(button) {
 	border-radius: 40px;
 }
 
-namaka-edit-review::part(title),
-namaka-add-review::part(title) {
+namaka-edit-comment::part(title),
+namaka-write-a-comment::part(title) {
 	font-size: 18px;
 	font-weight: 700;
 	line-height: 24px;
 	color: #000;
 }
 
-namaka-edit-review::part(subtitle),
-namaka-add-review::part(subtitle) {
+namaka-edit-comment::part(subtitle),
+namaka-write-a-comment::part(subtitle) {
 	font-weight: 700;
 	color: #000;
 }
 
-namaka-edit-review::part(pryColor),
-namaka-add-review::part(pryColor) {
+namaka-edit-comment::part(pryColor),
+namaka-write-a-comment::part(pryColor) {
 	width: 250px;
 	padding: 15px 0;
 	border-radius: 40px;
 }
 
-namaka-edit-review::part(bold),
-namaka-add-review::part(bold) {
+namaka-edit-comment::part(bold),
+namaka-write-a-comment::part(bold) {
 	color: #000;
 	font-weight: 700;
 }
 
-namaka-banned-users::part(container) {
+namaka-bans::part(container) {
 	border: 1px solid #F5F5FA;
 	box-shadow: 0px 1px 5px rgba(0, 0, 0, 0.05);
 	background: white;
 	color: #1A202C;
 }
 
-namaka-banned-users::part(search) {
+namaka-bans::part(search) {
 	border-color: #EEEEEE;
 	border-radius: 5px;
 	width: 100%;
 	max-width: 435px;
 }
 
-namaka-banned-users::part(text),
-namaka-banned-users::part(filter) {
+namaka-bans::part(text),
+namaka-bans::part(filter) {
 	color: #000;
 	width: 100%
 }
 
-namaka-banned-users td {
+namaka-bans td {
 	border-bottom: 1px solid #000;
 }
 
-namaka-banned-users::part(tableHeading) {
+namaka-bans::part(tableHeading) {
 	background: #F5F8FC;
 	color: #000;
 	border-radius: 5px;
 }
 
-namaka-banned-users::part(tag) {
+namaka-bans::part(tag) {
 	background: #FFAF02;
 	color: #fff;
 	padding: 10px 8px;

@@ -1,21 +1,23 @@
 import {html, LitElement} from "lit"
 import {property} from "lit/decorators.js"
-import {FiveStarState, renderFiveStarRating} from "../../common/five-stars/render-five-star-display.js"
-import xCircleSvg from "../../../../icons/feather/x-circle.svg.js"
-import starSvg from "../../../../icons/tabler/star.svg.js"
+
 import {mixinStyles} from "../../../framework/mixins/mixin-styles.js"
-import namakaAddReviewCss from "./namaka-add-review.css.js"
+import {FiveStarState, renderFiveStarRating} from "../../common/five-stars/render-five-star-display.js"
+
+import xCircleSvg from "../../../../icons/feather/x-circle.svg.js"
+import namakaWriteACommentCss from "./namaka-write-a-comment.css.js"
 import renderFiveStarDisplayCss from "../../common/five-stars/render-five-star-display.css.js"
 
-@mixinStyles(namakaAddReviewCss, renderFiveStarDisplayCss)
-export class NamakaAddReview extends LitElement {
+@mixinStyles(namakaWriteACommentCss, renderFiveStarDisplayCss)
+export class NamakaWriteAComment extends LitElement {
+
 	@property()
 	private fiveStarState: FiveStarState = {
-			rating: 0,
+		rating: 0,
 	}
 
 	private setFiveStarState = (state: FiveStarState) => {
-			this.fiveStarState = state
+		this.fiveStarState = state
 	}
 
 	render() {
@@ -38,12 +40,11 @@ export class NamakaAddReview extends LitElement {
 					</div>
 					<div class="edit-feedback">
 						<p><span part="bold">Leave a feedback to this user</span> <span class="gray">(This will be made public)</span></p>
-						<namaka-text-input></namaka-text-input	xt-input>
-						<!-- <textarea name="message" id="message" rows="10"></textarea> -->
+						<namaka-textarea></namaka-textarea>
 					</div>
 					<button part="pryColor">Submit</button>
 				</div>
 			</div>
-        `
-    }
+		`
+	}
 }

@@ -22,7 +22,7 @@
 		<p><em>"nine pregnant women cannot make a baby in one month"</em></p>
 		<p>free and open source <a href="https://github.com/haumea-group/namaka">on github</a></p>
 		<div class=demo>
-			<namaka-demo-auth></namaka-demo-auth>
+			<namaka-demo></namaka-demo>
 			
 			<namaka-comments
 				topic=74315c4911702b10f2db70f26e35a1fe733e680f351491e48237cc06795af462>
@@ -60,32 +60,24 @@
 		</namaka-unban-user>
 
 		<div class="banned-users">
-			<namaka-banned-users></namaka-banned-users>
+			<namaka-bans></namaka-bans>
 		</div>
 
 		<namaka-board-stats></namaka-board-stats>
 
-		<div class="all-comments">
-			<div class="heading">
-				<h1 class="title">My reviews</h1>
-				<select name="tag" id="tag">
-					<option value="mostRecent">Most Recent</option>
-					<option value="all">All</option>
-				</select>
-			</div>
-			<namaka-load-more></namaka-load-more>
-		</div>
+		<namaka-board>
+			<h1 slot="header__text">My Reviews</h1>
+		</namaka-board>
 
 		<div class="empty-review">
 			<namaka-empty-review></namaka-empty-review>
 		</div>
 
 		<div class="edit-review">
-			<namaka-edit-review></namaka-edit-review>
+			<namaka-edit-comment></namaka-edit-comment>
 		</div>
 
-		<namaka-review></namaka-review>
-		<namaka-add-review></namaka-add-review>
+		<namaka-write-a-comment></namaka-write-a-comment>
 	</div>
 </body>
 </html>
