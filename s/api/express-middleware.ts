@@ -43,6 +43,12 @@ export async function expressMiddleware({
 	const execute = renraku.servelet(api)
 
 	const middleware: express.RequestHandler = async(req, res, next) => {
+		if (req.url.endsWith("/health")) {
+			console.log(`⚕️ health check`)
+			res.setHeader("Content-Type", "text/plain; charset=utf-8")
+			res.statusCode = 200
+			res.end(Date.now().toString())
+		}
 		const userIntegration = await authUser(req)
 		const meta: Meta = {
 			user: userIntegration
