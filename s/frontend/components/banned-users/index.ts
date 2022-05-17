@@ -1,5 +1,5 @@
 import {html, LitElement} from "lit"
-import deleteSvg from "../../../icons/tabler/delete.svg.js"
+import deleteSvg from "../../../icons/feather/trash2.svg.js"
 import searchSvg from "../../../icons/tabler/search.svg.js"
 import {mixinStyles} from "../../framework/mixins/mixin-styles.js"
 import namakaLoadMoreCss from "./index.css.js"
