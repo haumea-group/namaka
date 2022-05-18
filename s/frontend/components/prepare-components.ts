@@ -12,12 +12,13 @@ import {NamakaEditComment} from "./reviews/edit-review/index.js"
 import {NamakaComment} from './namaka-comment/namaka-comment.js'
 import {themeComponents} from "../framework/theme-components.js"
 import {NamakaTextarea} from "./namaka-textarea/namaka-textarea.js"
-import {NamakaBoardStats} from './namaka-board-stats/namaka-board-stats.js'
+import {NamakaBoardStats} from "./namaka-board-stats/namaka-board-stats.js"
 import {NamakaAuthorReply} from "./namaka-author-reply/namaka-author-reply.js"
-import {NamakaBan} from './modal/namaka-ban/namaka-ban.js'
+import {NamakaBan} from "./modal/namaka-ban/namaka-ban.js"
 import {NamakaHorizontalReview} from "./reviews/horizontal-five-star-review/index.js"
+import {NamakaWriteAComment} from "./modal/namaka-write-a-comment/namaka-write-a-comment.js"
+import {NamakaCopyToClipboard} from "./namaka-copy-to-clipboard/namaka-copy-to-clipboard.js"
 import {NamakaArchiveComment} from "./modal/namaka-archive-comment/namaka-archive-comment.js"
-import {NamakaWriteAComment} from './modal/namaka-write-a-comment/namaka-write-a-comment.js'
 
 import themeCss from "./theme.css.js"
 
@@ -56,5 +57,6 @@ export function prepareComponents({
 		NamakaComments: NamakaComments
 			.withContext({auth, commenting})
 			.withSubscriptions(subscribe),
+		NamakaCopyToClipboard: NamakaCopyToClipboard
 	})
 }
