@@ -2,9 +2,32 @@
 import {html, LitElement} from "lit"
 import namakaBoardStatsCss from "./namaka-board-stats.css.js"
 import {mixinStyles} from "../../framework/mixins/mixin-styles.js"
+import {mixinStandard} from "../../framework/mixins/mixin-standard.js"
+import {makeCommentingModel} from "../../models/commenting/commenting-model.js"
+import {makeAuthModel} from "../../models/auth/auth-model.js"
+import {property} from "lit/decorators.js"
+import {TopicStats} from "../../../api/types/concepts.js"
+
+function ratingToNumberOfStars(rating: number) {
+	return (rating / 25) + 1
+}
 
 @mixinStyles(namakaBoardStatsCss)
-export class NamakaBoardStats extends LitElement {
+export class NamakaBoardStats extends mixinStandard<{
+	auth: ReturnType<typeof makeAuthModel>
+	commenting: ReturnType<typeof makeCommentingModel>
+}>()(LitElement) {
+
+	@property({type: String})
+	topicId: string = ""
+	
+	@property({type: Object})
+	stats?: TopicStats
+
+	async firstUpdated() {
+		this.stats = await this.context.commenting.getTopicStats(this.topicId)
+	}
+	
 	render() {
 		return html`
 			<div class="review-summary" part="container">
@@ -12,7 +35,9 @@ export class NamakaBoardStats extends LitElement {
 				<div class="flex-container">
 					<div class="wrapper">
 						<div>
-							<span class="big">4.6</span>
+							<span class="big">
+								${ratingToNumberOfStars(this.stats?.scoring?.averageScore || 0)}
+							</span>
 							<span class="small">/5</span>
 						</div>
 

@@ -43,8 +43,10 @@ export function prepareComponents({
 		NamakaUnban,
 		NamakaBan,
 		NamakaArchiveComment,
-		NamakaBoardStats,
 		NamakaWriteAComment,
+		NamakaBoardStats: NamakaBoardStats
+			.withContext({auth, commenting})
+			.withSubscriptions(subscribe),
 		NamakaComment: NamakaComment
 			.withContext({modals, auth, commenting})
 			.withSubscriptions(subscribe),
