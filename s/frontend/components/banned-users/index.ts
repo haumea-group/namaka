@@ -46,7 +46,7 @@ export class NamakaBans extends LitElement {
 									<td>
 										<div class="user">
 											<div class="box">
-												<img src="/assets/profile-img.png" alt="Profile Image">
+												<namaka-avatar></namaka-avatar>
 												<p>Fransesca312</p>
 											</div>
 										</div>
@@ -65,7 +65,7 @@ export class NamakaBans extends LitElement {
 									<td>
 										<div class="user">
 											<div class="box">
-												<img src="/assets/profile-img.png" alt="Profile Image">
+												<namaka-avatar></namaka-avatar>
 												<p>Fransesca312</p>
 											</div>
 										</div>
@@ -84,7 +84,7 @@ export class NamakaBans extends LitElement {
 									<td>
 										<div class="user">
 											<div class="box">
-												<img src="/assets/profile-img.png" alt="Profile Image">
+												<namaka-avatar></namaka-avatar>
 												<p>Fransesca312</p>
 											</div>
 										</div>
@@ -103,7 +103,7 @@ export class NamakaBans extends LitElement {
 									<td>
 										<div class="user">
 											<div class="box">
-												<img src="/assets/profile-img.png" alt="Profile Image">
+												<namaka-avatar></namaka-avatar>
 												<p>Fransesca312</p>
 											</div>
 										</div>

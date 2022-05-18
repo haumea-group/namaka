@@ -57,3 +57,25 @@ export function randomComment() {
 export function randomSubject() {
 	return constructions.subject()()
 }
+
+const randomUnsplashId = hatPuller([
+	"1627087820883-7a102b79179a",
+	"1555888997-03e986fc157b",
+	"1608649672403-3609a75eae18",
+	"1562457753-6867bda028cd",
+	"1506794778202-cad84cf45f1d",
+	"1531746020798-e6953c6e8e04",
+	"1438761681033-6461ffad8d80",
+	"1507003211169-0a1dd7228f2d",
+	"1504257432389-52343af06ae3",
+	"1500648767791-00dcc994a43e",
+	"1529626455594-4ff0802cfb7e",
+	"1528892952291-009c663ce843",
+	"1614204424926-196a80bf0be8",
+	"1509460913899-515f1df34fea",
+])
+
+export function randomAvatar() {
+	const id = randomUnsplashId()
+	return `https://images.unsplash.com/photo-${id}?q=75&fm=jpg&w=200&h=200&fit=facearea`
+}

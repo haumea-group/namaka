@@ -1,4 +1,3 @@
-
 import * as dbmage from "dbmage"
 import * as renraku from "renraku"
 
@@ -7,7 +6,7 @@ import {AppSnap} from "../models/app-snap.js"
 import {AuthDevice} from "../frontend-types.js"
 import {AppRemote} from "../../api/types/remote.js"
 import {databaseShape} from "../../api/types/schema.js"
-import {randomNickname} from "../../toolbox/randomly.js"
+import {randomAvatar, randomNickname} from "../../toolbox/randomly.js"
 import {MockMeta, Permissions, User} from "../../api/types/auth.js"
 import {mockUserFetching} from "../models/commenting/testing/mock-user-fetching.js"
 
@@ -43,12 +42,13 @@ export async function mockApiConnection({snap}: {
 		})
 
 	function mockLogin(permissions: Permissions) {
+		const id = rando.randomId().string
 		const user: User = {
 			permissions,
-			id: rando.randomId().string,
+			id,
 			profile: {
 				nickname: randomNickname(),
-				avatar: "",
+				avatar: randomAvatar(),
 				joinedTime: Date.now() * (1000 * 60 * 60),
 			},
 		}

@@ -9,6 +9,9 @@ export default css`
 
 img {
 	align-self: flex-start;
+	width:70px;
+	height:70px;
+	border-radius:50%;
 }
 
 .outer-div {

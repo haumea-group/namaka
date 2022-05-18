@@ -21,6 +21,7 @@ import {NamakaCopyToClipboard} from "./namaka-copy-to-clipboard/namaka-copy-to-c
 import {NamakaArchiveComment} from "./modal/namaka-archive-comment/namaka-archive-comment.js"
 
 import themeCss from "./theme.css.js"
+import {NamakaAvatar} from "./namaka-avatar/namaka-avatar.js"
 
 export function prepareComponents({
 		modals,
@@ -45,6 +46,7 @@ export function prepareComponents({
 		NamakaBan,
 		NamakaArchiveComment,
 		NamakaWriteAComment,
+		NamakaAvatar,
 		NamakaBoardStats: NamakaBoardStats
 			.withContext({auth, commenting})
 			.withSubscriptions(subscribe),

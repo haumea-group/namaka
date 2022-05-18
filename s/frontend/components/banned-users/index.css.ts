@@ -5,7 +5,12 @@ export default css`
 	width: 100%;
 	padding: 20px;
 }
-
+img{
+	width:100px;
+	height:100px;
+	border-radius:50%;
+	object-fit:contain;
+}
 .heading {
 	display: flex;
 	align-items: center;

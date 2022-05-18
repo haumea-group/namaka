@@ -14,7 +14,7 @@ export class NamakaMyReview extends LitElement {
 			<div class="container">
 				<div class="review-summary">
 					<div class="group">
-						<img src="/assets/profile-img.png" alt="Profile Image" width="55" height="55" />
+						<img src="https://source.unsplash.com/random" alt="Profile Image"/>
 						<div>
 							<p id="name">MrLong007</p>
 							<div class="rating flex">

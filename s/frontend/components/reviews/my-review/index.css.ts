@@ -8,6 +8,12 @@ export default css`
 	padding: 20px;
 }
 
+img {
+	width:50px;
+	height:50px;
+	border-radius:50%;
+}
+
 @media screen and (min-width: 768px) {
 	.container {
 		display: block;

@@ -199,7 +199,7 @@ export class NamakaComment extends mixinStandard<{
 
 		return html`
 			<div class="outer-div" part="container">
-				<div class="avatar"></div>
+				<namaka-avatar .user=${comment.user}></namaka-avatar>
 				<div class="inner-div">
 					<div class="header">
 						<div class="header__txt">
