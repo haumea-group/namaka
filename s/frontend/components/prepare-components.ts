@@ -1,4 +1,3 @@
-
 import {AppSnap} from "../models/app-snap.js"
 import {NamakaLoadMore} from "./load-more/index.js"
 import {ModalControls} from "./modals/modal-types.js"
@@ -51,7 +50,7 @@ export function prepareComponents({
 			.withContext({modals, auth, commenting})
 			.withSubscriptions(subscribe),
 		NamakaDemo: NamakaDemo
-			.withContext({modals, auth})
+			.withContext({modals, auth, commenting})
 			.withSubscriptions(subscribe),
 		NamakaComments: NamakaComments
 			.withContext({auth, commenting})
