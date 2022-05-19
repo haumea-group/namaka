@@ -103,6 +103,15 @@ export class NamakaComment extends mixinStandard<{
 			return this.context.commenting.archiveComment(comment.id)
 		}
 
+		const isThread = comment.parentCommentId === undefined
+		const isReview = comment.scoring !== undefined
+
+		const deleteText = isThread
+			? isReview
+				? "Delete review"
+				: "Delete thread"
+			: "Delete reply"
+
 		return html`
 			<div class="blanket" @click=${this.#toggleDropDown}></div>
 			<div class="drop-down" part="drop-down">
@@ -120,7 +129,7 @@ export class NamakaComment extends mixinStandard<{
 					? html`
 						<button part="delete" @click=${archiveThisComment}>
 							${trash2Svg}
-							Delete Review
+							${deleteText}
 						</button>
 					`
 					: null}
