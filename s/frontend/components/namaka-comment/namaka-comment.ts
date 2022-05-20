@@ -18,6 +18,7 @@ import alertTriangleSvg from "../../../icons/feather/alert-triangle.svg.js"
 import namakaCommentCss from "./namaka-comment.css.js"
 import renderFiveStarDisplayCss from "../common/five-stars/render-five-star-display.css.js"
 import {reportUserModalView} from "../modals/views/report-user/report-user-modal-view.js"
+import {deleteThreadModalView} from "../modals/views/delete-thread/delete-thread-modal-view.js"
 
 @mixinStyles(namakaCommentCss, renderFiveStarDisplayCss)
 export class NamakaComment extends mixinStandard<{
@@ -75,12 +76,26 @@ export class NamakaComment extends mixinStandard<{
 	#toggleDropDown = () => {
 		this.showDropDown = !this.showDropDown
 	}
+	
+	#archiveThisComment = async() => {
+		const comment = this.#getComment()
+		return this.context.commenting.archiveComment(comment.id)
+	}
 
 	#promptReportModal = () => {
 		const {modals} = this.context
 		const comment = this.#getComment()
 		this.#toggleDropDown()
 		reportUserModalView({modals, comment})
+	}
+
+
+	#promptDeleteModal = async () => {
+		const {modals} = this.context
+		const comment = this.#getComment()
+		this.#toggleDropDown()
+		const result = await deleteThreadModalView({modals, comment})
+		result && this.#archiveThisComment()
 	}
 
 	#renderDropDown = () => {
@@ -96,12 +111,6 @@ export class NamakaComment extends mixinStandard<{
 
 		const deleteButtonIsAvailable = userCanArchiveAnyComment
 			|| userIsTheAuthorOfThisComment
-
-		const archiveThisComment = async() => {
-			this.#toggleDropDown()
-			const comment = this.#getComment()
-			return this.context.commenting.archiveComment(comment.id)
-		}
 
 		const isThread = comment.parentCommentId === undefined
 		const isReview = comment.scoring !== undefined
@@ -127,7 +136,7 @@ export class NamakaComment extends mixinStandard<{
 				</button>
 				${deleteButtonIsAvailable
 					? html`
-						<button part="delete" @click=${archiveThisComment}>
+						<button part="delete" @click=${this.#promptDeleteModal}>
 							${trash2Svg}
 							${deleteText}
 						</button>
