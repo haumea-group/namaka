@@ -16,9 +16,9 @@ export async function deleteThreadModalView({
 
 		const deleteText = isThread
 			? isReview
-				? "Delete review"
-				: "Delete thread"
-			: "Delete reply"
+				? "review"
+				: "thread"
+			: "reply"
 
 		const result = await modals.confirm({
 			closeOnBlanketClick: true,
@@ -26,10 +26,10 @@ export async function deleteThreadModalView({
 			renderNo: () => html`Cancel`,
 			renderContent: () => html`
 			<div class="modalview report">
-				<h2>${deleteText}</h2>
-				<p>Are you sure you want to delete this review for "${comment.user.profile.nickname}"</p>
-				<p>${deleteText.split(" ").at(-1)} id: "${comment.id}"</p>
-				<p>${deleteText.split(" ").at(-1)} body: "${comment.body}"</p>
+				<h2>Delete ${deleteText}</h2>
+				<p>Are you sure you want to delete this ${deleteText} for "${comment.user.profile.nickname}"</p>
+				<p>${deleteText} id: "${comment.id}"</p>
+				<p>${deleteText} body: "${comment.body}"</p>
 			</div>
 			`
 		})
