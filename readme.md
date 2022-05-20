@@ -13,20 +13,32 @@ namaka is a fullstack library, for web apps, that provides features for user com
 🛠️ typescript library and nodejs server  
 🌐 universal web components  
 💖 made with open source love, just for you  
+🎨 [*figma designs*](https://www.figma.com/file/bkPYDb9SsfhJllBvR4mAkz/Review-System?node-id=1%3A20)  
 👨‍🏫 [**namaka devboard**](https://github.com/orgs/haumea-group/projects/3/views/1) *for tracking work and priorities*  
 
 <br/>
 
 ## how to work on namaka as a developer
 
-- first time
-  - git checkout the codebase
-  - `npm install` — install package dependencies
-  - `npm run build` — run a full project build
-- each development session
-  - `npm run watch` — background process that rebuilds typescript code
-  - `npm start` — background process http server
-  - browse to http://localhost:8080/ to access demo page
+### first time
+
+- git checkout the codebase
+- `npm install` — install package dependencies
+- `npm run build` — run a full project build
+
+### each development session
+
+- `npm run watch` — background process that rebuilds typescript code
+- `npm start` — background process http server
+- browse to http://localhost:8080/ to access demo page
+
+### technologies to read up on
+
+- [🔥 lit](https://lit.dev/) web component library
+- [🔮 snapstate](https://github.com/chase-moskal/snapstate) state management
+- [🧙‍♂️ dbmage](https://github.com/chase-moskal/dbmage) database library
+- [⛩️ renraku](https://github.com/chase-moskal/renraku) api library
+- [🧐 cynic](https://github.com/chase-moskal/cynic) testing library
 
 <br/>
 
