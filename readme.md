@@ -3,7 +3,9 @@
 
 # ⁓ 🌑 namaka ⁓
 
-namaka is a fullstack user comments and 5-star reviews system for web applications.
+namaka is a fullstack library, for web apps, that provides features for user comments, replies, and 5-star reviews.
+
+🚧 **namaka is currently under construction.**
 
 ### [🕹️ live demo of namaka](https://namaka.chasemoskal.com/)  
 
@@ -12,6 +14,19 @@ namaka is a fullstack user comments and 5-star reviews system for web applicatio
 🌐 universal web components  
 💖 made with open source love, just for you  
 👨‍🏫 [**namaka devboard**](https://github.com/orgs/haumea-group/projects/3/views/1) *for tracking work and priorities*  
+
+<br/>
+
+## how to work on namaka as a developer
+
+- first time
+  - git checkout the codebase
+  - `npm install` — install package dependencies
+  - `npm run build` — run a full project build
+- each development session
+  - `npm run watch` — background process that rebuilds typescript code
+  - `npm start` — background process http server
+  - browse to http://localhost:8080/ to access demo page
 
 <br/>
 
