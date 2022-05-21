@@ -20,7 +20,7 @@ export interface CompiledComment extends CommentCompiledParts {
 	archived: boolean
 }
 
-export interface NestedComment extends Omit<CompiledComment, "parentCommentId"> {
+export interface NestedComment extends CompiledComment {
 	children: NestedComment[]
 }
 
