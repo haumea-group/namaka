@@ -2,7 +2,7 @@
 import {css} from "lit"
 export default css`
 
-.modalview.report {
+.modalview.deletepost {
 	background: #f002;
 }
 

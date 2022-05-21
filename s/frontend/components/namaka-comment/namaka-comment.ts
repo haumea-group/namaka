@@ -18,7 +18,7 @@ import alertTriangleSvg from "../../../icons/feather/alert-triangle.svg.js"
 import namakaCommentCss from "./namaka-comment.css.js"
 import renderFiveStarDisplayCss from "../common/five-stars/render-five-star-display.css.js"
 import {reportUserModalView} from "../modals/views/report-user/report-user-modal-view.js"
-import {deleteThreadModalView} from "../modals/views/delete-thread/delete-thread-modal-view.js"
+import {deletePostModalView} from "../modals/views/delete-thread/delete-post-modal-view.js"
 
 @mixinStyles(namakaCommentCss, renderFiveStarDisplayCss)
 export class NamakaComment extends mixinStandard<{
@@ -94,8 +94,9 @@ export class NamakaComment extends mixinStandard<{
 		const {modals} = this.context
 		const comment = this.#getComment()
 		this.#toggleDropDown()
-		const result = await deleteThreadModalView({modals, comment})
-		result && this.#archiveThisComment()
+		const result = await deletePostModalView({modals, comment})
+		if (result)
+			await this.#archiveThisComment()
 	}
 
 	#renderDropDown = () => {
