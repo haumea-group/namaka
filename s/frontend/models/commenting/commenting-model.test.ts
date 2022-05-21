@@ -148,7 +148,7 @@ export default <Suite>{
 				})).throws()
 				expect(commenting.getComments(topicId).length).equals(0)
 			},
-			async "can comment posted by other users"() {
+			async "can read a comment posted by other user"() {
 				const server = newServer()
 				const topicId = randomId()
 				{
