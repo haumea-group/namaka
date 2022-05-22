@@ -17,8 +17,14 @@ export function installModalSystem() {
 
 	registerComponents(themeComponents(styles, {NamakaModals}))
 
-	const modals = <NamakaModals>document.createElement("namaka-modals")
-	document.body.prepend(modals)
+	const namakaModals = NamakaModals.elementName
+	let modals = <NamakaModals>document.querySelector(namakaModals)
+
+	if (!modals) {
+		console.log("create new modals")
+		modals = <NamakaModals>document.createElement(namakaModals)
+		document.body.prepend(modals)
+	}
 
 	return modals.controls
 }

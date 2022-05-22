@@ -15,6 +15,7 @@ export function reportUserModalView({
 		closeOnBlanketClick: true,
 		renderPopup: ({close}) => html`
 			<div class="modalview report">
+				<slot name=report-user-lol-custom>Default Custom Text</slot>
 				<h2>report user!?</h2>
 				<p>username: "${comment.user.profile.nickname}"</p>
 				<p>user id: "${comment.user.id}"</p>

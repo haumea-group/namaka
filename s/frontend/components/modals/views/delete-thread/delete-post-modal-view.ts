@@ -26,6 +26,7 @@ export async function deletePostModalView({
 		renderNo: () => html`Cancel`,
 		renderContent: () => html`
 		<div class="modalview deletepost">
+		<slot name=delete-post-lol-custom>Default Custom Text</slot>
 			<h2>Delete ${deleteText}</h2>
 			<p>Are you sure you want to delete this ${deleteText} for <strong>"${comment.user.profile.nickname}"</strong></p>
 			<p>${deleteText} id: "${comment.id}"</p>
