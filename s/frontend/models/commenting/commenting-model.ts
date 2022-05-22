@@ -22,6 +22,10 @@ export function makeCommentingModel({state, remote}: {
 		getUser(id: string) {
 			return state.users.find(u => u.id === id)
 		},
+		
+		removeUsers() {
+			return state.users = []
+		},
 
 		getComments(topicId: string) {
 			return state.comments.nestedComments

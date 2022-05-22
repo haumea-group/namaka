@@ -141,7 +141,7 @@ export default <Suite>{
 					.newUser(undefined)
 					.newBrowserTab()
 				const topicId = randomId()
-				await expect(async() => commenting.postComment({
+				await expect(async () => commenting.postComment({
 					topicId,
 					parentCommentId: undefined,
 					subject: "hello",
@@ -258,7 +258,7 @@ export default <Suite>{
 					.newUser(makeRegularUser())
 					.newBrowserTab()
 				const fakeCommentId = randomId()
-				await expect(async() => commenting.editComment({
+				await expect(async () => commenting.editComment({
 					id: fakeCommentId,
 					subject: "hello",
 					body: "world",
@@ -287,7 +287,7 @@ export default <Suite>{
 					await commenting.downloadComments(topicId)
 					expect(commenting.getComments(topicId).length).equals(1)
 					const [comment] = commenting.getComments(topicId)
-					await expect(async() => commenting.editComment({
+					await expect(async () => commenting.editComment({
 						id: comment.id,
 						subject: comment.subject + "!",
 						body: comment.body + "!",
@@ -319,7 +319,7 @@ export default <Suite>{
 					await commenting.downloadComments(topicId)
 					const [comment] = commenting.getComments(topicId)
 					expect(comment).defined()
-					await expect(async() => commenting.editComment({
+					await expect(async () => commenting.editComment({
 						id: comment.id,
 						subject: comment.subject + "!",
 						body: comment.body + "!",
@@ -367,7 +367,7 @@ export default <Suite>{
 					.newUser(makeAdminUser())
 					.newBrowserTab()
 				const fakeCommentId = randomId()
-				await expect(async() => commenting.editComment({
+				await expect(async () => commenting.editComment({
 					id: fakeCommentId,
 					subject: "hello",
 					body: "world",
@@ -429,9 +429,11 @@ export default <Suite>{
 					body: "world",
 				})
 				const fakeCommentId = randomId()
+				const fakeCommentIds = [randomId(), randomId()]
 				await expect(async() => commenting.archiveComments([comment.id, fakeCommentId])).throws()
 				await commenting.downloadComments(topicId)
 				expect(commenting.getComments(topicId).length).equals(1)
+				await expect(async () => commenting.archiveComments(fakeCommentIds)).throws()
 			},
 
 		},
@@ -491,6 +493,8 @@ export default <Suite>{
 						error = err
 				}
 				expect(error?.code).equals(400)
+				const fakeCommentIds = [randomId(), randomId()]
+				await expect(async () => commenting.archiveComments(fakeCommentIds)).throws()
 			},
 		}
 	},
@@ -600,6 +604,34 @@ export default <Suite>{
 			expect(stats.scoring).ok()
 			expect(stats.scoring?.averageScore).equals(55)
 		},
+	},
+	"wiping database": {
+		"systemic": {
+			
+			async "bug #122, user is broken after wiping database and stuff??"() {
+				let userAdmin = makeAdminUser()
+				const user = newServer().newUser(userAdmin)
+				const tab1 = user.newBrowserTab()
+				const topicId = randomId()
+
+				await tab1.commenting.postComment({
+					topicId,
+					parentCommentId: undefined,
+					subject: "hello",
+					body: "world",
+					scores: [
+						{aspect: "flavor", score: 50},
+						{aspect: "presentation", score: 60},
+					],
+				})
+
+				tab1.commenting.wipeComments()
+				tab1.commenting.removeUsers()
+				const tab2 = user.newBrowserTab()
+
+				expect(tab1.commenting.getUser(userAdmin.id)).ok()
+			}
+		}
 	},
 
 	utils: {computeNestedCommentsTest},
