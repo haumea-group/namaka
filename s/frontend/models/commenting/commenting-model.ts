@@ -7,8 +7,8 @@ import {CommentEditDraft, CommentPostDraft} from "../../../api/types/concepts.js
 export function makeCommentingModel({state, remote}: {
 		state: AppState
 		remote: {
-			commentReading: AppRemote["commentReading"]
-			commentWriting: AppRemote["commentWriting"]
+			commentReading: AppRemote["v1"]["commentReading"]
+			commentWriting: AppRemote["v1"]["commentWriting"]
 		}
 	}) {
 

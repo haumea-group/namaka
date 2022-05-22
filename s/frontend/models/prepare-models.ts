@@ -11,7 +11,7 @@ export function prepareModels({
 		authDevice,
 	}: {
 		snap: AppSnap
-		remote: AppRemote
+		remote: AppRemote["v1"]
 		authDevice: AuthDevice
 	}) {
 

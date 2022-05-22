@@ -3,17 +3,17 @@ import * as renraku from "renraku"
 
 import {Auth} from "./types/auth.js"
 import {ServiceOptions} from "./types/service.js"
-import {makeAdminActionsService} from "./services/admin-actions-service.js"
-import {makeCommentReadingService} from "./services/comment-reading-service.js"
-import {makeCommentWritingService} from "./services/comment-writing-service.js"
+import {makeAdminActionsService} from "./services/v1/admin-actions-service.js"
+import {makeCommentReadingService} from "./services/v1/comment-reading-service.js"
+import {makeCommentWritingService} from "./services/v1/comment-writing-service.js"
 
 export function makeApi<AuthMeta extends {}>({policy, ...options}: {
 		policy: renraku.Policy<AuthMeta, Auth>
 	} & ServiceOptions) {
 
 	return renraku.api({
-
-		commentReading: renraku.service()
+		v1:	{
+			commentReading: renraku.service()
 			.policy(policy)
 			.expose(makeCommentReadingService(options)),
 
@@ -24,5 +24,7 @@ export function makeApi<AuthMeta extends {}>({policy, ...options}: {
 		adminActions: renraku.service()
 			.policy(policy)
 			.expose(makeAdminActionsService(options)),
+		},
+		
 	})
 }

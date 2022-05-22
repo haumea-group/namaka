@@ -21,7 +21,7 @@ export function newServer() {
 			if (user)
 				addUser(user)
 			const getAuth = async() => ({user})
-			const remote = <AppRemote>renraku.mock()
+			const newRemote = <AppRemote>renraku.mock()
 				.forApi(makeApi<MockMeta>({
 					policy: async() => {throw new Error("nope")},
 					rando,
@@ -30,10 +30,16 @@ export function newServer() {
 					fetchUsers,
 				}))
 				.withAuthMap({
-					commentReading: getAuth,
-					commentWriting: getAuth,
-					adminActions: getAuth,
+					v1:	{
+						commentReading: getAuth,
+						commentWriting: getAuth,
+						adminActions: getAuth,
+					},
 				})
+				const remote = {
+					commentReading:	newRemote["v1"]["commentReading"],
+					commentWriting: newRemote["v1"]["commentWriting"]
+				}
 			return {
 				newBrowserTab: () => {
 					const {state} = makeAppSnap()

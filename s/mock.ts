@@ -7,8 +7,8 @@ import {registerComponents} from "./frontend/framework/register-components.js"
 import {installModalSystem} from "./frontend/components/modals/install-modal-system.js"
 
 const snap = makeAppSnap()
-const {remote, authDevice} = await mockApiConnection({snap})
-const models = prepareModels({snap, remote, authDevice})
+let {remote, authDevice} = await mockApiConnection({snap})
+const models = prepareModels({snap, remote:remote['v1'], authDevice})
 const modals = installModalSystem()
 const components = prepareComponents({snap, modals, models})
 

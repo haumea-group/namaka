@@ -3,14 +3,14 @@ import {find} from "dbmage"
 import * as dbmage from "dbmage"
 import * as renraku from "renraku"
 
-import {newScoreRows} from "./utils/new-score-rows.js"
-import {rowsToScores} from "./utils/rows-to-scores.js"
-import {rowToComment} from "./utils/row-to-comment.js"
-import {newCommentRow} from "./utils/new-comment-row.js"
-import {enforceValidation} from "./utils/enforce-validation.js"
-import {asServiceProvider} from "./utils/as-service-provider.js"
-import {validateCommentPostDraft, validateId} from "./validators/validators.js"
-import {CommentPostDraft, CommentPost, CommentEditDraft, Score} from "../types/concepts.js"
+import {newScoreRows} from "../utils/new-score-rows.js"
+import {rowsToScores} from "../utils/rows-to-scores.js"
+import {rowToComment} from "../utils/row-to-comment.js"
+import {newCommentRow} from "../utils/new-comment-row.js"
+import {enforceValidation} from "../utils/enforce-validation.js"
+import {asServiceProvider} from "../utils/as-service-provider.js"
+import {validateCommentPostDraft, validateId} from "../validators/validators.js"
+import {CommentPostDraft, CommentPost, CommentEditDraft, Score} from "../../types/concepts.js"
 
 export const makeCommentWritingService = asServiceProvider(({
 		rando, database, fetchUsers,

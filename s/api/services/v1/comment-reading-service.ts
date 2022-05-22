@@ -2,12 +2,12 @@
 import * as dbmage from "dbmage"
 import * as renraku from "renraku"
 
-import {User} from "../types/auth.js"
-import {rowToComment} from "./utils/row-to-comment.js"
-import {enforceValidation} from "./utils/enforce-validation.js"
-import {asServiceProvider} from "./utils/as-service-provider.js"
-import {validateGetCommennts} from "./validators/validate-fetch-threads-params.js"
-import {CommentPost, Score, TopicStats, FetchThreadsParams} from "../types/concepts.js"
+import {User} from "../../types/auth.js"
+import {rowToComment} from "../utils/row-to-comment.js"
+import {enforceValidation} from "../utils/enforce-validation.js"
+import {asServiceProvider} from "../utils/as-service-provider.js"
+import {validateGetCommennts} from "../validators/validate-fetch-threads-params.js"
+import {CommentPost, Score, TopicStats, FetchThreadsParams} from "../../types/concepts.js"
 
 export const makeCommentReadingService = asServiceProvider(({
 		database, scoreAspects, fetchUsers,

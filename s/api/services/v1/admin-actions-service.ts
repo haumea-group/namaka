@@ -2,16 +2,16 @@
 import * as dbmage from "dbmage"
 import * as renraku from "renraku"
 
-import {Auth, User} from "../types/auth.js"
-import { Ban, BanParams, UnbanParams, ListBansParams, FetchBanParams } from "../types/concepts.js"
-import {enforceValidation} from "./utils/enforce-validation.js";
-import {rowsToBans} from "./utils/row-to-bans.js"
-import {newBanRow} from "./utils/new-ban-row.js"
-import {validateBanParams} from "./validators/validate-ban-params.js"
-import {validateUnbanParams} from "./validators/validate-admin-unban-params.js"
-import {validateListBans} from "./validators/validate-list-bans-params.js"
-import {validateFetchBanParams} from "./validators/validate-fetch-ban-params.js"
-import {asServiceProvider} from "./utils/as-service-provider.js"
+import {Auth, User} from "../../types/auth.js"
+import { Ban, BanParams, UnbanParams, ListBansParams, FetchBanParams } from "../../types/concepts.js"
+import {enforceValidation} from "../utils/enforce-validation.js";
+import {rowsToBans} from "../utils/row-to-bans.js"
+import {newBanRow} from "../utils/new-ban-row.js"
+import {validateBanParams} from "../validators/validate-ban-params.js"
+import {validateUnbanParams} from "../validators/validate-admin-unban-params.js"
+import {validateListBans} from "../validators/validate-list-bans-params.js"
+import {validateFetchBanParams} from "../validators/validate-fetch-ban-params.js"
+import {asServiceProvider} from "../utils/as-service-provider.js"
 import {find} from "dbmage"
 
 export const makeAdminActionsService = asServiceProvider(({

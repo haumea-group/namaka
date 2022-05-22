@@ -35,9 +35,11 @@ export async function mockApiConnection({snap}: {
 	const remote = renraku.mock()
 		.forApi(api)
 		.withMetaMap({
-			commentReading: getMeta,
-			commentWriting: getMeta,
-			adminActions: getMeta,
+			v1	:{
+				commentReading: getMeta,
+				commentWriting: getMeta,
+				adminActions: getMeta,
+			},
 		})
 
 	function mockLogin(permissions: Permissions) {
