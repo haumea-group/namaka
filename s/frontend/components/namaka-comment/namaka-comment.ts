@@ -14,6 +14,7 @@ import namakaCommentCss from "./namaka-comment.css.js"
 import trash2Svg from "../../../icons/feather/trash2.svg.js"
 import infoSquareSvg from "../../../icons/tabler/info-square.svg.js"
 import alertTriangleSvg from "../../../icons/feather/alert-triangle.svg.js"
+import edit2Svg from "../../../icons/feather/edit-2.svg.js"
 
 import {virtualFiveStar} from "../virtual/virtual-five-star.js"
 import {reportUserModalView} from "../modals/views/report-user/report-user-modal-view.js"
@@ -93,6 +94,12 @@ export class NamakaComment extends mixinStandard<{
 			await this.#archiveThisComment()
 	}
 
+	#promptEditModal = async () => {
+		const {modals} = this.context
+		const comment = this.#getComment()
+		this.#toggleDropDown()
+	}
+
 	#renderDropDown = () => {
 		const comment = this.#getComment()
 		const {user} = this.context.auth
@@ -100,12 +107,18 @@ export class NamakaComment extends mixinStandard<{
 		const isUserLoggedIn = !!user
 		const userCanArchiveAnyComment
 			= !!user?.permissions.canArchiveAnyComment
+		
+		const userCanEditAnyComment
+			= !!user?.permissions.canEditAnyComment
 
 		const userIsTheAuthorOfThisComment = isUserLoggedIn
 			&& user?.id === comment.user.id
 
 		const deleteButtonIsAvailable = userCanArchiveAnyComment
 			|| userIsTheAuthorOfThisComment
+		
+		const editButtonIsAvailable = userCanEditAnyComment
+		|| userIsTheAuthorOfThisComment
 
 		const isThread = comment.parentCommentId === undefined
 		const isReview = comment.scoring !== undefined
@@ -115,6 +128,12 @@ export class NamakaComment extends mixinStandard<{
 				? "Delete review"
 				: "Delete thread"
 			: "Delete reply"
+		
+		const editText = isThread
+			? isReview
+				? "Edit review"
+				: "Edit thread"
+			: "Edit reply"
 
 		return html`
 			<div class="blanket" @click=${this.#toggleDropDown}></div>
@@ -134,6 +153,14 @@ export class NamakaComment extends mixinStandard<{
 						<button part="delete" @click=${this.#promptDeleteModal}>
 							${trash2Svg}
 							${deleteText}
+						</button>
+					`
+					: null}
+				${editButtonIsAvailable
+					? html`
+						<button part="edit" @click=${this.#promptEditModal}>
+							${edit2Svg}
+							${editText}
 						</button>
 					`
 					: null}
