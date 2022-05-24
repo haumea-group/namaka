@@ -148,7 +148,7 @@ export default <Suite>{
 				})).throws()
 				expect(commenting.getComments(topicId).length).equals(0)
 			},
-			async "can comment posted by other users"() {
+			async "can read a comment posted by other user"() {
 				const server = newServer()
 				const topicId = randomId()
 				{
@@ -465,7 +465,7 @@ export default <Suite>{
 		}
 	},
 
-	"posting reviews with scores, and reading them": {
+	"posting reviews with scores": {
 		"a logged-in user": {
 
 			async "can post a review, with a score, and see it"() {
@@ -488,6 +488,28 @@ export default <Suite>{
 				expect(commenting.getComments(topicId)[0].scoring).ok()
 				expect(commenting.getComments(topicId)[0].scoring?.scores).ok()
 				expect(commenting.getComments(topicId)[0].scoring?.average).equals(55)
+			},
+
+			async "can post a review, and see it in a new tab"() {
+				const user = newServer().newUser(makeRegularUser())
+				const tab1 = user.newBrowserTab()
+				const topicId = randomId()
+				await tab1.commenting.postComment({
+					topicId,
+					parentCommentId: undefined,
+					subject: "hello",
+					body: "world",
+					scores: [
+						{aspect: "flavor", score: 50},
+						{aspect: "presentation", score: 60},
+					],
+				})
+				const tab2 = user.newBrowserTab()
+				await tab2.commenting.downloadComments(topicId)
+				expect(tab2.commenting.getComments(topicId).length).equals(1)
+				expect(tab2.commenting.getComments(topicId)[0].scoring).ok()
+				expect(tab2.commenting.getComments(topicId)[0].scoring?.scores).ok()
+				expect(tab2.commenting.getComments(topicId)[0].scoring?.average).equals(55)
 			},
 		},
 	},

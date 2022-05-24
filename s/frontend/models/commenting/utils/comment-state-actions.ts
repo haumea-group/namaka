@@ -24,6 +24,7 @@ export function makeCommentStateActions({state}: {
 	}
 
 	const userIsNew = (user: User) => !state.users.find(u => u.id === user.id)
+	const scoreIsNew = (score: Score) => !state.comments.scores.find(s => s.id === score.id)
 
 	const actions = {
 		wipeComments() {
@@ -43,6 +44,10 @@ export function makeCommentStateActions({state}: {
 				throw new Error(`cannot edit missing comment ${draft.id}`)
 			comment.body = draft.body
 			comment.subject = draft.subject
+		},
+		addScores(scores: Score[]) {
+			const newScore = scores.filter(scoreIsNew)
+			state.comments.scores = [...state.comments.scores, ...newScore]
 		},
 		updateScores(commentId: string, scoreDrafts: undefined | ScoreDraft[]) {
 			const scores: undefined | Score[] = scoreDrafts
