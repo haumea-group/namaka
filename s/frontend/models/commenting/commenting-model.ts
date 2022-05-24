@@ -22,9 +22,8 @@ export function makeCommentingModel({state, remote}: {
 		getUser(id: string) {
 			return state.users.find(u => u.id === id)
 		},
-		
 		removeUsers() {
-			return state.users = []
+			return state.user = undefined, state.users = []
 		},
 
 		getComments(topicId: string) {

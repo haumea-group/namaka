@@ -53,7 +53,8 @@ export const makeCommentReadingService = asServiceProvider(({
 		const userIds = new Map<string, dbmage.Id>()
 		for (const {authorId} of rows)
 			userIds.set(authorId.string, authorId)
-
+			console.log(userIds, "ids")
+			console.log()
 		const users = (await fetchUsers([...userIds.values()]))
 			.map(user => (<User>{
 				id: user.id.string,

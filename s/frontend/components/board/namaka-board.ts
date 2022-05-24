@@ -39,6 +39,10 @@ export class NamakaBoard extends mixinStandard<{
 	}
 
 	render() {
+				const user = this.context.auth.user?.id!
+		console.log(this.context.commenting.getUser(user)?.id)
+		console.log(this.context.commenting.getComments(this.topic!))
+		console.log(window.localStorage)
 		if (!this.topic)
 			return null
 

@@ -6,16 +6,28 @@ import {makeJsonStore, makeMemoryStorage, SimpleStorage} from "../../../../toolb
 
 export function mockUserFetching(
 		storage: SimpleStorage = makeMemoryStorage()
-	) {
+) {
+	// console.log(window.localStorage)
+
 	const key = "mock-users"
 	const store = makeJsonStore(storage)
+	console.log(store.getItem<User[]>(key))
 	const users = store.getItem<User[]>(key)
 		?? []
+	
+	console.log(users)
+	
+	if (users.length === 0) {
+		console.log("halo")
+		store.setItem(key, users)
+	}
+	
 	return {
 
 		addUser(user: User) {
 			users.push(user)
 			store.setItem(key, users)
+			console.log("tu?")
 		},
 
 		async fetchUsers(
