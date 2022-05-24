@@ -30,6 +30,8 @@ export function makeAuthModel({snap: {state, readable}, authDevice}: {
 				authDevice.mockLogin({
 					canPost: true,
 					canBanUsers: false,
+					canListBanUsers: false,
+					canUnbanUsers: false,
 					canEditAnyComment: false,
 					canArchiveAnyComment: false,
 				})
@@ -39,6 +41,8 @@ export function makeAuthModel({snap: {state, readable}, authDevice}: {
 				authDevice.mockLogin({
 					canPost: true,
 					canBanUsers: true,
+					canUnbanUsers: true,
+					canListBanUsers: true,
 					canEditAnyComment: true,
 					canArchiveAnyComment: true,
 				})

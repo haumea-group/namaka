@@ -4,6 +4,8 @@ import * as dbmage from "dbmage"
 export interface Permissions {
 	canPost: boolean
 	canBanUsers: boolean
+	canUnbanUsers: boolean
+	canListBanUsers: Boolean
 	canEditAnyComment: boolean
 	canArchiveAnyComment: boolean
 }

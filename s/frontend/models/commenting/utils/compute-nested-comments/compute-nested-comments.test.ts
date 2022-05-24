@@ -12,6 +12,8 @@ function makeUser(): User {
 		permissions: {
 			canArchiveAnyComment: true,
 			canBanUsers: true,
+			canUnbanUsers: true,
+			canListBanUsers: true,
 			canEditAnyComment: true,
 			canPost: true,
 		},
