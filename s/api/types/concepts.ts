@@ -22,6 +22,11 @@ export interface ScoreDraft {
 	score: number
 }
 
+export interface BanDraft {
+	reason: string
+	until: number
+}
+
 export interface CommentPostDraft {
 	parentCommentId: undefined | string
 	topicId: string
@@ -51,6 +56,7 @@ export interface TopicStats {
 export interface BanParams {
 	userId: string
 	until: number
+	reason: string
 }
 
 export interface UnbanParams {
@@ -61,4 +67,19 @@ export interface FetchThreadsParams {
 	topicId: string
 	limit: number
 	offset: number
+}
+
+export interface ListBansParams {
+	limit: number
+	offset: number
+}
+
+export interface FetchBanParams {
+	userId: string
+}
+
+export interface Ban {
+	reason: string
+	userId: string
+	until: number
 }

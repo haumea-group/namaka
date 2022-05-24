@@ -61,6 +61,8 @@ export async function mockApiConnection({snap}: {
 				mockLogin({
 					canPost: true,
 					canBanUsers: true,
+					canListBanUsers: true,
+					canUnbanUsers: true,
 					canEditAnyComment: true,
 					canArchiveAnyComment: true,
 				})
