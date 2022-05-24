@@ -9,23 +9,24 @@ import {mixinStandard} from "../../framework/mixins/mixin-standard.js"
 import {NestedComment} from "../../models/commenting/commenting-types.js"
 import {randomComment, randomSubject} from "../../../toolbox/randomly.js"
 import {makeCommentingModel} from "../../models/commenting/commenting-model.js"
-import {FiveStarState, renderFiveStarRating} from "../common/five-stars/render-five-star-display.js"
 
+import namakaCommentCss from "./namaka-comment.css.js"
 import trash2Svg from "../../../icons/feather/trash2.svg.js"
 import infoSquareSvg from "../../../icons/tabler/info-square.svg.js"
 import alertTriangleSvg from "../../../icons/feather/alert-triangle.svg.js"
 
-import namakaCommentCss from "./namaka-comment.css.js"
-import renderFiveStarDisplayCss from "../common/five-stars/render-five-star-display.css.js"
+import {virtualFiveStar} from "../virtual/virtual-five-star.js"
 import {reportUserModalView} from "../modals/views/report-user/report-user-modal-view.js"
 import {deletePostModalView} from "../modals/views/delete-thread/delete-post-modal-view.js"
 
-@mixinStyles(namakaCommentCss, renderFiveStarDisplayCss)
+@mixinStyles(namakaCommentCss, virtualFiveStar.styles)
 export class NamakaComment extends mixinStandard<{
 		modals: ModalControls
 		auth: ReturnType<typeof makeAuthModel>
 		commenting: ReturnType<typeof makeCommentingModel>
 	}>()(LitElement) {
+
+	private FiveStar = virtualFiveStar.attach({component: this})
 
 	@property({type: Object})
 	comment?: NestedComment = undefined
@@ -43,21 +44,14 @@ export class NamakaComment extends mixinStandard<{
 		return !!this.context.auth.user?.permissions.canPost
 	}
 
-	@property()
-	private fiveStarState: FiveStarState = {
-		rating: 0,
-	}
-
-	private setFiveStarState = (state: FiveStarState) => {
-		this.fiveStarState = state
-	}
-
 	async firstUpdated() {
 		const comment = this.#getComment()
-		this.setFiveStarState({
+
+		this.FiveStar.setState({
 			rating: comment.scoring
 				? comment.scoring.average
 				: 0,
+			editable: false,
 		})
 	}
 
@@ -147,9 +141,12 @@ export class NamakaComment extends mixinStandard<{
 	`}
 
 	render() {
+		const {FiveStar} = this
 		const comment = this.#getComment()
+
 		if (!comment.user)
 			return null
+
 		return html`
 			<div class="outer-div">
 				<div class="avatar"></div>
@@ -161,8 +158,8 @@ export class NamakaComment extends mixinStandard<{
 						</div>
 						<div class="header__btn">
 							${comment.scoring
-								? renderFiveStarRating(this.fiveStarState, this.setFiveStarState)
-								: undefined}
+								? FiveStar()
+								: null}
 							<button @click=${this.#toggleDropDown} class="drop-down__btn">
 								&bull;&bull;&bull;
 							</button>

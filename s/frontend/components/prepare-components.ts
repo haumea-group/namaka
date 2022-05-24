@@ -11,7 +11,6 @@ import {NamakaUnban} from "./modal/namaka-unban/namaka-unban.js"
 import {NamakaEditComment} from "./reviews/edit-review/index.js"
 import {NamakaComment} from './namaka-comment/namaka-comment.js'
 import {themeComponents} from "../framework/theme-components.js"
-import {NamakaReview} from "./common/five-stars/namaka-review.js"
 import {NamakaTextarea} from "./namaka-textarea/namaka-textarea.js"
 import {NamakaBoardStats} from './namaka-board-stats/namaka-board-stats.js'
 import {NamakaAuthorReply} from "./namaka-author-reply/namaka-author-reply.js"
@@ -55,6 +54,5 @@ export function prepareComponents({
 		NamakaComments: NamakaComments
 			.withContext({auth, commenting})
 			.withSubscriptions(subscribe),
-		NamakaReview: NamakaReview
 	})
 }
