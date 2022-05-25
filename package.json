@@ -28,7 +28,7 @@
 	],
 	"dependencies": {
 		"@chasemoskal/snapstate": "^0.0.8",
-		"dbmage": "^0.0.0-dev.8",
+		"dbmage": "^0.0.0-dev.9",
 		"es-module-shims": "^1.5.5",
 		"express": "^4.18.1",
 		"lit": "^2.2.4",
