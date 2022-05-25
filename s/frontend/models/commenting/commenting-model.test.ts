@@ -514,5 +514,63 @@ export default <Suite>{
 		},
 	},
 
+	"board stats": {
+		async "work on board with a single review"() {
+			const {commenting} = newServer()
+				.newUser(makeRegularUser())
+				.newBrowserTab()
+			const topicId = randomId()
+			await commenting.postComment({
+				topicId,
+				subject: "hello",
+				body: "rofl",
+				parentCommentId: undefined,
+				scores: [
+					{score: 40, aspect: "flavor"},
+					{score: 50, aspect: "presentation"},
+					{score: 60, aspect: "service"},
+				],
+			})
+			const stats = await commenting.getTopicStats(topicId)
+			expect(stats.numberOfRootComments).equals(1)
+			expect(stats.numberOfReplyComments).equals(0)
+			expect(stats.scoring).ok()
+			expect(stats.scoring?.averageScore).equals(50)
+		},
+		async "work on board with two reviews"() {
+			const {commenting} = newServer()
+				.newUser(makeRegularUser())
+				.newBrowserTab()
+			const topicId = randomId()
+			await commenting.postComment({
+				topicId,
+				subject: "hello",
+				body: "rofl",
+				parentCommentId: undefined,
+				scores: [
+					{score: 40, aspect: "flavor"},
+					{score: 50, aspect: "presentation"},
+					{score: 60, aspect: "service"},
+				],
+			})
+			await commenting.postComment({
+				topicId,
+				subject: "hello",
+				body: "rofl",
+				parentCommentId: undefined,
+				scores: [
+					{score: 50, aspect: "flavor"},
+					{score: 60, aspect: "presentation"},
+					{score: 70, aspect: "service"},
+				],
+			})
+			const stats = await commenting.getTopicStats(topicId)
+			expect(stats.numberOfRootComments).equals(2)
+			expect(stats.numberOfReplyComments).equals(0)
+			expect(stats.scoring).ok()
+			expect(stats.scoring?.averageScore).equals(55)
+		},
+	},
+
 	utils: {computeNestedCommentsTest},
 }
