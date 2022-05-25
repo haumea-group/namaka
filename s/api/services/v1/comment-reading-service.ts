@@ -7,7 +7,9 @@ import {rowToComment} from "../utils/row-to-comment.js"
 import {enforceValidation} from "../utils/enforce-validation.js"
 import {asServiceProvider} from "../utils/as-service-provider.js"
 import {validateGetCommennts} from "../validators/validate-fetch-threads-params.js"
-import {CommentPost, Score, TopicStats, FetchThreadsParams} from "../../types/concepts.js"
+import {CommentPost, Score, TopicStats, FetchThreadsParams, BoardScoringStats} from "../../types/concepts.js"
+import {schema} from "../../../toolbox/darkvalley.js"
+import {validateId} from "../validators/validators.js"
 
 export const makeCommentReadingService = asServiceProvider(({
 		database, scoreAspects, fetchUsers,
@@ -82,30 +84,84 @@ export const makeCommentReadingService = asServiceProvider(({
 		return {scoreAspects}
 	},
 
-	async getTopicStats({topicId: topicIdString}: {topicId: string}): Promise<TopicStats> {
-		console.warn("TODO implement 'getTopicStats'")
+	async getTopicStats(data: {topicId: string}): Promise<TopicStats> {
+		const {topicId: topicIdString} = enforceValidation(data, schema({
+			topicId: validateId,
+		}))
+
+		const topicId = dbmage.Id.fromString(topicIdString)
+
+		const numberOfRootComments = await database.tables.comments.count(
+			dbmage.find({
+				topicId,
+				parentCommentId: null,
+			})
+		)
+
+		const numberOfReviews = await database.tables.scores.count(
+			dbmage.find({topicId})
+		)
+
+		const numberOfReplyComments = await database.tables.comments.count({
+			conditions: dbmage.and({set: {parentCommentId: true}})
+		})
+
+		let scoring: BoardScoringStats | undefined = undefined
+
+		if (numberOfReviews > 0) {
+			const {score: averageScore} = await database.tables.scores.average({
+				...dbmage.find({topicId}),
+				fields: {score: true},
+			})
+	
+			async function getNumberOfScoresBetween(from: number, to: number) {
+				return database.tables.scores.count({
+					conditions: dbmage.and(
+						{equal: {topicId}},
+						{greatery: {score: from}},
+						{less: {score: to}},
+					),
+				})
+			}
+	
+			const averageScoreBreakdown = await Promise.all([
+				getNumberOfScoresBetween(0, 10),
+				getNumberOfScoresBetween(10, 20),
+				getNumberOfScoresBetween(20, 30),
+				getNumberOfScoresBetween(30, 40),
+				getNumberOfScoresBetween(40, 50),
+				getNumberOfScoresBetween(50, 60),
+				getNumberOfScoresBetween(60, 70),
+				getNumberOfScoresBetween(70, 80),
+				getNumberOfScoresBetween(80, 90),
+				getNumberOfScoresBetween(90, 101),
+			])
+
+			const aspectAverages = await Promise.all(
+				scoreAspects.map(async aspect => (await database.tables.scores.average({
+					conditions: dbmage.and({equal: {topicId, aspect}}),
+					fields: {score: true},
+				})).score)
+			)
+
+			const scoreAspectAverages: {[key: string]: number} = {}
+	
+			scoreAspects.forEach((aspect, index) => {
+				scoreAspectAverages[aspect] = aspectAverages[index]
+			})
+
+			scoring = {
+				averageScore,
+				averageScoreBreakdown,
+				scoreAspectAverages,
+			}
+		}
+
 		return {
 			topicId: topicIdString,
-			numberOfRootComments: 10,
-			numberOfReplyComments: 100,
-			scoring: {
-				averageScore: 51,
-				averageScoreBreakdown: [
-					1,  // number of ratings from 0 to 10
-					4,  // number of ratings from 10 to 20
-					8,  // number of ratings from 20 to 30
-					10, // number of ratings from 30 to 40
-					15, // number of ratings from 40 to 50
-					20, // number of ratings from 50 to 60
-					18, // number of ratings from 60 to 70
-					11, // number of ratings from 70 to 80
-					9,  // number of ratings from 80 to 90
-					7,  // number of ratings from 90 to 100
-				],
-				scoreAspectAverages: {
-					"recommended": 51,
-				},
-			},
+			numberOfRootComments,
+			numberOfReplyComments,
+			scoring,
 		}
 	}
 }))

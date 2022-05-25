@@ -17,7 +17,7 @@ export const databaseShape: dbmage.SchemaToShape<AppSchema> = {
 
 export type CommentRow = dbmage.AsRow<{
 	id: dbmage.Id
-	parentCommentId: undefined | dbmage.Id
+	parentCommentId: null | dbmage.Id
 	authorId: dbmage.Id
 	topicId: dbmage.Id
 	timePosted: number
@@ -28,6 +28,7 @@ export type CommentRow = dbmage.AsRow<{
 
 export type ScoreRow = dbmage.AsRow<{
 	id: dbmage.Id
+	topicId: dbmage.Id
 	commentId: dbmage.Id
 	aspect: string
 	score: number

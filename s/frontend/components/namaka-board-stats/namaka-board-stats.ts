@@ -19,13 +19,13 @@ export class NamakaBoardStats extends mixinStandard<{
 }>()(LitElement) {
 
 	@property({type: String})
-	topicId: string = ""
+	topic: string = ""
 	
 	@property({type: Object})
 	stats?: TopicStats
 
 	async firstUpdated() {
-		this.stats = await this.context.commenting.getTopicStats(this.topicId)
+		this.stats = await this.context.commenting.getTopicStats(this.topic)
 	}
 	
 	render() {
