@@ -28,7 +28,7 @@
 	],
 	"dependencies": {
 		"@chasemoskal/snapstate": "^0.0.8",
-		"dbmage": "^0.0.0-dev.7",
+		"dbmage": "^0.0.0-dev.8",
 		"es-module-shims": "^1.5.5",
 		"express": "^4.18.1",
 		"lit": "^2.2.4",
@@ -42,6 +42,6 @@
 		"mkdirp": "^1.0.4",
 		"npm-run-all": "^4.1.5",
 		"rimraf": "^3.0.2",
-		"typescript": "^4.6.3"
+		"typescript": "^4.7.2"
 	}
 }
