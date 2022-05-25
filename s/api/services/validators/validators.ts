@@ -53,7 +53,7 @@ export const validateCommentPostDraft = schema<CommentPostDraft>({
 
 export const validateCommentEditDraft = schema<CommentEditDraft>({
 	id: validateId,
-	subject: optional(validateCommentSubject),
+	subject: validateCommentSubject,
 	body: validateCommentBody,
 	scores: optional(validateScoresDraft)
 })

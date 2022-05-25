@@ -61,7 +61,8 @@ export const makeCommentWritingService = asServiceProvider(({
 	},
 
 	async editComment(rawDraft: CommentEditDraft): Promise<void> {
-		const {id, body, subject, scores} = rawDraft
+		const draft = enforceValidation(rawDraft, validateCommentEditDraft)
+		const {id, body, subject, scores} = draft
 		const specificComment = await database.tables.comments.readOne(find({id: dbmage.Id.fromString(id)}))
 
 		if (!user)
@@ -70,9 +71,6 @@ export const makeCommentWritingService = asServiceProvider(({
 		if (!specificComment) {
 			throw new renraku.ApiError(404, "cannot edit, comment not found")
 		}
-
-		
-		const draft = enforceValidation(rawDraft, validateCommentEditDraft)
 			
 		const userIsTheAuthor = user.id === specificComment.authorId.string
 		const userHasAdminRights = user.permissions.canEditAnyComment
@@ -81,14 +79,14 @@ export const makeCommentWritingService = asServiceProvider(({
 		if (!userIsAllowedToEdit)
 			throw new renraku.ApiError(403, "forbidden, must be author or admin to edit a comment")
 
-		const binaryId = dbmage.Id.fromString(draft.id)
+		const binaryId = dbmage.Id.fromString(id)
 
 		await database.transaction(async({tables}) => {
 			await tables.comments.update({
 				...find({id: binaryId}),
 				write: {
-					subject: draft.subject,
-					body: draft.body,
+					subject: subject,
+					body: body,
 				},
 			})
 			await tables.scores.delete(dbmage.find({commentId: binaryId}))
@@ -98,7 +96,7 @@ export const makeCommentWritingService = asServiceProvider(({
 						rando,
 						topicId: specificComment.topicId,
 						commentId: binaryId,
-						scoreDrafts: draft.scores as ScoreDraft[],
+						scoreDrafts: scores,
 					})
 				)
 		})
