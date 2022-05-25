@@ -14,7 +14,7 @@ export function newCommentRow({userId, rando, draft}: {
 		authorId: dbmage.Id.fromString(userId),
 		parentCommentId: draft.parentCommentId
 			? dbmage.Id.fromString(draft.parentCommentId)
-			: undefined,
+			: null,
 		topicId: dbmage.Id.fromString(draft.topicId),
 		timePosted: Date.now(),
 		subject: draft.subject,

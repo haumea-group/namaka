@@ -6,7 +6,7 @@ import {mixinStandard} from "../../framework/mixins/mixin-standard.js"
 import {makeCommentingModel} from "../../models/commenting/commenting-model.js"
 import {makeAuthModel} from "../../models/auth/auth-model.js"
 import {property} from "lit/decorators.js"
-import {TopicStats} from "../../../api/types/concepts.js"
+import {BoardStats} from "../../../api/types/concepts.js"
 
 function ratingToNumberOfStars(rating: number) {
 	return (rating / 25) + 1
@@ -19,13 +19,13 @@ export class NamakaBoardStats extends mixinStandard<{
 }>()(LitElement) {
 
 	@property({type: String})
-	topicId: string = ""
+	topic: string = ""
 	
 	@property({type: Object})
-	stats?: TopicStats
+	stats?: BoardStats
 
 	async firstUpdated() {
-		this.stats = await this.context.commenting.getTopicStats(this.topicId)
+		this.stats = await this.context.commenting.getTopicStats(this.topic)
 	}
 	
 	render() {

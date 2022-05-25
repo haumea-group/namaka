@@ -40,6 +40,7 @@ export const makeCommentWritingService = asServiceProvider(({
 		const scoreRows = draft.scores
 			? newScoreRows({
 				rando,
+				topicId: commentRow.topicId,
 				commentId: commentRow.id,
 				scoreDrafts: draft.scores,
 			})
@@ -92,6 +93,7 @@ export const makeCommentWritingService = asServiceProvider(({
 				await tables.scores.create(
 					...newScoreRows({
 						rando,
+						topicId: specificComment.topicId,
 						commentId: binaryId,
 						scoreDrafts: scores,
 					})

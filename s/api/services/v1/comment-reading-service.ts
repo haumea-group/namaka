@@ -7,7 +7,12 @@ import {rowToComment} from "../utils/row-to-comment.js"
 import {enforceValidation} from "../utils/enforce-validation.js"
 import {asServiceProvider} from "../utils/as-service-provider.js"
 import {validateGetCommennts} from "../validators/validate-fetch-threads-params.js"
-import {CommentPost, Score, TopicStats, FetchThreadsParams} from "../../types/concepts.js"
+import {CommentPost, Score, BoardStats, FetchThreadsParams, BoardScoringStats} from "../../types/concepts.js"
+import {schema} from "../../../toolbox/darkvalley.js"
+import {validateId} from "../validators/validators.js"
+import {concurrent} from "../../../toolbox/concurrent.js"
+import {getBoardBasicStats} from "../stats/get-board-basic-stats.js"
+import {getBoardScoringStats} from "../stats/get-board-scoring-stats.js"
 
 export const makeCommentReadingService = asServiceProvider(({
 		database, scoreAspects, fetchUsers,
@@ -82,30 +87,27 @@ export const makeCommentReadingService = asServiceProvider(({
 		return {scoreAspects}
 	},
 
-	async getTopicStats({topicId: topicIdString}: {topicId: string}): Promise<TopicStats> {
-		console.warn("TODO implement 'getTopicStats'")
+	async getTopicStats(data: {topicId: string}): Promise<BoardStats> {
+		const {topicId: topicIdString} = enforceValidation(data, schema({
+			topicId: validateId,
+		}))
+
+		const topicId = dbmage.Id.fromString(topicIdString)
+
+		const {
+			threadCount,
+			replyCount,
+			reviewCount,
+		} = await getBoardBasicStats({topicId, database})
+
 		return {
 			topicId: topicIdString,
-			numberOfRootComments: 10,
-			numberOfReplyComments: 100,
-			scoring: {
-				averageScore: 51,
-				averageScoreBreakdown: [
-					1,  // number of ratings from 0 to 10
-					4,  // number of ratings from 10 to 20
-					8,  // number of ratings from 20 to 30
-					10, // number of ratings from 30 to 40
-					15, // number of ratings from 40 to 50
-					20, // number of ratings from 50 to 60
-					18, // number of ratings from 60 to 70
-					11, // number of ratings from 70 to 80
-					9,  // number of ratings from 80 to 90
-					7,  // number of ratings from 90 to 100
-				],
-				scoreAspectAverages: {
-					"recommended": 51,
-				},
-			},
+			threadCount,
+			replyCount,
+			reviewCount,
+			scoring: (reviewCount > 0)
+				? await getBoardScoringStats({topicId, database, scoreAspects})
+				: undefined,
 		}
 	}
 }))

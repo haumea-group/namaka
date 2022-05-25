@@ -42,15 +42,18 @@ export interface CommentEditDraft {
 	scores?: ScoreDraft[]
 }
 
-export interface TopicStats {
+export interface BoardScoringStats {
+	averageScore: number
+	averageScoreBreakdown: number[]
+	scoreAspectAverages: {[key: string]: number}
+}
+
+export interface BoardStats {
 	topicId: string
-	numberOfRootComments: number
-	numberOfReplyComments: number
-	scoring?: {
-		averageScore: number
-		averageScoreBreakdown: number[]
-		scoreAspectAverages: {[key: string]: number}
-	}
+	threadCount: number
+	replyCount: number
+	reviewCount: number
+	scoring?: BoardScoringStats
 }
 
 export interface BanParams {
