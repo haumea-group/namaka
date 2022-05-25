@@ -7,7 +7,7 @@ import {rowToComment} from "../utils/row-to-comment.js"
 import {enforceValidation} from "../utils/enforce-validation.js"
 import {asServiceProvider} from "../utils/as-service-provider.js"
 import {validateGetCommennts} from "../validators/validate-fetch-threads-params.js"
-import {CommentPost, Score, TopicStats, FetchThreadsParams, BoardScoringStats} from "../../types/concepts.js"
+import {CommentPost, Score, BoardStats, FetchThreadsParams, BoardScoringStats} from "../../types/concepts.js"
 import {schema} from "../../../toolbox/darkvalley.js"
 import {validateId} from "../validators/validators.js"
 import {concurrent} from "../../../toolbox/concurrent.js"
@@ -87,7 +87,7 @@ export const makeCommentReadingService = asServiceProvider(({
 		return {scoreAspects}
 	},
 
-	async getTopicStats(data: {topicId: string}): Promise<TopicStats> {
+	async getTopicStats(data: {topicId: string}): Promise<BoardStats> {
 		const {topicId: topicIdString} = enforceValidation(data, schema({
 			topicId: validateId,
 		}))
@@ -102,8 +102,9 @@ export const makeCommentReadingService = asServiceProvider(({
 
 		return {
 			topicId: topicIdString,
-			numberOfRootComments: threadCount,
-			numberOfReplyComments: replyCount,
+			threadCount,
+			replyCount,
+			reviewCount,
 			scoring: (reviewCount > 0)
 				? await getBoardScoringStats({topicId, database, scoreAspects})
 				: undefined,

@@ -48,10 +48,11 @@ export interface BoardScoringStats {
 	scoreAspectAverages: {[key: string]: number}
 }
 
-export interface TopicStats {
+export interface BoardStats {
 	topicId: string
-	numberOfRootComments: number
-	numberOfReplyComments: number
+	threadCount: number
+	replyCount: number
+	reviewCount: number
 	scoring?: BoardScoringStats
 }
 

@@ -532,8 +532,8 @@ export default <Suite>{
 				],
 			})
 			const stats = await commenting.getTopicStats(topicId)
-			expect(stats.numberOfRootComments).equals(1)
-			expect(stats.numberOfReplyComments).equals(0)
+			expect(stats.threadCount).equals(1)
+			expect(stats.replyCount).equals(0)
 			expect(stats.scoring).ok()
 			expect(stats.scoring?.averageScore).equals(50)
 		},
@@ -565,8 +565,8 @@ export default <Suite>{
 				],
 			})
 			const stats = await commenting.getTopicStats(topicId)
-			expect(stats.numberOfRootComments).equals(2)
-			expect(stats.numberOfReplyComments).equals(0)
+			expect(stats.threadCount).equals(2)
+			expect(stats.replyCount).equals(0)
 			expect(stats.scoring).ok()
 			expect(stats.scoring?.averageScore).equals(55)
 		},
