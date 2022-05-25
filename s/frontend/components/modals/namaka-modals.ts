@@ -6,8 +6,10 @@ import {mixinStyles} from "../../framework/mixins/mixin-styles.js"
 import {ModalControls, Popup, PopupOptions} from "./modal-types.js"
 
 import namakaModalsCss from "./namaka-modals.css.js"
+import deletePostModalViewCss from "./views/delete-thread/delete-post-modal-view.css.js"
+import reportUserModalViewCss from "./views/report-user/report-user-modal-view.css.js"
 
-@mixinStyles(namakaModalsCss)
+@mixinStyles(namakaModalsCss, reportUserModalViewCss, deletePostModalViewCss)
 export class NamakaModals extends LitElement {
 
 	static readonly elementName = dashify(NamakaModals.name)
@@ -19,6 +21,8 @@ export class NamakaModals extends LitElement {
 	}
 
 	controls: ModalControls = {
+
+		component: this,
 
 		popup: ({
 				renderPopup,

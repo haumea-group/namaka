@@ -1,5 +1,5 @@
 
-import {TemplateResult} from "lit"
+import {LitElement, TemplateResult} from "lit"
 
 export interface PopupActions {
 	close(): void
@@ -22,6 +22,7 @@ export interface Popup {
 }
 
 export interface ModalControls {
+	component: LitElement
 	popup(options: PopupOptions): PopupActions
 	confirm({}: {
 		closeOnBlanketClick?: boolean

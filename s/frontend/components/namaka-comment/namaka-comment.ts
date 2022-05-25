@@ -19,6 +19,7 @@ import edit2Svg from "../../../icons/feather/edit-2.svg.js"
 import {virtualFiveStar} from "../virtual/virtual-five-star.js"
 import {reportUserModalView} from "../modals/views/report-user/report-user-modal-view.js"
 import {deletePostModalView} from "../modals/views/delete-thread/delete-post-modal-view.js"
+import {virtualDeletePostModal} from "../virtual/virtual-delete-post-modal.js"
 
 @mixinStyles(namakaCommentCss, virtualFiveStar.styles)
 export class NamakaComment extends mixinStandard<{
@@ -87,9 +88,12 @@ export class NamakaComment extends mixinStandard<{
 
 	#promptDeleteModal = async () => {
 		const {modals} = this.context
+		const {user} = this.context.auth
+		const userCanArchiveAnyComment
+			= !!user?.permissions.canArchiveAnyComment
 		const comment = this.#getComment()
 		this.#toggleDropDown()
-		const result = await deletePostModalView({modals, comment})
+		const result = await deletePostModalView({modals, comment, userCanArchiveAnyComment})
 		if (result)
 			await this.#archiveThisComment()
 	}

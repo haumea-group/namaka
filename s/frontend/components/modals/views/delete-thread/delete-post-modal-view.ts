@@ -2,37 +2,33 @@
 import {html} from "lit"
 import {ModalControls} from "../../modal-types.js"
 import {NestedComment} from "../../../../models/commenting/commenting-types.js"
+import {virtualDeletePostModal} from "../../../virtual/virtual-delete-post-modal.js"
 
 export async function deletePostModalView({
 		modals,
 		comment,
+		userCanArchiveAnyComment,
 	}: {
 		modals: ModalControls
 		comment: NestedComment
+		userCanArchiveAnyComment: boolean
 	}) {
 
-	const isThread = comment.parentCommentId === undefined
-	const isReview = comment.scoring !== undefined
-
-	const deleteText = isThread
-		? isReview
-			? "review"
-			: "thread"
-		: "reply"
-
-	const result = await modals.confirm({
-		closeOnBlanketClick: true,
-		renderYes: () => html`Delete`,
-		renderNo: () => html`Cancel`,
-		renderContent: () => html`
-		<div class="modalview deletepost">
-		<slot name=delete-post-lol-custom>Default Custom Text</slot>
-			<h2>Delete ${deleteText}</h2>
-			<p>Are you sure you want to delete this ${deleteText} for <strong>"${comment.user.profile.nickname}"</strong></p>
-			<p>${deleteText} id: "${comment.id}"</p>
-			<p>${deleteText} body: "${comment.body}"</p>
-		</div>
-		`
+	const DeletePostModal = virtualDeletePostModal.attach({
+		component: modals.component,
+		state: {choice: "one", disabledBtn :userCanArchiveAnyComment},
 	})
-	return result
+
+	return new Promise((resolve) => {
+		modals.popup({
+			closeOnBlanketClick: true,
+			renderPopup: ({close}) => html`
+				<div class="modalview deletepost">
+					${DeletePostModal({close, comment, userCanArchiveAnyComment})}
+				</div>
+			`,
+			onClose: () => resolve(DeletePostModal.state.choice)
+		})
+	})
+	
 }
