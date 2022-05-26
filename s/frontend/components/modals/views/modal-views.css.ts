@@ -1,7 +1,7 @@
 
 import {css} from "lit"
 import reportUserModalViewCss from "./report-user/report-user-modal-view.css.js"
-import deletePostModalViewCss from "./delete-thread/delete-post-modal-view.css.js"
+import deletePostModalViewCss from "./delete-post/delete-post-modal-view.css.js"
 export default css`
 
 .modalview {

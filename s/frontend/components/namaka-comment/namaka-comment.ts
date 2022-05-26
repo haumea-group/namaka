@@ -18,7 +18,7 @@ import edit2Svg from "../../../icons/feather/edit-2.svg.js"
 
 import {virtualFiveStar} from "../virtual/virtual-five-star.js"
 import {reportUserModalView} from "../modals/views/report-user/report-user-modal-view.js"
-import {deletePostModalView} from "../modals/views/delete-thread/delete-post-modal-view.js"
+import {deletePostModalView} from "../modals/views/delete-post/delete-post-modal-view.js"
 import {virtualDeletePostModal} from "../virtual/virtual-delete-post-modal.js"
 
 @mixinStyles(namakaCommentCss, virtualFiveStar.styles)

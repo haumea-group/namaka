@@ -7,7 +7,7 @@ import {ModalControls, Popup, PopupOptions} from "./modal-types.js"
 
 import namakaModalsCss from "./namaka-modals.css.js"
 import banUserModalViewCss from "./views/ban-user/ban-user-modal-view.css.js"
-import deletePostModalViewCss from "./views/delete-thread/delete-post-modal-view.css.js"
+import deletePostModalViewCss from "./views/delete-post/delete-post-modal-view.css.js"
 import reportUserModalViewCss from "./views/report-user/report-user-modal-view.css.js"
 
 @mixinStyles(namakaModalsCss, reportUserModalViewCss, deletePostModalViewCss, banUserModalViewCss)

@@ -5,7 +5,7 @@ import {virtual} from "../../framework/virtual.js"
 import {NestedComment} from "../../models/commenting/commenting-types.js"
 
 import infoCircleSvg from "../../../icons/tabler/info-circle.svg.js"
-import deletePostModalViewCss from "../modals/views/delete-thread/delete-post-modal-view.css.js"
+import deletePostModalViewCss from "../modals/views/delete-post/delete-post-modal-view.css.js"
 
 export const virtualDeletePostModal = virtual({
 
