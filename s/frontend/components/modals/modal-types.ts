@@ -1,6 +1,10 @@
 
 import {LitElement, TemplateResult} from "lit"
 
+export interface OnBlanketClick {
+	({}: {closeModal: () => void}): void
+}
+
 export interface PopupActions {
 	closeModal(): void
 }
@@ -10,13 +14,13 @@ export interface RenderContent {
 }
 
 export interface PopupOptions {
-	closeOnBlanketClick: boolean
 	renderContent: RenderContent
 	onClose?(): void
+	onBlanketClick?: OnBlanketClick
 }
 
 export interface Popup {
-	closeOnBlanketClick: boolean
+	onBlanketClick: OnBlanketClick
 	actions: PopupActions
 	renderContent: RenderContent
 }
@@ -25,7 +29,7 @@ export interface ModalControls {
 	component: LitElement
 	openModal(options: PopupOptions): PopupActions
 	confirm({}: {
-		closeOnBlanketClick?: boolean
+		onBlanketClick?: OnBlanketClick
 		renderYes?(): TemplateResult
 		renderNo?(): TemplateResult
 		renderContent({}: {
