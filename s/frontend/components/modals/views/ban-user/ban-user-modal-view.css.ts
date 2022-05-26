@@ -1,9 +1,7 @@
 import {css} from "lit"
 export default css`
 
-.modalview.banuser {
-	background: #f002;
-}
+.modalview.banuser {}
 
 .modalview.banuser .suspend-user {
 	width: 100%;

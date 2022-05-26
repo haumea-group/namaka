@@ -2,23 +2,25 @@
 import {css} from "lit"
 export default css`
 
-.modalview.deletepost {
-	background: #f002;
-}
+.modalview.deletepost {}
 
 .modalview.deletepost .header {
 	display: flex;
 	align-items: center;
-	column-gap: 0.5rem;
+	gap: 0.5rem;
+}
+
+.modalview.deletepost .header svg {
+	width: 1.5rem;
+	height: 1.5rem;
 }
 
 .modalview.deletepost .body {
-	padding: 0 2em;
+	padding: 0 2rem;
 	text-align: left;
 }
 
 .modalview.deletepost blockquote {
-	margin: 0.2em 0 0 2em;
 	line-height: 1.2;
 }
 
@@ -32,7 +34,7 @@ export default css`
 	display: flex;
 	flex-direction: column;
 	align-items: flex-start;
-	row-gap: 0.5rem;
+	gap: 0.5rem;
 	padding: 1rem 2rem;
 }
 
@@ -41,7 +43,7 @@ export default css`
 }
 
 .modalview.deletepost .buttons {
-	margin: auto;
+	margin: auto 2rem;
 	padding: 1em 0;
 	border-top: 1px solid;
 }
