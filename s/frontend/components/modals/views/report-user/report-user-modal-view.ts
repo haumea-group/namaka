@@ -12,7 +12,6 @@ export function reportUserModalView({
 	}) {
 
 	modals.openModal({
-		closeOnBlanketClick: true,
 		renderContent: ({closeModal}) => html`
 			<div class="modalview report">
 				<slot name=report-user-lol-custom>Default Custom Text</slot>

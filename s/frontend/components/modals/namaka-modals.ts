@@ -27,12 +27,12 @@ export class NamakaModals extends LitElement {
 
 		openModal: ({
 				renderContent,
-				closeOnBlanketClick,
 				onClose = () => {},
+				onBlanketClick = ({closeModal}) => closeModal(),
 			}: PopupOptions) => {
 
 			const newPopup: Popup = {
-				closeOnBlanketClick,
+				onBlanketClick,
 				actions: {
 					closeModal: () => {
 						this.#popups.delete(newPopup)
@@ -50,7 +50,7 @@ export class NamakaModals extends LitElement {
 		},
 
 		confirm: async({
-				closeOnBlanketClick = true,
+				onBlanketClick = ({closeModal}) => closeModal(),
 				renderNo = () => html`no`,
 				renderYes = () => html`yes`,
 				renderContent,
@@ -58,7 +58,7 @@ export class NamakaModals extends LitElement {
 
 			let result = false
 			this.controls.openModal({
-				closeOnBlanketClick,
+				onBlanketClick,
 				renderContent: ({closeModal}) => {
 					const yes = () => {
 						result = true
@@ -90,7 +90,9 @@ export class NamakaModals extends LitElement {
 
 					<div
 						class=blanket
-						@click=${openModal.closeOnBlanketClick ?openModal.actions.closeModal :() => {}}
+						@click=${() => openModal.onBlanketClick({
+							closeModal: openModal.actions.closeModal,
+						})}
 					></div>
 
 					<div class=content style="top: ${this.#top}px">

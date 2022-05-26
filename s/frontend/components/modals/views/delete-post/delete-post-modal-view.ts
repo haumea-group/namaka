@@ -2,7 +2,7 @@
 import {html} from "lit"
 import {ModalControls} from "../../modal-types.js"
 import {NestedComment} from "../../../../models/commenting/commenting-types.js"
-import {virtualDeletePostModal} from "../../../virtual/virtual-delete-post-modal.js"
+import {DeletionChoice, virtualDeletePostModal} from "../../../virtual/virtual-delete-post-modal.js"
 
 export async function deletePostModalView({
 		modals,
@@ -14,20 +14,26 @@ export async function deletePostModalView({
 		userCanArchiveAnyComment: boolean
 	}) {
 
-	const DeletePostModal = virtualDeletePostModal.attach({
-		component: modals.component,
-		state: {choice: "one", disabledBtn :userCanArchiveAnyComment},
-	})
+	return new Promise<undefined | DeletionChoice>((resolve) => {
 
-	return new Promise((resolve) => {
+		const DeletePostModal = virtualDeletePostModal.attach(
+			{
+				component: modals.component,
+			},
+			{
+				comment,
+				userCanArchiveAnyComment,
+				onDelete: (choice: DeletionChoice) => resolve(choice),
+			},
+		)
+
 		modals.openModal({
-			closeOnBlanketClick: false,
+			onClose: () => resolve(undefined),
 			renderContent: ({closeModal}) => html`
 				<div class="modalview deletepost">
-					${DeletePostModal({closeModal, comment, userCanArchiveAnyComment})}
+					${DeletePostModal({closeModal})}
 				</div>
 			`,
-			onClose: () => resolve(DeletePostModal.state.choice)
 		})
 	})
 }

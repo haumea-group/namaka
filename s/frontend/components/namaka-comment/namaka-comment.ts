@@ -85,7 +85,6 @@ export class NamakaComment extends mixinStandard<{
 		reportUserModalView({modals, comment})
 	}
 
-
 	#promptDeleteModal = async () => {
 		const {modals} = this.context
 		const {user} = this.context.auth
@@ -93,8 +92,12 @@ export class NamakaComment extends mixinStandard<{
 			= !!user?.permissions.canArchiveAnyComment
 		const comment = this.#getComment()
 		this.#toggleDropDown()
-		const result = await deletePostModalView({modals, comment, userCanArchiveAnyComment})
-		if (result)
+		const deletionChoice = await deletePostModalView({
+			modals,
+			comment,
+			userCanArchiveAnyComment,
+		})
+		if (deletionChoice !== undefined)
 			await this.#archiveThisComment()
 	}
 
