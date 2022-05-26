@@ -28,6 +28,10 @@ export function makeCommentingModel({state, remote}: {
 				.filter(comment => comment.topicId === topicId)
 		},
 
+		async fetchScoreAspects() {
+			return remote.commentReading.fetchScoreAspects()
+		},
+
 		async downloadComments(topicId: string) {
 			const {comments, users, scores} = await remote.commentReading.fetchComments({
 				topicId,

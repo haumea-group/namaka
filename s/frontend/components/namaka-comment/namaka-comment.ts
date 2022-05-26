@@ -108,7 +108,8 @@ export class NamakaComment extends mixinStandard<{
 		const {modals} = this.context
 		const comment = this.#getComment()
 		this.#toggleDropDown()
-		const result = await editPostModalView({modals, comment})
+		const {scoreAspects} = await this.context.commenting.fetchScoreAspects()
+		const result = await editPostModalView({modals, comment, scoreAspects})
 		if (result)
 			await this.#editThisComment()
 	}
