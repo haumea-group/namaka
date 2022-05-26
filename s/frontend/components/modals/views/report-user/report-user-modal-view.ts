@@ -11,16 +11,16 @@ export function reportUserModalView({
 		comment: NestedComment
 	}) {
 
-	modals.popup({
+	modals.openModal({
 		closeOnBlanketClick: true,
-		renderPopup: ({close}) => html`
+		renderContent: ({closeModal}) => html`
 			<div class="modalview report">
 				<slot name=report-user-lol-custom>Default Custom Text</slot>
 				<h2>report user!?</h2>
 				<p>username: "${comment.user.profile.nickname}"</p>
 				<p>user id: "${comment.user.id}"</p>
 				<p>comment id: "${comment.id}"</p>
-				<button @click=${close}>close</button>
+				<button @click=${closeModal}>closeModal</button>
 			</div>
 		`,
 	})

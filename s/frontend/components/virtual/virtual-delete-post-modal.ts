@@ -27,17 +27,16 @@ export const virtualDeletePostModal = virtual({
 
 		const handleCancelClick = () => {
 			setState({...getState(), choice: ""})
-			close()
 		}
 
 		return (
 			state,
 			props: {
-				close: () => void,
+				closeModal: () => void,
 				comment: NestedComment,
 				userCanArchiveAnyComment:boolean
 			}) => {
-				const {close, comment, userCanArchiveAnyComment} = props
+				const {closeModal, comment, userCanArchiveAnyComment} = props
 				const isThread = comment.parentCommentId === undefined
 				const isReview = comment.scoring !== undefined
 
@@ -96,7 +95,7 @@ export const virtualDeletePostModal = virtual({
 							: null
 						}
 					<div class="buttons">
-						<button ?disabled=${state.disabledBtn} @click=${close}>
+						<button ?disabled=${state.disabledBtn} @click=${closeModal}>
 							Delete ${state.choice === "all"
 								? `${replyCount+1} posts`
 								: "post"}
@@ -104,7 +103,7 @@ export const virtualDeletePostModal = virtual({
 						<button
 							@click=${() => {
 								handleCancelClick()
-								close()
+								closeModal()
 							}}
 						>Cancel</button>
 					</div>

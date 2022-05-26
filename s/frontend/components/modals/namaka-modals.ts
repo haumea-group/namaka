@@ -6,10 +6,11 @@ import {mixinStyles} from "../../framework/mixins/mixin-styles.js"
 import {ModalControls, Popup, PopupOptions} from "./modal-types.js"
 
 import namakaModalsCss from "./namaka-modals.css.js"
+import banUserModalViewCss from "./views/ban-user/ban-user-modal-view.css.js"
 import deletePostModalViewCss from "./views/delete-thread/delete-post-modal-view.css.js"
 import reportUserModalViewCss from "./views/report-user/report-user-modal-view.css.js"
 
-@mixinStyles(namakaModalsCss, reportUserModalViewCss, deletePostModalViewCss)
+@mixinStyles(namakaModalsCss, reportUserModalViewCss, deletePostModalViewCss, banUserModalViewCss)
 export class NamakaModals extends LitElement {
 
 	static readonly elementName = dashify(NamakaModals.name)
@@ -24,8 +25,8 @@ export class NamakaModals extends LitElement {
 
 		component: this,
 
-		popup: ({
-				renderPopup,
+		openModal: ({
+				renderContent,
 				closeOnBlanketClick,
 				onClose = () => {},
 			}: PopupOptions) => {
@@ -33,13 +34,13 @@ export class NamakaModals extends LitElement {
 			const newPopup: Popup = {
 				closeOnBlanketClick,
 				actions: {
-					close: () => {
+					closeModal: () => {
 						this.#popups.delete(newPopup)
 						this.requestUpdate()
 						onClose()
 					},
 				},
-				renderPopup,
+				renderContent,
 			}
 
 			this.#popups.add(newPopup)
@@ -56,16 +57,16 @@ export class NamakaModals extends LitElement {
 			}) => new Promise((resolve) => {
 
 			let result = false
-			this.controls.popup({
+			this.controls.openModal({
 				closeOnBlanketClick,
-				renderPopup: ({close}) => {
+				renderContent: ({closeModal}) => {
 					const yes = () => {
 						result = true
-						close()
+						closeModal()
 					}
 					const no = () => {
 						result = false
-						close()
+						closeModal()
 					}
 					return html`
 						<div class=innercontent>
@@ -84,16 +85,16 @@ export class NamakaModals extends LitElement {
 
 	render() {
 		return html`
-			${[...this.#popups].map(popup => html`
+			${[...this.#popups].map(openModal => html`
 				<div class=popup>
 
 					<div
 						class=blanket
-						@click=${popup.closeOnBlanketClick ?popup.actions.close :() => {}}
+						@click=${openModal.closeOnBlanketClick ?openModal.actions.closeModal :() => {}}
 					></div>
 
 					<div class=content style="top: ${this.#top}px">
-						${popup.renderPopup(popup.actions)}
+						${openModal.renderContent(openModal.actions)}
 					</div>
 				</div>
 			`)}

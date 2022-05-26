@@ -2,28 +2,28 @@
 import {LitElement, TemplateResult} from "lit"
 
 export interface PopupActions {
-	close(): void
+	closeModal(): void
 }
 
-export interface RenderPopup {
+export interface RenderContent {
 	({}: PopupActions): TemplateResult
 }
 
 export interface PopupOptions {
 	closeOnBlanketClick: boolean
-	renderPopup: RenderPopup
+	renderContent: RenderContent
 	onClose?(): void
 }
 
 export interface Popup {
 	closeOnBlanketClick: boolean
 	actions: PopupActions
-	renderPopup: RenderPopup
+	renderContent: RenderContent
 }
 
 export interface ModalControls {
 	component: LitElement
-	popup(options: PopupOptions): PopupActions
+	openModal(options: PopupOptions): PopupActions
 	confirm({}: {
 		closeOnBlanketClick?: boolean
 		renderYes?(): TemplateResult
