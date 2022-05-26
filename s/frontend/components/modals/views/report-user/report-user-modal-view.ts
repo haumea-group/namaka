@@ -11,9 +11,9 @@ export function reportUserModalView({
 		comment: NestedComment
 	}) {
 
-	modals.popup({
+	modals.openModal({
 		closeOnBlanketClick: true,
-		renderPopup: ({closeModal}) => html`
+		renderContent: ({closeModal}) => html`
 			<div class="modalview report">
 				<slot name=report-user-lol-custom>Default Custom Text</slot>
 				<h2>report user!?</h2>

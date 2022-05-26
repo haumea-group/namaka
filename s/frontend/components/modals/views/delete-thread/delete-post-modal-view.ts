@@ -20,9 +20,9 @@ export async function deletePostModalView({
 	})
 
 	return new Promise((resolve) => {
-		modals.popup({
+		modals.openModal({
 			closeOnBlanketClick: false,
-			renderPopup: ({closeModal}) => html`
+			renderContent: ({closeModal}) => html`
 				<div class="modalview deletepost">
 					${DeletePostModal({closeModal, comment, userCanArchiveAnyComment})}
 				</div>

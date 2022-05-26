@@ -18,9 +18,9 @@ export async function banUserModalView({
 	})
 
 	return new Promise((resolve) => {
-		modals.popup({
+		modals.openModal({
 			closeOnBlanketClick: false,
-			renderPopup: ({closeModal}) => html`
+			renderContent: ({closeModal}) => html`
 				<div class="modalview banuser">
 					${BanUserModal({closeModal, comment})}
 				</div>
