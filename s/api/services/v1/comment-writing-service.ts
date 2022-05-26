@@ -9,8 +9,8 @@ import {rowToComment} from "../utils/row-to-comment.js"
 import {newCommentRow} from "../utils/new-comment-row.js"
 import {enforceValidation} from "../utils/enforce-validation.js"
 import {asServiceProvider} from "../utils/as-service-provider.js"
-import {validateCommentPostDraft, validateId} from "../validators/validators.js"
-import {CommentPostDraft, CommentPost, CommentEditDraft, Score} from "../../types/concepts.js"
+import {validateCommentPostDraft, validateCommentEditDraft, validateId} from "../validators/validators.js"
+import {CommentPostDraft, CommentPost, CommentEditDraft, Score, ScoreDraft} from "../../types/concepts.js"
 
 export const makeCommentWritingService = asServiceProvider(({
 		rando, database, fetchUsers,
@@ -60,7 +60,8 @@ export const makeCommentWritingService = asServiceProvider(({
 		}
 	},
 
-	async editComment(draft: CommentEditDraft): Promise<void> {
+	async editComment(rawDraft: CommentEditDraft): Promise<void> {
+		const draft = enforceValidation(rawDraft, validateCommentEditDraft)
 		const {id, body, subject, scores} = draft
 		const specificComment = await database.tables.comments.readOne(find({id: dbmage.Id.fromString(id)}))
 
@@ -84,8 +85,8 @@ export const makeCommentWritingService = asServiceProvider(({
 			await tables.comments.update({
 				...find({id: binaryId}),
 				write: {
-					subject,
-					body,
+					subject: subject,
+					body: body,
 				},
 			})
 			await tables.scores.delete(dbmage.find({commentId: binaryId}))
