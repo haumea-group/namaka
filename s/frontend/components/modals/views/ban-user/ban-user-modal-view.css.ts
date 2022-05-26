@@ -1,11 +1,9 @@
 import {css} from "lit"
 export default css`
 
-.modalview.banuser {
-	background: #f002;
-}
+.modalview.banuser {}
 
-.suspend-user {
+.modalview.banuser .suspend-user {
 	width: 100%;
 	max-width: 540px;
 	margin: 0 auto;
@@ -14,75 +12,75 @@ export default css`
 	border: 1px solid #DDE2E5;
 }
 
-.heading {
+.modalview.banuser .heading {
 	display: flex;
 	justify-content: space-between;
 	align-items: center;
 	margin-bottom: 15px;
 }
 
-.heading__text {
+.modalview.banuser .heading__text {
 	display: flex;
 }
 
-.info {
+.modalview.banuser .info {
 	width: 20px;
 	height: 20px;
 	margin-right: 10px;
 }
 
-.title {
+.modalview.banuser .title {
 	font-size: 20px;
 	font-weight: 700;
 	line-height: 24px;
 }
 
-p {
+.modalview.banuser p {
 	font-size: 16px;
 	line-height: 24px;
 }
 
-.gray {
+.modalview.banuser .gray {
 	color: #777E90;
 }
 
-.name {
+.modalview.banuser .name {
 	font-weight: bold;
 }
 
-.border-b {
+.modalview.banuser .border-b {
 	padding: 0 0 15px;
 	border-bottom: 1px solid #EDEFF5;
 }
 
-.selection {
+.modalview.banuser .selection {
 	margin: 20px 0;
 	display: flex;
 	justify-content: space-between;
 }
 
-.selection > div {
+.modalview.banuser .selection > div {
 	display: flex;
 	justify-content: space-between;
 	align-items: center;
 }
 
-.selection input {
+.modalview.banuser .selection input {
 	margin-right: 5px;
 }
 
-.action {
+.modalview.banuser .action {
 	display: flex;
 	margin-top: 35px;
 }
 
-.action button {
+.modalview.banuser .action button {
 	border: none;
 	background: transparent;
 	color: rgba(255,255,255,0.8);
 }
 
-.action button:first-child {
+.modalview.banuser .action button:first-child {
 	margin-right: 15px;
 }
 
