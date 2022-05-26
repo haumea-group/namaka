@@ -6,7 +6,7 @@ export default () => css`
 	max-width: 540px;
 	margin: 0 auto;
 	padding: 20px;
-	border: 0.5px solid #776e62;
+	border: 1px solid rgb(221, 226, 229);
 	text-align: left;
 }
 

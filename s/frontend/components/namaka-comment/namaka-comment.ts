@@ -179,7 +179,7 @@ export class NamakaComment extends mixinStandard<{
 			return null
 
 		return html`
-			<div class="outer-div">
+			<div class="outer-div" part="container">
 				<div class="avatar"></div>
 				<div class="inner-div">
 					<div class="header">
@@ -201,7 +201,7 @@ export class NamakaComment extends mixinStandard<{
 						<p class="time-stamp">${comment.timePosted}</p>
 						<span>&bull; ${comment.children.length} ${comment.children.length === 1 ? "comment" : "comments"}</span>
 						${this.#canPost
-							? html`<button @click=${this.#postRandomReply}>Reply</button>`
+							? html`<button @click=${this.#postRandomReply} part="button">Reply</button>`
 							: null}
 					</div>
 				</div>

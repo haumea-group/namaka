@@ -42,10 +42,10 @@ export class NamakaBan extends LitElement {
 				</form>
 
 				<div class="action">
-					<button part="dangerBtn button">
+					<button part="dangerButton button">
 						Suspend
 					</button>
-					<button part="cancelBtn button">
+					<button part="cancelButton button">
 						Cancel
 					</button>
 				</div>

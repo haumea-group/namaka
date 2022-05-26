@@ -41,7 +41,7 @@ export class NamakaWriteAComment extends LitElement {
 						<p><span part="bold">Leave a feedback to this user</span> <span class="gray">(This will be made public)</span></p>
 						<namaka-textarea></namaka-textarea>
 					</div>
-					<button part="pryColor">Submit</button>
+					<button part="primaryColor">Submit</button>
 				</div>
 			</div>
 		`

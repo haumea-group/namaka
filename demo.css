@@ -51,13 +51,13 @@ a:hover { color: white; }
 namaka-demo {
 	margin: 1em;
 	padding: 1em;
-	border: 1px solid;
+	border: 1px solid rgb(221, 226, 229);
 }
 
 namaka-comments {
 	text-align: left;
 	margin: auto;
-	border: 1px solid;
+	border: 1px solid rgb(221, 226, 229);
 	padding: 1em;
 }
 

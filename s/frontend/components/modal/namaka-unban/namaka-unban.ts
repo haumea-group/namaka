@@ -25,10 +25,10 @@ export class NamakaUnban extends LitElement {
 				</div>
 
 				<div class="action">
-					<button part="pryColor button">
+					<button part="primaryColor button">
 						Unban
 					</button>
-					<button part="cancelBtn button">
+					<button part="cancelButton button">
 						Cancel
 					</button>
 				</div>

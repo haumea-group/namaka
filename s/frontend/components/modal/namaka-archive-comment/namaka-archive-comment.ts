@@ -27,10 +27,10 @@ export class NamakaArchiveComment extends LitElement {
 				</div>
 
 				<div class="action">
-					<button part="dangerBtn button">
+					<button part="dangerButton button">
 						Delete
 					</button>
-					<button part="cancelBtn button">
+					<button part="cancelButton button">
 						Cancel
 					</button>
 				</div>

@@ -42,7 +42,7 @@ export class NamakaEditComment extends LitElement {
 						<namaka-textarea></namaka-textarea>
 						<!-- <textarea name="message" id="message" rows="10"></textarea> -->
 					</div>
-					<button part="pryColor">Submit</button>
+					<button part="primaryColor">Submit</button>
 				</div>
 			</div>
 		`

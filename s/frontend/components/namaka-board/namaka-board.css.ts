@@ -3,7 +3,7 @@ import {css} from "lit"
 export default css`
 
 .board {
-	border: 1px solid;
+	border: 1px solid rgb(221, 226, 229);
 	border-radius: 1rem;
 	padding: 1rem;
 }
@@ -12,7 +12,7 @@ export default css`
 	display: flex;
 	justify-content: space-between;
 	align-items: center;
-	border-bottom: 1px solid;
+	border-bottom: 1px solid rgb(221, 226, 229);
 	padding-bottom: 0.5rem;
 }
 

@@ -1,11 +1,19 @@
+html {
+	background: #fff;
+	color: #000;
+}
 
-namaka-ban::part(container),
-namaka-unban::part(container),
-namaka-edit-comment::part(container),
-namaka-author-reply::part(container),	
-namaka-archive-comment::part(container),
-namaka-board-stats::part(container),
-namaka-write-a-comment::part(container) {	
+:is(
+    namaka-ban,
+    namaka-unban,
+    namaka-edit-comment,
+    namaka-author-reply,
+    namaka-archive-comment,
+    namaka-board-stats,
+    namaka-comments,
+    namaka-board,
+    namaka-write-a-comment
+  )::part(container) {	
 	border-radius: 25px;
 	background: #fff;
 	padding: 30px;
@@ -17,23 +25,23 @@ namaka-unban::part(title) {
 	color: #000;
 }
 
-namaka-archive-comment::part(deleteBtn),
-namaka-ban::part(deleteBtn) {
+namaka-archive-comment::part(deleteButton),
+namaka-ban::part(deleteButton) {
 	background: #EB5757;
 	color: #fff;
 }
 
-namaka-archive-comment::part(dangerBtn),
-namaka-ban::part(dangerBtn),
-namaka-unban::part(dangerBtn) {
+namaka-archive-comment::part(dangerButton),
+namaka-ban::part(dangerButton),
+namaka-unban::part(dangerButton) {
 	background: #EB5757;
 	color: #fff;
 }
 
-namaka-archive-comment::part(cancelBtn),
-namaka-ban::part(cancelBtn),
-namaka-unban::part(cancelBtn),
-namaka-author-reply::part(cancelBtn){
+namaka-archive-comment::part(cancelButton),
+namaka-ban::part(cancelButton),
+namaka-unban::part(cancelButton),
+namaka-author-reply::part(cancelButton){
 	background: #FFFAF0;
 	color: #FFAF02;
 }
@@ -43,11 +51,12 @@ namaka-unban::part(name) {
 	font-weight: bold;
 }
 
-namaka-unban::part(pryColor),
-namaka-edit-comment::part(pryColor),
-namaka-write-a-comment::part(pryColor) {
+namaka-unban::part(primaryColor),
+namaka-edit-comment::part(primaryColor),
+namaka-write-a-comment::part(primaryColor) {
 	background: #FFAF02;
 	color: #fff;
+	border: none;
 }
 
 namaka-archive-comment::part(button),
@@ -74,8 +83,8 @@ namaka-write-a-comment::part(subtitle) {
 	color: #000;
 }
 
-namaka-edit-comment::part(pryColor),
-namaka-write-a-comment::part(pryColor) {
+namaka-edit-comment::part(primaryColor),
+namaka-write-a-comment::part(primaryColor) {
 	width: 250px;
 	padding: 15px 0;
 	border-radius: 40px;
@@ -128,4 +137,15 @@ namaka-ban::part(label),
 namaka-archive-comment::part(bold),
 namaka-ban::part(bold) {
 	color: #000;
+}
+
+namaka-comments {
+	/* border: none; */
+	padding: 0;
+}
+
+namaka-comment::part(button) {
+	background: transparent;
+	color: #000;
+	border: none;
 }
