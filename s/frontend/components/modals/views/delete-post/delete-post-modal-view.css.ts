@@ -6,29 +6,29 @@ export default css`
 	background: #f002;
 }
 
-.header {
+.modalview.deletepost .header {
 	display: flex;
 	align-items: center;
 	column-gap: 0.5rem;
 }
 
-.body {
+.modalview.deletepost .body {
 	padding: 0 2em;
 	text-align: left;
 }
 
-blockquote {
+.modalview.deletepost blockquote {
 	margin: 0.2em 0 0 2em;
 	line-height: 1.2;
 }
 
-.sub-txt {
+.modalview.deletepost .sub-txt {
 	text-align: right;
 	margin-top: 0.4em;
 	opacity: 0.7;
 }
 
-.selection {
+.modalview.deletepost .selection {
 	display: flex;
 	flex-direction: column;
 	align-items: flex-start;
@@ -36,11 +36,11 @@ blockquote {
 	padding: 1rem 2rem;
 }
 
-label:hover {
+.modalview.deletepost label:hover {
 	cursor: pointer;
 }
 
-.buttons {
+.modalview.deletepost .buttons {
 	margin: auto;
 	padding: 1em 0;
 	border-top: 1px solid;
