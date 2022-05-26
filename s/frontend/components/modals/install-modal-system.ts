@@ -21,7 +21,6 @@ export function installModalSystem() {
 	let modals = <NamakaModals>document.querySelector(namakaModals)
 
 	if (!modals) {
-		console.log("create new modals")
 		modals = <NamakaModals>document.createElement(namakaModals)
 		document.body.prepend(modals)
 	}
