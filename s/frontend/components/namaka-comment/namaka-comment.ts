@@ -20,6 +20,7 @@ import {virtualFiveStar} from "../virtual/virtual-five-star.js"
 import {reportUserModalView} from "../modals/views/report-user/report-user-modal-view.js"
 import {deletePostModalView} from "../modals/views/delete-post/delete-post-modal-view.js"
 import {virtualDeletePostModal} from "../virtual/virtual-delete-post-modal.js"
+import {editPostModalView} from "../modals/views/edit-thread/edit-post-modal-view.js"
 
 @mixinStyles(namakaCommentCss, virtualFiveStar.styles)
 export class NamakaComment extends mixinStandard<{
@@ -78,6 +79,11 @@ export class NamakaComment extends mixinStandard<{
 		return this.context.commenting.archiveComment(comment.id)
 	}
 
+	#editThisComment = async() => {
+		const comment = this.#getComment()
+		return this.context.commenting.editComment(comment)
+	}
+
 	#promptReportModal = () => {
 		const {modals} = this.context
 		const comment = this.#getComment()
@@ -102,6 +108,9 @@ export class NamakaComment extends mixinStandard<{
 		const {modals} = this.context
 		const comment = this.#getComment()
 		this.#toggleDropDown()
+		const result = await editPostModalView({modals, comment})
+		if (result)
+			await this.#editThisComment()
 	}
 
 	#renderDropDown = () => {
