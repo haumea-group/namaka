@@ -63,10 +63,10 @@ export class NamakaCopyToClipboard extends LitElement {
 
 	render() {
 		return html`
-		<div @click=${() => this.copyToClipboard()} class="flex">
-			<div class="background"
-			@mouseover=${() => this.setCopyIcon(true)}
-			@mouseout=${() => this.setCopyIcon(false)}>
+		<div @mouseenter=${() => this.setCopyIcon(true)}
+			@mouseleave=${() => this.setCopyIcon(false)} 
+			@click=${() => this.copyToClipboard()} class="flex kupa">
+			<div class="background">
 				${this.copyText}
 				<div class="copy-container">
 					${this.showCopyIcon &&
