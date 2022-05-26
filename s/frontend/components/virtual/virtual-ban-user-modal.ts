@@ -63,15 +63,31 @@ export const virtualBanUserModal = virtual({
 	
 					<form class="selection">
 						<div>
-							<input type="radio" name="time" value="24hrs" checked/>
+							<input
+								type="radio"
+								name="time"
+								value="24hrs"
+								checked
+								@click=${setChoice}
+							/>
 							<label for="24hrs" part="label">24 hrs</label>
 						</div>
 						<div>
-							<input type="radio" name="time" value="7days" />
+							<input
+								type="radio"
+								name="time"
+								value="7days"
+								@click=${setChoice}
+							/>
 							<label for="7days" part="label">7  days</label>
 						</div>
 						<div>
-							<input type="radio" name="time" value="indefinitely" />
+							<input
+								type="radio"
+								name="time"
+								value="indefinitely"
+								@click=${setChoice}
+							/>
 							<label for="indefinitely" part="label">Indefinitely</label>
 						</div>
 					</form>
