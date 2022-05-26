@@ -21,7 +21,6 @@ export default css`
 	left: 0;
 	right: 0;
 	margin: 10vh auto;
-	width: max-content;
 }
 
 `
