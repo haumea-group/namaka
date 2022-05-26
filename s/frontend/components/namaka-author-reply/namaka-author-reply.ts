@@ -16,7 +16,7 @@ export class NamakaAuthorReply extends LitElement {
 					<namaka-textarea .validator=${validateCommentBody} maxCharacters="580"></namaka-textarea>
 					<div class="action-btns">
 						<button part="pryColor button">Reply</button>
-						<button part="cancelBtn button">Close</button>
+						<button part="cancelBtn button">closeModal</button>
 					</div>
 				</div>
 			</div>

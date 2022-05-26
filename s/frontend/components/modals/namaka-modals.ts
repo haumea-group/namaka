@@ -6,10 +6,11 @@ import {mixinStyles} from "../../framework/mixins/mixin-styles.js"
 import {ModalControls, Popup, PopupOptions} from "./modal-types.js"
 
 import namakaModalsCss from "./namaka-modals.css.js"
+import banUserModalViewCss from "./views/ban-user/ban-user-modal-view.css.js"
 import deletePostModalViewCss from "./views/delete-thread/delete-post-modal-view.css.js"
 import reportUserModalViewCss from "./views/report-user/report-user-modal-view.css.js"
 
-@mixinStyles(namakaModalsCss, reportUserModalViewCss, deletePostModalViewCss)
+@mixinStyles(namakaModalsCss, reportUserModalViewCss, deletePostModalViewCss, banUserModalViewCss)
 export class NamakaModals extends LitElement {
 
 	static readonly elementName = dashify(NamakaModals.name)
@@ -33,7 +34,7 @@ export class NamakaModals extends LitElement {
 			const newPopup: Popup = {
 				closeOnBlanketClick,
 				actions: {
-					close: () => {
+					closeModal: () => {
 						this.#popups.delete(newPopup)
 						this.requestUpdate()
 						onClose()
@@ -58,14 +59,14 @@ export class NamakaModals extends LitElement {
 			let result = false
 			this.controls.popup({
 				closeOnBlanketClick,
-				renderPopup: ({close}) => {
+				renderPopup: ({closeModal}) => {
 					const yes = () => {
 						result = true
-						close()
+						closeModal()
 					}
 					const no = () => {
 						result = false
-						close()
+						closeModal()
 					}
 					return html`
 						<div class=innercontent>
@@ -89,7 +90,7 @@ export class NamakaModals extends LitElement {
 
 					<div
 						class=blanket
-						@click=${popup.closeOnBlanketClick ?popup.actions.close :() => {}}
+						@click=${popup.closeOnBlanketClick ?popup.actions.closeModal :() => {}}
 					></div>
 
 					<div class=content style="top: ${this.#top}px">

@@ -2,7 +2,7 @@
 import {LitElement, TemplateResult} from "lit"
 
 export interface PopupActions {
-	close(): void
+	closeModal(): void
 }
 
 export interface RenderPopup {
