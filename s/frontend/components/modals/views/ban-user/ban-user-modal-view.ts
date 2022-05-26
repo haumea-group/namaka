@@ -1,7 +1,7 @@
 
 import {html} from "lit"
 import {ModalControls} from "../../modal-types.js"
-import {virtualBanUserModal} from "../../../virtual/virtual-ban-user-modal.js"
+import {BanPeriod, virtualBanUserModal} from "../../../virtual/virtual-ban-user-modal.js"
 import {NestedComment} from "../../../../models/commenting/commenting-types.js"
 
 export async function banUserModalView({
@@ -12,19 +12,22 @@ export async function banUserModalView({
 		comment: NestedComment
 	}) {
 
-	const BanUserModal = virtualBanUserModal.attach({
-		component: modals.component,
-		state: {banPeriod: ""},
-	})
+	return new Promise<BanPeriod | undefined> ((resolve) => {
 
-	return new Promise((resolve) => {
+		const BanUserModal = virtualBanUserModal.attach({
+			component: modals.component,
+		}, {
+			comment,
+			onDelete: (banPeriod: BanPeriod) => resolve(banPeriod)
+		})
+
 		modals.openModal({
+			onClose: () => resolve(undefined),
 			renderContent: ({closeModal}) => html`
 				<div class="modalview banuser">
-					${BanUserModal({closeModal, comment})}
+					${BanUserModal({closeModal})}
 				</div>
 			`,
-			onClose: () => resolve(BanUserModal.state.banPeriod)
 		})
 	})
 }
