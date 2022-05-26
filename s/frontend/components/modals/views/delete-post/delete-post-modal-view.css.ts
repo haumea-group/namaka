@@ -43,7 +43,8 @@ export default css`
 }
 
 .modalview.deletepost .buttons {
-	margin: auto 2rem;
+	margin: 1rem 2rem;
+	margin-bottom: 0;
 	padding: 1em 0;
 	border-top: 1px solid;
 }
