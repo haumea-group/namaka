@@ -4,6 +4,7 @@ import {ModalControls} from "../../modal-types.js"
 import {NestedComment} from "../../../../models/commenting/commenting-types.js"
 import {validateCommentBody} from "../../../../../api/services/validators/validators.js"
 import {virtualFiveStar} from "../../../virtual/virtual-five-star.js"
+import {virtualEditPostModal} from "../../../virtual/virtual-edit-post-modal.js"
 
 const defaultScore = 0
 
@@ -17,69 +18,20 @@ export async function editPostModalView({
 		scoreAspects: string[]
 	}) {
 
-	const isThread = comment.parentCommentId === undefined
-	const isReview = comment.scoring !== undefined
-
-	let renderScoringUi: () => TemplateResult | null = () => null
-
-	if (isReview) {
-		const {scores} = comment.scoring!
-
-		function getPreviousOrDefaultScore(aspect: string) {
-			const existingScore = scores.find(score => score.aspect === aspect)
-			return existingScore
-				? existingScore.score
-				: defaultScore
-		}
-
-		const scoringCategories = scoreAspects.map(aspect => ({
-			aspect,
-			FiveStar: virtualFiveStar.attach({
-				component: modals.component,
-				state: {
-					editable: true,
-					rating: getPreviousOrDefaultScore(aspect),
-				},
-			})
-		}))
-
-		renderScoringUi = () => html`
-			<ol>
-				${scoringCategories.map(({aspect, FiveStar}) => html`
-					<li>
-						<p>${aspect}</p>
-						${FiveStar()}
-					</li>
-				`)}
-			</ol>
-		`
-	}
-
-	const editText = isThread
-		? isReview
-			? "review"
-			: "thread"
-		: "reply"
-
-	const result = await modals.confirm({
-		closeOnBlanketClick: true,
-		renderYes: () => html`Save`,
-		renderNo: () => html`Cancel`,
-		renderContent: () => html`
-
-			<div class="modalview deletepost">
-				<h2>Edit ${editText}</h2>
-
-				${renderScoringUi()}
-
-				<namaka-textarea
-					.validator=${validateCommentBody}
-					.initial-value="${comment.body}"
-					part="textarea"
-				></namaka-textarea>
-			</div>
-		`
+	const EditPostModal = virtualEditPostModal.attach({
+		component: modals.component,
+		state: {choice: "one"},
 	})
 
-	return result
+	return new Promise((resolve) => {
+		modals.openModal({
+			closeOnBlanketClick: false,
+			renderContent: ({closeModal}) => html`
+				<div class="modalview deletepost">
+					${EditPostModal({modals, closeModal, comment, scoreAspects})}
+				</div>
+			`,
+			onClose: () => resolve(EditPostModal.state.choice)
+		})
+	})
 }
