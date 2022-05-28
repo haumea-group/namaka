@@ -6,7 +6,6 @@ export default css`
 	display: flex;
 	flex-direction: column;
 	gap: 0.5em;
-	background: #f002;
 	text-align: left;
 }
 
