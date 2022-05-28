@@ -3,11 +3,11 @@ import {property} from "lit/decorators.js"
 
 import {mixinStyles} from "../../../namaka.js"
 
-import NamakaBoardCss from "./namaka-board.css.js"
+import NamakaBoardCss from "./namaka-board-wip.css.js"
 import noDataSvg from "../../../icons/tabler/no-data.svg.js"
 
 @mixinStyles(NamakaBoardCss)
-export class NamakaBoard extends LitElement {
+export class NamakaBoardWip extends LitElement {
 	@property({type: Boolean})
 	private noComments: boolean = true
 

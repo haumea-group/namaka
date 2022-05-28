@@ -3,7 +3,7 @@ import {NamakaLoadMore} from "./load-more/index.js"
 import {ModalControls} from "./modals/modal-types.js"
 import {NamakaBans} from "./banned-users/index.js"
 import {prepareModels} from "../models/prepare-models.js"
-import {NamakaBoard} from './namaka-board/namaka-board.js'
+// import {NamakaBoardWip} from './namaka-board-wip/namaka-board-wip.js'
 import {NamakaMyReview} from "./reviews/my-review/index.js"
 import {NamakaComments} from "./comments/namaka-comments.js"
 import {NamakaDemo} from "./demo-auth/namaka-demo.js"
@@ -34,7 +34,7 @@ export function prepareComponents({
 	}) {
 
 	return themeComponents(themeCss, {
-		NamakaBoard,
+		// NamakaBoard,
 		NamakaTextarea,
 		NamakaAuthorReply,
 		NamakaMyReview,
