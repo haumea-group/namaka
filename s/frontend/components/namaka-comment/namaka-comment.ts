@@ -16,11 +16,13 @@ import infoSquareSvg from "../../../icons/tabler/info-square.svg.js"
 import alertTriangleSvg from "../../../icons/feather/alert-triangle.svg.js"
 import edit2Svg from "../../../icons/feather/edit-2.svg.js"
 
+import {howLongAgo} from "../../../toolbox/how-long-ago.js"
 import {virtualFiveStar} from "../virtual/virtual-five-star.js"
-import {reportUserModalView} from "../modals/views/report-user/report-user-modal-view.js"
-import {deletePostModalView} from "../modals/views/delete-post/delete-post-modal-view.js"
 import {virtualDeletePostModal} from "../virtual/virtual-delete-post-modal.js"
 import {banUserModalView} from "../modals/views/ban-user/ban-user-modal-view.js"
+import {reportUserModalView} from "../modals/views/report-user/report-user-modal-view.js"
+import {deletePostModalView} from "../modals/views/delete-post/delete-post-modal-view.js"
+import {recursivelyCountAllNestedChildren} from "./utils/recursively-count-all-nested-children.js"
 
 @mixinStyles(namakaCommentCss, virtualFiveStar.styles)
 export class NamakaComment extends mixinStandard<{
@@ -197,6 +199,8 @@ export class NamakaComment extends mixinStandard<{
 		if (!comment.user)
 			return null
 
+		const replyCount: number = recursivelyCountAllNestedChildren(comment)
+
 		return html`
 			<div class="outer-div" part="container">
 				<namaka-avatar .user=${comment.user}></namaka-avatar>
@@ -217,8 +221,18 @@ export class NamakaComment extends mixinStandard<{
 					</div>
 					<p>${comment.body}</p>
 					<div class="footer">
-						<p class="time-stamp">${comment.timePosted}</p>
-						<span>&bull; ${comment.children.length} ${comment.children.length === 1 ? "comment" : "comments"}</span>
+						<p class="time-stamp">
+							${howLongAgo(comment.timePosted)}
+						</p>
+						${replyCount > 0
+							? html`
+								<span>
+									&bull;
+									${replyCount}
+									comment${replyCount === 1 ?"" : "s"}
+								</span>
+							`
+							: null}
 						${this.#canPost
 							? html`<button @click=${this.#postRandomReply} part="button">Reply</button>`
 							: null}
