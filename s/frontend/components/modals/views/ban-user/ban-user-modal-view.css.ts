@@ -5,11 +5,9 @@ export default css`
 
 .modalview.banuser .suspend-user {
 	width: 100%;
-	max-width: 540px;
 	margin: 0 auto;
 	padding: 20px;	
 	text-align: left;
-	border: 1px solid #DDE2E5;
 }
 
 .modalview.banuser .heading {
@@ -72,12 +70,6 @@ export default css`
 .modalview.banuser .action {
 	display: flex;
 	margin-top: 35px;
-}
-
-.modalview.banuser .action button {
-	border: none;
-	background: transparent;
-	color: rgba(255,255,255,0.8);
 }
 
 .modalview.banuser .action button:first-child {

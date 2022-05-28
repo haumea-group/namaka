@@ -20,7 +20,6 @@ export function reportUserModalView({
 	`.split("\n").map(s => s.trim()).join("\n").trim()
 
 	modals.openModal({
-		closeOnBlanketClick: true,
 		renderContent: ({closeModal}) => html`
 			<div part="container" class="modalview report">
 

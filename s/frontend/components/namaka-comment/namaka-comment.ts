@@ -20,6 +20,7 @@ import {virtualFiveStar} from "../virtual/virtual-five-star.js"
 import {reportUserModalView} from "../modals/views/report-user/report-user-modal-view.js"
 import {deletePostModalView} from "../modals/views/delete-post/delete-post-modal-view.js"
 import {virtualDeletePostModal} from "../virtual/virtual-delete-post-modal.js"
+import {banUserModalView} from "../modals/views/ban-user/ban-user-modal-view.js"
 
 @mixinStyles(namakaCommentCss, virtualFiveStar.styles)
 export class NamakaComment extends mixinStandard<{
@@ -85,6 +86,12 @@ export class NamakaComment extends mixinStandard<{
 		reportUserModalView({modals, comment})
 	}
 
+	#promptBanModal = async () => {
+		const {modals} = this.context
+		const comment = this.#getComment()
+		this.#toggleDropDown()
+		const banPeriod = await banUserModalView({modals, comment})
+	}
 
 	#promptDeleteModal = async () => {
 		const {modals} = this.context
@@ -93,8 +100,12 @@ export class NamakaComment extends mixinStandard<{
 			= !!user?.permissions.canArchiveAnyComment
 		const comment = this.#getComment()
 		this.#toggleDropDown()
-		const result = await deletePostModalView({modals, comment, userCanArchiveAnyComment})
-		if (result)
+		const deletionChoice = await deletePostModalView({
+			modals,
+			comment,
+			userCanArchiveAnyComment,
+		})
+		if (deletionChoice !== undefined)
 			await this.#archiveThisComment()
 	}
 
@@ -121,8 +132,9 @@ export class NamakaComment extends mixinStandard<{
 		const deleteButtonIsAvailable = userCanArchiveAnyComment
 			|| userIsTheAuthorOfThisComment
 		
-		const editButtonIsAvailable = userCanEditAnyComment
-		|| userIsTheAuthorOfThisComment
+		const editButtonIsAvailable = userIsTheAuthorOfThisComment
+
+		const banUserButtonIsAvailable = !!user?.permissions.canBanUsers
 
 		const isThread = comment.parentCommentId === undefined
 		const isReview = comment.scoring !== undefined
@@ -148,10 +160,16 @@ export class NamakaComment extends mixinStandard<{
 						${infoSquareSvg}
 						Report user
 				</button>
-				<button part="suspend">
-					${alertTriangleSvg}
-					Suspend user
-				</button>
+
+				${banUserButtonIsAvailable
+					? html`
+						<button part="suspend" @click=${this.#promptBanModal}>
+							${alertTriangleSvg}
+							Suspend user
+						</button>
+					`
+					: null}
+				
 				${deleteButtonIsAvailable
 					? html`
 						<button part="delete" @click=${this.#promptDeleteModal}>
@@ -160,6 +178,7 @@ export class NamakaComment extends mixinStandard<{
 						</button>
 					`
 					: null}
+
 				${editButtonIsAvailable
 					? html`
 						<button part="edit" @click=${this.#promptEditModal}>
