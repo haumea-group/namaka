@@ -8,10 +8,10 @@ import {randomComment, randomSubject} from "../../../toolbox/randomly.js"
 import {makeCommentingModel} from "../../models/commenting/commenting-model.js"
 import {recursivelyRenderComments} from "./utils/recursively-render-comments.js"
 
-import namakaCommentsCss from "./namaka-comments.css.js"
+import namakaCommentsCss from "./namaka-board.css.js"
 
 @mixinStyles(namakaCommentsCss)
-export class NamakaComments extends mixinStandard<{
+export class NamakaBoard extends mixinStandard<{
 		auth: ReturnType<typeof makeAuthModel>
 		commenting: ReturnType<typeof makeCommentingModel>
 	}>()(LitElement) {
