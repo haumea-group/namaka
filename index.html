@@ -19,61 +19,19 @@
 		<a slot="report-user-support-email" href="mailto:support@valor.com">support@valor.com</a>
 	</namaka-modals>
 
-	<div class="layout">
+	<header>
 		<h1>
 			<strong>⁓ 🌑 namaka ⁓</strong>
 			<em>user comments and 5-star reviews</em>
 		</h1>
 		<p><em>"nine pregnant women cannot make a baby in one month"</em></p>
 		<p>free and open source <a href="https://github.com/haumea-group/namaka">on github</a></p>
-		<div class=demo>
-			<namaka-demo></namaka-demo>
-			
-			<namaka-comments
-				topic=74315c4911702b10f2db70f26e35a1fe733e680f351491e48237cc06795af462>
-			</namaka-comments>
+	</header>
 
-			<namaka-comments
-				topic=aa315c4911702b10f2db70f26e35a1fe733e680f351491e48237cc06795af462>
-			</namaka-comments>
+	<namaka-demo></namaka-demo>
 
-			<namaka-author-reply></namaka-author-reply>
-		</div>
-	</div>
-
-	<div class="container">
-		<h1 class="title review-title">My reviews</h1>
-
-		<namaka-archive-comment>
-			<span slot="title">Delete Review</span>
-			<span slot="text">Are you sure you want to delete this review for <span class="name" part="bold">Francesca20</span>?</span>
-		</namaka-archive-comment>
-
-		<namaka-ban>
-			<span slot="title">Suspend User</span>
-			<span slot="text">Are you sure you want to suspend <span class="name" part="bold">Francesca20</span> from the platform?</span>
-		</namaka-ban>
-
-		<namaka-unban>
-			<span slot="title">Unban User</span>
-			<span slot="text">Are you sure you want to unban <span part="name">Francesca20</span>? This user will be able to use this platform again when unbanned</span>
-		</namaka-unban>
-
-		<div class="banned-users">
-			<namaka-bans></namaka-bans>
-		</div>
-
-		<namaka-board-stats topic=74315c4911702b10f2db70f26e35a1fe733e680f351491e48237cc06795af462></namaka-board-stats>
-
-		<namaka-board>
-			<h1 slot="header__text">My Reviews</h1>
-		</namaka-board>
-
-		<div class="edit-review">
-			<namaka-edit-comment></namaka-edit-comment>
-		</div>
-
-		<namaka-write-a-comment></namaka-write-a-comment>
-	</div>
+	<namaka-comments
+		topic=74315c4911702b10f2db70f26e35a1fe733e680f351491e48237cc06795af462>
+	</namaka-comments>
 </body>
 </html>
