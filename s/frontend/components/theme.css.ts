@@ -9,7 +9,7 @@ export default css`
 }
 
 button {
-	opacity: 0.5;
+	opacity: 0.7;
 	background: transparent;
 	padding: 0.1em 0.5em;
 	color: inherit;
@@ -28,7 +28,7 @@ button:active {
 }
 
 button:disabled {
-	opacity: 0.2;
+	opacity: 0.4;
 	cursor: default;
 	border-style: dashed;
 }

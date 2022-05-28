@@ -15,8 +15,8 @@ html {
 }
 
 body {
-	
 	text-align: center;
+	padding-bottom: 10em;
 }
 
 h1 > strong {
@@ -56,8 +56,6 @@ namaka-demo {
 namaka-board {
 	text-align: left;
 	margin: auto;
-	border: 1px solid rgb(221, 226, 229);
-	padding: 1em;
 }
 
 .review-title {

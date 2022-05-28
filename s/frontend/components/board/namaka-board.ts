@@ -46,16 +46,18 @@ export class NamakaBoard extends mixinStandard<{
 		const comments = this.context.commenting.getComments(this.topic)
 		
 		return html`
-			<div part="container">
-				<div>
+			<section>
+				<div class=buttons>
 					<button
 						@click=${this.#postRandomComment}
 						?disabled=${!isLoggedIn}>
 							post a comment
 					</button>
 				</div>
-				${recursivelyRenderComments(comments)}
-			</div>
+				<div class=comments>
+					${recursivelyRenderComments(comments)}
+				</div>
+			</section>
 		`
 	}
 }

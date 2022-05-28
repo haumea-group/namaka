@@ -4,16 +4,27 @@ html {
 }
 
 :is(
-    namaka-ban,
-    namaka-unban,
-    namaka-edit-comment,
-    namaka-author-reply,
-    namaka-archive-comment,
-    namaka-board-stats,
-    namaka-comments,
-    namaka-board,
-    namaka-write-a-comment
-  )::part(container) {	
+	namaka-ban,
+	namaka-unban,
+	namaka-edit-comment,
+	namaka-author-reply,
+	namaka-archive-comment,
+	namaka-board-stats,
+	namaka-comments,
+	namaka-board,
+	namaka-write-a-comment
+)::part(container),
+:is(
+	namaka-ban,
+	namaka-unban,
+	namaka-edit-comment,
+	namaka-author-reply,
+	namaka-archive-comment,
+	namaka-board-stats,
+	namaka-comments,
+	namaka-board,
+	namaka-write-a-comment
+) {
 	border-radius: 25px;
 	background: #fff;
 	padding: 30px;
