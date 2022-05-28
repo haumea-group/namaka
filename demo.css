@@ -49,9 +49,8 @@ a:hover { color: white; }
 }
 
 namaka-demo {
-	margin: 1em;
+	margin: 1em auto;
 	padding: 1em;
-	border: 1px solid rgb(221, 226, 229);
 }
 
 namaka-comments {

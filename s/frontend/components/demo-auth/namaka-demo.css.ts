@@ -4,7 +4,14 @@ export default css`
 
 :host {
 	display: block;
-	margin: auto;
+	min-width: 24em;
+	width: min-content;
+	border: 1px solid;
+}
+
+button {
+	padding: 0.2em;
+	margin: 0.2em;
 }
 
 `

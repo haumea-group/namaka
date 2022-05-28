@@ -8,4 +8,23 @@ export default css`
 	box-sizing: border-box;
 }
 
+button {
+	opacity: 0.5;
+	background: transparent;
+	padding: 0.1em 0.5em;
+	color: inherit;
+	font: inherit;
+	border: 1px solid;
+	border-radius: 3px;
+	cursor: pointer;
+}
+
+button:is(:hover, :focus) {
+	opacity: 1;
+}
+
+button:active {
+	opacity: 0.6;
+}
+
 `

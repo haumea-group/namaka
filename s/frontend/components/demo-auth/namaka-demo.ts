@@ -37,45 +37,44 @@ export class NamakaDemo extends mixinStandard<{
 		const isLoggedIn = !!auth.user
 		const isAdmin = !!auth.user?.permissions.canArchiveAnyComment
 		return html`
+			<div>
+				<button
+					?disabled=${isLoggedIn}
+					@click=${auth.mockLogins.regular}>
+						login (regular)
+				</button>
+				<button
+					?disabled=${isLoggedIn}
+					@click=${auth.mockLogins.admin}>
+						login (admin)
+				</button>
+				<button
+					?disabled=${!isLoggedIn}
+					@click=${auth.logout}>
+						logout
+				</button>
+			</div>
 
-			<button
-				?disabled=${isLoggedIn}
-				@click=${auth.mockLogins.regular}>
-					login (regular)
-			</button>
-
-			<button
-				?disabled=${isLoggedIn}
-				@click=${auth.mockLogins.admin}>
-					login (admin)
-			</button>
-
-			<button
-				?disabled=${!isLoggedIn}
-				@click=${auth.logout}>
-					logout
-			</button>
+			<div>
+				<button
+					@click=${this.#modalTestConfirm}>
+						test modal
+				</button>
+				<button
+					@click=${this.#clearLocalStorage}>
+						wipe database
+				</button>
+			</div>
 
 			${auth.user
 				? html`
 					<p>
-						logged in:
-						${auth.user.id.slice(0, 7)}
+						logged in as
 						${isAdmin ?"(admin)" :null}
 						"${auth.user.profile.nickname}"
 					</p>	
 				`
 				: html`<p>logged out</p>`}
-
-			<button
-				@click=${this.#modalTestConfirm}>
-					test modal
-			</button>
-			
-			<button
-				@click=${this.#clearLocalStorage}>
-					wipe database
-			</button>
 		`
 	}
 }
