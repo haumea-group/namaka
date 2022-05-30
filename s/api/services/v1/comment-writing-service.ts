@@ -108,7 +108,7 @@ export const makeCommentWritingService = asServiceProvider(({
 		if (!user)
 			throw new renraku.ApiError(403, "cannot archive, not logged in")
 
-		// const scoreCountArr: number[] = []
+		const ids = idArr.map(id => dbmage.Id.fromString(id))
 		for (const id of idArr) {
 			const specificComment = await database.tables.comments.readOne(
 				find({id: dbmage.Id.fromString(id)})
@@ -122,30 +122,24 @@ export const makeCommentWritingService = asServiceProvider(({
 		
 			if (!userIsAllowedToArchive) 
 				throw new renraku.ApiError(403, "forbidden, must be author or admin to archive a comment")
-
-			await database.transaction(async({tables}) => {
-				await tables.comments.update({
-					...find({id: dbmage.Id.fromString(id)}),
-					write: {archived: true},
-				})
-	
-				// TODO dbmage currently requires this count.. but shouldn't
-				const scoreCount = await tables.scores.count({
-					...find({commentId: dbmage.Id.fromString(id)}),
-				})
-				if (scoreCount)
-					await tables.scores.update({
-						...find({commentId: dbmage.Id.fromString(id)}),
-						write: {archived: true},
-					})
-			})
-
 		}
 
-			// await database.tables.comments.update({
-			// 	...dbmage.findAll(idArr, id => ({id})),
-			// 	write: {archived: true}
-			// })
-		return ;
+		await database.transaction(async({tables}) => {
+		await tables.comments.update({
+			...dbmage.findAll(ids, id => ({id})),
+			write: {archived: true}
+			})
+
+		const scoreCount = await tables.scores.count({
+			...dbmage.findAll(ids, id => ({id}))
+			})
+		
+		if (scoreCount)
+			await tables.scores.update({
+				...dbmage.findAll(ids, id => ({id})),
+				write: {archived: true}
+			})
+		})
+
 	},
 }))
