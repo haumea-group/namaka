@@ -1,5 +1,5 @@
 
-import {find} from "dbmage"
+import {find, findAll} from "dbmage"
 import * as dbmage from "dbmage"
 import * as renraku from "renraku"
 
@@ -9,7 +9,7 @@ import {rowToComment} from "../utils/row-to-comment.js"
 import {newCommentRow} from "../utils/new-comment-row.js"
 import {enforceValidation} from "../utils/enforce-validation.js"
 import {asServiceProvider} from "../utils/as-service-provider.js"
-import {validateCommentPostDraft, validateCommentEditDraft, validateId} from "../validators/validators.js"
+import {validateCommentPostDraft, validateCommentEditDraft, validateId, validateIdArray} from "../validators/validators.js"
 import {CommentPostDraft, CommentPost, CommentEditDraft, Score, ScoreDraft} from "../../types/concepts.js"
 
 export const makeCommentWritingService = asServiceProvider(({
@@ -102,41 +102,50 @@ export const makeCommentWritingService = asServiceProvider(({
 		})
 	},
 
-	async archiveComment(rawId: string): Promise<void> {
-		const id = enforceValidation(rawId, validateId)
+	async archiveComments(rawIds: string[]): Promise<void> {
+		const idArr = enforceValidation(rawIds, validateIdArray)
 
 		if (!user)
 			throw new renraku.ApiError(403, "cannot archive, not logged in")
 
-		const specificComment = await database.tables.comments.readOne(
-			find({id: dbmage.Id.fromString(id)})
-		)
+		// const scoreCountArr: number[] = []
+		for (const id of idArr) {
+			const specificComment = await database.tables.comments.readOne(
+				find({id: dbmage.Id.fromString(id)})
+			)
+			if (!specificComment)
+				throw new renraku.ApiError(404, "cannot archive, comment not found")
 
-		if (!specificComment)
-			throw new renraku.ApiError(404, "cannot archive, comment not found")
+			const userIsTheAuthor = user.id === specificComment.authorId.string
+			const userHasAdminRights = user.permissions.canArchiveAnyComment
+			const userIsAllowedToArchive = userIsTheAuthor || userHasAdminRights
+		
+			if (!userIsAllowedToArchive) 
+				throw new renraku.ApiError(403, "forbidden, must be author or admin to archive a comment")
 
-		const userIsTheAuthor = user.id === specificComment.authorId.string
-		const userHasAdminRights = user.permissions.canArchiveAnyComment
-		const userIsAllowedToArchive = userIsTheAuthor || userHasAdminRights
-
-		if (!userIsAllowedToArchive) 
-			throw new renraku.ApiError(403, "forbidden, must be author or admin to archive a comment")
-
-		await database.transaction(async({tables}) => {
-			await tables.comments.update({
-				...find({id: dbmage.Id.fromString(id)}),
-				write: {archived: true},
-			})
-
-			// TODO dbmage currently requires this count.. but shouldn't
-			const scoreCount = await tables.scores.count({
-				...find({commentId: dbmage.Id.fromString(id)}),
-			})
-			if (scoreCount)
-				await tables.scores.update({
-					...find({commentId: dbmage.Id.fromString(id)}),
+			await database.transaction(async({tables}) => {
+				await tables.comments.update({
+					...find({id: dbmage.Id.fromString(id)}),
 					write: {archived: true},
 				})
-		})
+	
+				// TODO dbmage currently requires this count.. but shouldn't
+				const scoreCount = await tables.scores.count({
+					...find({commentId: dbmage.Id.fromString(id)}),
+				})
+				if (scoreCount)
+					await tables.scores.update({
+						...find({commentId: dbmage.Id.fromString(id)}),
+						write: {archived: true},
+					})
+			})
+
+		}
+
+			// await database.tables.comments.update({
+			// 	...dbmage.findAll(idArr, id => ({id})),
+			// 	write: {archived: true}
+			// })
+		return ;
 	},
 }))

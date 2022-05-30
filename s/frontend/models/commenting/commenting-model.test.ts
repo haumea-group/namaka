@@ -395,7 +395,7 @@ export default <Suite>{
 						body: "world",
 					})
 					expect(commenting.getComments(topicId).length).equals(1)
-					await commenting.archiveComment(id)
+					await commenting.archiveComments([id])
 				}
 				{
 					// other users also see the comment is gone
@@ -412,8 +412,8 @@ export default <Suite>{
 				const {commenting} = server
 					.newUser(makeRegularUser())
 					.newBrowserTab()
-				const fakeCommentId = randomId()
-				await expect(async() => commenting.archiveComment(fakeCommentId)).throws()
+					const fakeCommentId = [randomId()]
+				await expect(async() => commenting.archiveComments(fakeCommentId)).throws()
 			},
 
 		},
@@ -442,7 +442,7 @@ export default <Suite>{
 					await commenting.downloadComments(topicId)
 					const [comment] = commenting.getComments(topicId)
 					expect(comment).ok()
-					await commenting.archiveComment(comment.id)
+					await commenting.archiveComments([comment.id])
 					expect(commenting.getComments(topicId).length).equals(0)
 				}
 				{
@@ -458,10 +458,9 @@ export default <Suite>{
 				const {commenting} = server
 					.newUser(makeAdminUser())
 					.newBrowserTab()
-				const fakeCommentId = randomId()
-				await expect(async() => commenting.archiveComment(fakeCommentId)).throws()
+				const fakeCommentId = [randomId(), randomId()]
+				await expect(async() => commenting.archiveComments(fakeCommentId)).throws()
 			},
-
 		}
 	},
 

@@ -57,9 +57,9 @@ export function makeCommentingModel({state, remote}: {
 			stateActions.updateScores(draft.id, draft.scores)
 		},
 
-		async archiveComment(id: string) {
-			await remote.commentWriting.archiveComment(id)
-			stateActions.archiveComment(id)
+		async archiveComments(ids: string[]) {
+			await remote.commentWriting.archiveComments(ids)
+			stateActions.archiveComments(ids)
 		},
 	}
 }
