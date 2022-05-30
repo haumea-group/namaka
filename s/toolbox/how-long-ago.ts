@@ -1,23 +1,37 @@
 
-export function howLongAgo(time: number) {
-	const elapsed = Math.floor((Date.now() - time)/1000)
-	if (Date.now() - time < 1001)
-		return null
-	else
-		return `${prettify(elapsed)} ago`
+import {day, hour, minute, month, second, week, year} from "./goodtimes.js"
+
+export function howLongAgo(timestamp: number) {
+	const elapsed = Date.now() - timestamp
+	return elapsed >= second
+		? `${chooseUnitOfTimeToDisplay(elapsed)} ago`
+		: null
 }
 
-const prettify = (timeInSeconds: number) => {
-	if (timeInSeconds < 60) {
-		return `${timeInSeconds} second${timeInSeconds > 1 ? "s" : ""}`
-	} else if (timeInSeconds > 60 && timeInSeconds < 3600) {
-		const val = Math.floor(timeInSeconds / 60)
-		return`${val} minute${val>1 ? "s" : ""}`
-	} else if (timeInSeconds > 3600 && timeInSeconds < 86400) {
-		const val = Math.floor(timeInSeconds / 3600)
-		return`${val} hour${val>1 ? "s" : ""}`
-	} else {
-		const val = Math.floor(timeInSeconds / 86400)
-		return`${val} day${val>1 ? "s" : ""}`
-	}
+function chooseUnitOfTimeToDisplay(elapsed: number) {
+	if (elapsed < minute)
+		return formatTimeForDisplay(elapsed, second, "second")
+
+	else if (elapsed < hour)
+		return formatTimeForDisplay(elapsed, minute, "minute")
+
+	else if (elapsed < day)
+		return formatTimeForDisplay(elapsed, hour, "hour")
+
+	else if (elapsed < week)
+		return formatTimeForDisplay(elapsed, day, "day")
+
+	else if (elapsed < month)
+		return formatTimeForDisplay(elapsed, week, "week")
+
+	else if (elapsed < year)
+		return formatTimeForDisplay(elapsed, month, "month")
+
+	else
+		return formatTimeForDisplay(elapsed, year, "year")
+}
+
+function formatTimeForDisplay(elapsed: number, unit: number, unitName: string) {
+	const value = Math.round(elapsed / unit)
+	return `${value} ${unitName}${value > 1 ?"s" :""}`
 }
