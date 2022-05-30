@@ -18,12 +18,13 @@ import edit2Svg from "../../../icons/feather/edit-2.svg.js"
 
 import {howLongAgo} from "../../../toolbox/how-long-ago.js"
 import {virtualFiveStar} from "../virtual/virtual-five-star.js"
-import {virtualDeletePostModal} from "../virtual/virtual-delete-post-modal.js"
 import {banUserModalView} from "../modals/views/ban-user/ban-user-modal-view.js"
+import {mixinRefreshInterval} from "../../framework/mixins/mixin-refresh-interval.js"
 import {reportUserModalView} from "../modals/views/report-user/report-user-modal-view.js"
 import {deletePostModalView} from "../modals/views/delete-post/delete-post-modal-view.js"
 import {recursivelyCountAllNestedChildren} from "./utils/recursively-count-all-nested-children.js"
 
+@mixinRefreshInterval(1000)
 @mixinStyles(namakaCommentCss, virtualFiveStar.styles)
 export class NamakaComment extends mixinStandard<{
 		modals: ModalControls
