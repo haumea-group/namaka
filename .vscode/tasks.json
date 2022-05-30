@@ -2,10 +2,10 @@
 	"version": "2.0.0",
 	"tasks": [
 		{
-			"label": "production build",
+			"label": "typescript build",
 			"type": "shell",
 			"command": "npm",
-			"args": ["install"],
+			"args": ["run", "compile"],
 			"problemMatcher": ["$tsc"],
 			"group": {
 				"kind": "build",
