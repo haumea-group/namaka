@@ -78,7 +78,7 @@ export class NamakaComment extends mixinStandard<{
 	
 	#archiveThisComment = async() => {
 		const comment = this.#getComment()
-		return this.context.commenting.archiveComment(comment.id)
+		return this.context.commenting.archiveComments([comment.id])
 	}
 
 	#promptReportModal = () => {
