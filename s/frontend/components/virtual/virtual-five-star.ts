@@ -49,9 +49,15 @@ export const virtualFiveStar = virtual({
 			display: flex;
 			align-items: center;
 		}
-		
+
+		.five-star > * {
+			display: flex;
+			align-items: center;
+		}
+
 		.five-star svg {
-			width: 20px;
+			width: var(--five-star-size, 1em);
+			height: var(--five-star-size, 1em);
 		}
 		
 		.five-star .star-full svg path {

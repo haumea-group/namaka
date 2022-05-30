@@ -15,8 +15,8 @@ html {
 }
 
 body {
-	
 	text-align: center;
+	padding-bottom: 10em;
 }
 
 h1 > strong {
@@ -49,16 +49,13 @@ a:hover { color: white; }
 }
 
 namaka-demo {
-	margin: 1em;
+	margin: 1em auto;
 	padding: 1em;
-	border: 1px solid rgb(221, 226, 229);
 }
 
-namaka-comments {
+namaka-board {
 	text-align: left;
 	margin: auto;
-	border: 1px solid rgb(221, 226, 229);
-	padding: 1em;
 }
 
 .review-title {

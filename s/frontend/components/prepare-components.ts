@@ -3,9 +3,8 @@ import {NamakaLoadMore} from "./load-more/index.js"
 import {ModalControls} from "./modals/modal-types.js"
 import {NamakaBans} from "./banned-users/index.js"
 import {prepareModels} from "../models/prepare-models.js"
-import {NamakaBoard} from './namaka-board/namaka-board.js'
 import {NamakaMyReview} from "./reviews/my-review/index.js"
-import {NamakaComments} from "./comments/namaka-comments.js"
+import {NamakaBoard} from "./board/namaka-board.js"
 import {NamakaDemo} from "./demo-auth/namaka-demo.js"
 import {NamakaUnban} from "./modal/namaka-unban/namaka-unban.js"
 import {NamakaEditComment} from "./reviews/edit-review/index.js"
@@ -34,7 +33,6 @@ export function prepareComponents({
 	}) {
 
 	return themeComponents(themeCss, {
-		NamakaBoard,
 		NamakaTextarea,
 		NamakaAuthorReply,
 		NamakaMyReview,
@@ -56,7 +54,7 @@ export function prepareComponents({
 		NamakaDemo: NamakaDemo
 			.withContext({modals, auth, commenting})
 			.withSubscriptions(subscribe),
-		NamakaComments: NamakaComments
+		NamakaBoard: NamakaBoard
 			.withContext({auth, commenting})
 			.withSubscriptions(subscribe),
 		NamakaCopyToClipboard: NamakaCopyToClipboard

@@ -10,12 +10,12 @@ export default css`
 	text-align: left;
 }
 
-h2:first-of-type {
+.modalview.report h2:first-of-type {
 	display: flex;
 	gap: 5px;
 }
 
-.flex {
+.modalview.report .flex {
 	display: flex;
 	align-items: center;
 	border: 1px solid rgb(182, 181, 181);
@@ -23,7 +23,7 @@ h2:first-of-type {
 	cursor: pointer;
 }
 
-.btn-close {
+.modalview.report .btn-close {
 	padding: 0.5em;
 	border: none;
 	background-color: gray;
@@ -31,7 +31,7 @@ h2:first-of-type {
 	align-self: flex-end;
 }
 
-.background {
+.modalview.report .background {
 	display: flex;
 	background-color: #e3e3e3;
 	padding: 0.5em;
@@ -39,13 +39,13 @@ h2:first-of-type {
 	font-size: 14px;
 }
 
-.copy-container {
+.modalview.report .copy-container {
 	display: flex;
 	height: 30px;
 	align-items: center;
 }
 
-.copy-icon {
+.modalview.report .copy-icon {
 	display: flex;
 	border: 1px solid rgb(182, 181, 181);
 	border-radius: 5px;
@@ -56,16 +56,16 @@ h2:first-of-type {
 	padding: 5px;
 }
 
-.check-square {
+.modalview.report .check-square {
 	display: flex;
 	align-items: center;
 }
 
-.check-square span {
+.modalview.report .check-square span {
 	margin-right: 5px;
 }
 
-.check-square path {
+.modalview.report .check-square path {
 	fill: green;
 }
 

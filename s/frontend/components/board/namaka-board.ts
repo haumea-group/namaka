@@ -8,10 +8,10 @@ import {randomComment, randomSubject} from "../../../toolbox/randomly.js"
 import {makeCommentingModel} from "../../models/commenting/commenting-model.js"
 import {recursivelyRenderComments} from "./utils/recursively-render-comments.js"
 
-import namakaCommentsCss from "./namaka-comments.css.js"
+import namakaCommentsCss from "./namaka-board.css.js"
 
 @mixinStyles(namakaCommentsCss)
-export class NamakaComments extends mixinStandard<{
+export class NamakaBoard extends mixinStandard<{
 		auth: ReturnType<typeof makeAuthModel>
 		commenting: ReturnType<typeof makeCommentingModel>
 	}>()(LitElement) {
@@ -46,16 +46,18 @@ export class NamakaComments extends mixinStandard<{
 		const comments = this.context.commenting.getComments(this.topic)
 		
 		return html`
-			<div part="container">
-				<div>
+			<section>
+				<div class=buttons>
 					<button
 						@click=${this.#postRandomComment}
 						?disabled=${!isLoggedIn}>
 							post a comment
 					</button>
 				</div>
-				${recursivelyRenderComments(comments)}
-			</div>
+				<div class=comments>
+					${recursivelyRenderComments(comments)}
+				</div>
+			</section>
 		`
 	}
 }

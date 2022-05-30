@@ -16,11 +16,13 @@ import infoSquareSvg from "../../../icons/tabler/info-square.svg.js"
 import alertTriangleSvg from "../../../icons/feather/alert-triangle.svg.js"
 import edit2Svg from "../../../icons/feather/edit-2.svg.js"
 
+import {howLongAgo} from "../../../toolbox/how-long-ago.js"
 import {virtualFiveStar} from "../virtual/virtual-five-star.js"
-import {reportUserModalView} from "../modals/views/report-user/report-user-modal-view.js"
-import {deletePostModalView} from "../modals/views/delete-post/delete-post-modal-view.js"
 import {virtualDeletePostModal} from "../virtual/virtual-delete-post-modal.js"
 import {banUserModalView} from "../modals/views/ban-user/ban-user-modal-view.js"
+import {reportUserModalView} from "../modals/views/report-user/report-user-modal-view.js"
+import {deletePostModalView} from "../modals/views/delete-post/delete-post-modal-view.js"
+import {recursivelyCountAllNestedChildren} from "./utils/recursively-count-all-nested-children.js"
 
 @mixinStyles(namakaCommentCss, virtualFiveStar.styles)
 export class NamakaComment extends mixinStandard<{
@@ -153,7 +155,7 @@ export class NamakaComment extends mixinStandard<{
 
 		return html`
 			<div class="blanket" @click=${this.#toggleDropDown}></div>
-			<div class="drop-down" part="drop-down">
+			<div class="dropdownmenu" part="drop-down">
 				<button
 					part="report"
 					@click=${this.#promptReportModal}>
@@ -197,38 +199,67 @@ export class NamakaComment extends mixinStandard<{
 		if (!comment.user)
 			return null
 
+		const replyCount: number = recursivelyCountAllNestedChildren(comment)
+
 		return html`
-			<div class="outer-div" part="container">
+			<section>
 				<namaka-avatar .user=${comment.user}></namaka-avatar>
-				<div class="inner-div">
-					<div class="header">
-						<div class="header__txt">
-							<p>${comment.user.profile.nickname}</p>
-							<span>&bull; ${comment.subject}</span>
-						</div>
-						<div class="header__btn">
+				<div class=plate>
+
+					<header>
+						<span class=nickname>
+							${comment.user.profile.nickname}
+						</span>
+						<span class=fivestar>
 							${comment.scoring
 								? FiveStar()
 								: null}
-							<button @click=${this.#toggleDropDown} class="drop-down__btn">
-								&bull;&bull;&bull;
-							</button>
-						</div>
+						</span>
+						<button class=dropdownbutton @click=${this.#toggleDropDown}>
+							&bull;&bull;&bull;
+						</button>
+					</header>
+
+					<div class=text>
+						<p class=subject>
+							${comment.subject}
+						</p>
+						<p class=body>
+							${comment.body}
+						</p>
 					</div>
-					<p>${comment.body}</p>
-					<div class="footer">
-						<p class="time-stamp">${comment.timePosted}</p>
-						<span>&bull; ${comment.children.length} ${comment.children.length === 1 ? "comment" : "comments"}</span>
-						${this.#canPost
-							? html`<button @click=${this.#postRandomReply} part="button">Reply</button>`
+
+					<footer>
+						<span class=time>
+							${howLongAgo(comment.timePosted)}
+						</span>
+						${replyCount > 0
+							? html`
+								<span>—</span>
+								<span>
+									${replyCount}
+									${replyCount === 1 ?"reply" : "replies"}
+								</span>
+							`
 							: null}
-					</div>
+						${this.#canPost
+							? html`
+								<button
+									part=button
+									class=reply
+									@click=${this.#postRandomReply}>
+										Reply
+								</button>`
+							: null}
+					</footer>
 				</div>
-			</div>
-			<div class="nested-reply" part="nested-reply">
-				<slot></slot>
-			</div>
-			${this.showDropDown ? this.#renderDropDown() : null}
+			</section>
+
+			${this.showDropDown
+				? this.#renderDropDown()
+				: null}
+
+			<slot class=nested-reply></slot>
 		`
 	}
 }
