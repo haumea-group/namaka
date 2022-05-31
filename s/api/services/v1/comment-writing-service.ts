@@ -1,5 +1,5 @@
 
-import {find, findAll} from "dbmage"
+import {find} from "dbmage"
 import * as dbmage from "dbmage"
 import * as renraku from "renraku"
 
@@ -9,8 +9,10 @@ import {rowToComment} from "../utils/row-to-comment.js"
 import {newCommentRow} from "../utils/new-comment-row.js"
 import {enforceValidation} from "../utils/enforce-validation.js"
 import {asServiceProvider} from "../utils/as-service-provider.js"
-import {validateCommentPostDraft, validateCommentEditDraft, validateId, validateIdArray} from "../validators/validators.js"
-import {CommentPostDraft, CommentPost, CommentEditDraft, Score, ScoreDraft} from "../../types/concepts.js"
+import {validateCommentPostDraft, validateCommentEditDraft, validateIdArray} from "../validators/validators.js"
+import {CommentPostDraft, CommentPost, CommentEditDraft, Score} from "../../types/concepts.js"
+import {ensureUserHasPermissionToArchiveComment} from "../utils/archive-permission.js"
+
 
 export const makeCommentWritingService = asServiceProvider(({
 		rando, database, fetchUsers,
@@ -109,17 +111,15 @@ export const makeCommentWritingService = asServiceProvider(({
 			throw new renraku.ApiError(403, "cannot archive, not logged in")
 
 		const ids = idArr.map(id => dbmage.Id.fromString(id))
-		for (const id of idArr) {
-			const specificComment = await database.tables.comments.readOne(
-				find({id: dbmage.Id.fromString(id)})
-			)
-			if (!specificComment)
+		const comments = await database.tables.comments.read(
+			dbmage.findAll(ids, id =>  ({id}))
+		)
+		for (const comment of comments) {
+			if (!comment) 
 				throw new renraku.ApiError(404, "cannot archive, comment not found")
+				
+			const userIsAllowedToArchive = ensureUserHasPermissionToArchiveComment(user, comment)
 
-			const userIsTheAuthor = user.id === specificComment.authorId.string
-			const userHasAdminRights = user.permissions.canArchiveAnyComment
-			const userIsAllowedToArchive = userIsTheAuthor || userHasAdminRights
-		
 			if (!userIsAllowedToArchive) 
 				throw new renraku.ApiError(403, "forbidden, must be author or admin to archive a comment")
 		}

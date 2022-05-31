@@ -1,3 +1,4 @@
+import {dbmage} from "../../common-index.js"
 
 export interface CommentPost {
 	id: string
@@ -8,6 +9,13 @@ export interface CommentPost {
 	subject: string
 	body: string
 	archived: boolean
+}
+
+export interface CommentArchive extends Omit<CommentPost, 'id'| 'topicId' | 'parentCommentId' | 'authorId'>{
+	id: dbmage.Id
+	topicId: dbmage.Id
+	parentCommentId: dbmage.Id | null
+	authorId: dbmage.Id 
 }
 
 export interface Score {
