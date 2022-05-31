@@ -472,8 +472,7 @@ export default <Suite>{
 				}
 			},
 			async "cannot archive non-existent comment"() {
-				const server = newServer()
-				const {commenting} = server
+				const {commenting} = newServer()
 					.newUser(makeAdminUser())
 					.newBrowserTab()
 				const fakeCommentIds = [randomId(), randomId()]
