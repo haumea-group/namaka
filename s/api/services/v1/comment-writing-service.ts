@@ -11,7 +11,7 @@ import {enforceValidation} from "../utils/enforce-validation.js"
 import {asServiceProvider} from "../utils/as-service-provider.js"
 import {validateCommentPostDraft, validateCommentEditDraft, validateIdArray} from "../validators/validators.js"
 import {CommentPostDraft, CommentPost, CommentEditDraft, Score} from "../../types/concepts.js"
-import {ensureUserHasPermissionToArchiveComment} from "../utils/archive-permission.js"
+import {isUserAllowedToArchive} from "../utils/is-user-allowed-to-archive.js"
 
 
 export const makeCommentWritingService = asServiceProvider(({
@@ -118,9 +118,8 @@ export const makeCommentWritingService = asServiceProvider(({
 			if (!comment) 
 				throw new renraku.ApiError(404, "cannot archive, comment not found")
 				
-			const userIsAllowedToArchive = ensureUserHasPermissionToArchiveComment(user, comment)
 
-			if (!userIsAllowedToArchive) 
+			if (!isUserAllowedToArchive(user, comment)) 
 				throw new renraku.ApiError(403, "forbidden, must be author or admin to archive a comment")
 		}
 
