@@ -57,3 +57,9 @@ export const validateCommentEditDraft = schema<CommentEditDraft>({
 	body: validateCommentBody,
 	scores: optional(validateScoresDraft)
 })
+
+export const validateIdArray = validator(
+	array(),
+	minLength(1),
+	each(validateId),
+)

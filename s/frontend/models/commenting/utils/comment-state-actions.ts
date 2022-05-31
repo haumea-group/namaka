@@ -60,11 +60,13 @@ export function makeCommentStateActions({state}: {
 				...(scores ?scores :[]),
 			]
 		},
-		archiveComment(id: string) {
-			const comment = map.get(id)
-			if (!comment)
-				throw new Error(`cannot archive missing comment ${id}`)
-			comment.archived = true
+		archiveComments(ids: string[]) {
+			for (const id of ids) {
+				const comment = map.get(id)
+				if (!comment)
+					throw new Error(`cannot archive missing comment ${id}`)
+				comment.archived = true
+			}
 		},
 		setScoreAspects(aspects: string[]) {
 			state.comments.scoreAspects = [...aspects]

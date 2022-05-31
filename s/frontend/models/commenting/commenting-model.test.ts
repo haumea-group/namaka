@@ -1,5 +1,6 @@
 
 import {Suite, expect} from "cynic"
+import {ApiError, RenrakuError} from "renraku"
 import {User} from "../../../api/types/auth.js"
 import {newServer, randomId} from "./testing/commenting-test-setups.js"
 
@@ -395,7 +396,7 @@ export default <Suite>{
 						body: "world",
 					})
 					expect(commenting.getComments(topicId).length).equals(1)
-					await commenting.archiveComment(id)
+					await commenting.archiveComments([id])
 				}
 				{
 					// other users also see the comment is gone
@@ -406,14 +407,31 @@ export default <Suite>{
 					expect(commenting.getComments(topicId).length).equals(0)
 				}
 			},
-
 			async "cannot archive non-existent comment"() {
 				const server = newServer()
 				const {commenting} = server
 					.newUser(makeRegularUser())
 					.newBrowserTab()
 				const fakeCommentId = randomId()
-				await expect(async() => commenting.archiveComment(fakeCommentId)).throws()
+				await expect(async() => commenting.archiveComments([fakeCommentId])).throws()
+			},
+			async "cannot archive comments when any of them don't exist"() {
+				const server = newServer()
+				const {commenting} = server
+					.newUser(makeRegularUser())
+					.newBrowserTab()
+				const topicId = randomId()
+				await commenting.downloadComments(topicId)
+				const comment = await commenting.postComment({
+					topicId,
+					parentCommentId: undefined,
+					subject: "hello",
+					body: "world",
+				})
+				const fakeCommentId = randomId()
+				await expect(async() => commenting.archiveComments([comment.id, fakeCommentId])).throws()
+				await commenting.downloadComments(topicId)
+				expect(commenting.getComments(topicId).length).equals(1)
 			},
 
 		},
@@ -442,7 +460,7 @@ export default <Suite>{
 					await commenting.downloadComments(topicId)
 					const [comment] = commenting.getComments(topicId)
 					expect(comment).ok()
-					await commenting.archiveComment(comment.id)
+					await commenting.archiveComments([comment.id])
 					expect(commenting.getComments(topicId).length).equals(0)
 				}
 				{
@@ -454,14 +472,26 @@ export default <Suite>{
 				}
 			},
 			async "cannot archive non-existent comment"() {
-				const server = newServer()
-				const {commenting} = server
+				const {commenting} = newServer()
 					.newUser(makeAdminUser())
 					.newBrowserTab()
-				const fakeCommentId = randomId()
-				await expect(async() => commenting.archiveComment(fakeCommentId)).throws()
+				const fakeCommentIds = [randomId(), randomId()]
+				await expect(async() => commenting.archiveComments(fakeCommentIds)).throws()
 			},
-
+			async "cannot archive an empty array of comment ids"() {
+				const {commenting} = newServer()
+					.newUser(makeAdminUser())
+					.newBrowserTab()
+				let error: undefined | ApiError
+				try {
+					await commenting.archiveComments([])
+				}
+				catch (err) {
+					if (err instanceof ApiError)
+						error = err
+				}
+				expect(error?.code).equals(400)
+			},
 		}
 	},
 
