@@ -406,14 +406,13 @@ export default <Suite>{
 					expect(commenting.getComments(topicId).length).equals(0)
 				}
 			},
-
 			async "cannot archive non-existent comment"() {
 				const server = newServer()
 				const {commenting} = server
 					.newUser(makeRegularUser())
 					.newBrowserTab()
-					const fakeCommentId = [randomId()]
-				await expect(async() => commenting.archiveComments(fakeCommentId)).throws()
+				const fakeCommentId = randomId()
+				await expect(async() => commenting.archiveComments([fakeCommentId])).throws()
 			},
 
 		},
@@ -458,8 +457,8 @@ export default <Suite>{
 				const {commenting} = server
 					.newUser(makeAdminUser())
 					.newBrowserTab()
-				const fakeCommentId = [randomId(), randomId()]
-				await expect(async() => commenting.archiveComments(fakeCommentId)).throws()
+				const fakeCommentIds = [randomId(), randomId()]
+				await expect(async() => commenting.archiveComments(fakeCommentIds)).throws()
 			},
 		}
 	},
