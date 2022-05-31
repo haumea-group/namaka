@@ -1,7 +1,7 @@
 
-import {find} from "dbmage"
 import * as dbmage from "dbmage"
 import * as renraku from "renraku"
+import {find, findAll} from "dbmage"
 
 import {newScoreRows} from "../utils/new-score-rows.js"
 import {rowsToScores} from "../utils/rows-to-scores.js"
@@ -9,10 +9,9 @@ import {rowToComment} from "../utils/row-to-comment.js"
 import {newCommentRow} from "../utils/new-comment-row.js"
 import {enforceValidation} from "../utils/enforce-validation.js"
 import {asServiceProvider} from "../utils/as-service-provider.js"
-import {validateCommentPostDraft, validateCommentEditDraft, validateIdArray} from "../validators/validators.js"
-import {CommentPostDraft, CommentPost, CommentEditDraft, Score} from "../../types/concepts.js"
 import {isUserAllowedToArchive} from "../utils/is-user-allowed-to-archive.js"
-
+import {CommentPostDraft, CommentPost, CommentEditDraft, Score} from "../../types/concepts.js"
+import {validateCommentPostDraft, validateCommentEditDraft, validateIdArray} from "../validators/validators.js"
 
 export const makeCommentWritingService = asServiceProvider(({
 		rando, database, fetchUsers,
@@ -91,7 +90,7 @@ export const makeCommentWritingService = asServiceProvider(({
 					body: body,
 				},
 			})
-			await tables.scores.delete(dbmage.find({commentId: binaryId}))
+			await tables.scores.delete(find({commentId: binaryId}))
 			if (scores)
 				await tables.scores.create(
 					...newScoreRows({
@@ -111,7 +110,7 @@ export const makeCommentWritingService = asServiceProvider(({
 		const ids = enforceValidation(rawIds, validateIdArray)
 			.map(id => dbmage.Id.fromString(id))
 
-		const conditional = dbmage.findAll(ids, id => ({id}))
+		const conditional = findAll(ids, id => ({id}))
 		const comments = await database.tables.comments.read(conditional)
 
 		for (const id of ids) {
