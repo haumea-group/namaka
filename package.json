@@ -12,6 +12,7 @@
 	"main": "x/namaka.js",
 	"scripts": {
 		"build": "run-s clean && run-p compile importly",
+		"stamp": "git rev-parse HEAD > x/commit-id.txt",
 		"clean": "rimraf x && mkdirp x",
 		"compile": "tsc",
 		"importly": "importly < package-lock.json > x/importmap.json",
