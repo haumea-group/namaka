@@ -414,6 +414,24 @@ export default <Suite>{
 				const fakeCommentId = randomId()
 				await expect(async() => commenting.archiveComments([fakeCommentId])).throws()
 			},
+			async "cannot archive comments when any of them don't exist"() {
+				const server = newServer()
+				const {commenting} = server
+					.newUser(makeRegularUser())
+					.newBrowserTab()
+				const topicId = randomId()
+				await commenting.downloadComments(topicId)
+				const comment = await commenting.postComment({
+					topicId,
+					parentCommentId: undefined,
+					subject: "hello",
+					body: "world",
+				})
+				const fakeCommentId = randomId()
+				await expect(async() => commenting.archiveComments([comment.id, fakeCommentId])).throws()
+				await commenting.downloadComments(topicId)
+				expect(commenting.getComments(topicId).length).equals(1)
+			},
 
 		},
 		"an admin user": {
