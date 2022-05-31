@@ -2,6 +2,7 @@
 import {html, LitElement} from "lit"
 
 import {dashify} from "../../../toolbox/dashify.js"
+import {virtualFiveStar} from "../virtual/virtual-five-star.js"
 import {mixinStyles} from "../../framework/mixins/mixin-styles.js"
 import {ModalControls, Popup, PopupOptions} from "./modal-types.js"
 
@@ -10,7 +11,13 @@ import banUserModalViewCss from "./views/ban-user/ban-user-modal-view.css.js"
 import deletePostModalViewCss from "./views/delete-post/delete-post-modal-view.css.js"
 import reportUserModalViewCss from "./views/report-user/report-user-modal-view.css.js"
 
-@mixinStyles(namakaModalsCss, reportUserModalViewCss, deletePostModalViewCss, banUserModalViewCss)
+@mixinStyles(
+	namakaModalsCss,
+	banUserModalViewCss,
+	reportUserModalViewCss,
+	deletePostModalViewCss,
+	virtualFiveStar.styles,
+)
 export class NamakaModals extends LitElement {
 
 	static readonly elementName = dashify(NamakaModals.name)

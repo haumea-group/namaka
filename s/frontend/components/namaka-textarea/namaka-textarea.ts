@@ -12,6 +12,9 @@ import NamakaTextareaCss from "./namaka-textarea.css.js"
 export class NamakaTextarea extends LitElement {
 
 	@property({type: String})
+	"initial-value": string = ""
+
+	@property({type: String})
 	private inputValue: string = ""
 
 	@property({type: Number})
@@ -34,6 +37,7 @@ export class NamakaTextarea extends LitElement {
 			<textarea
 				autofocus
 				part="textarea"
+				.value="${this["initial-value"]}"
 				@input=${this.#handleInput}
 				placeholder="Enter your text here..."
 			></textarea>

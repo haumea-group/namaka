@@ -24,7 +24,7 @@ export async function mockApiConnection({snap}: {
 	const api = makeApi<MockMeta>({
 		rando,
 		database,
-		scoreAspects: ["a", "b"],
+		scoreAspects: ["flavor", "presentation", "service"],
 		fetchUsers,
 		policy: async meta => ({user: meta.user}),
 	})

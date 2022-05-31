@@ -26,7 +26,9 @@ jobs:
       run: npm ci
 
     - name: 🔨 build
-      run: npm run build -s
+      run: |
+        npm run build -s
+        npm run stamp -s
 
     - name: 🧪 test
       run: npm test

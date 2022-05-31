@@ -26,15 +26,16 @@ export class NamakaBoard extends mixinStandard<{
 	}
 
 	#postRandomComment = async() => {
+		const {scoreAspects} = await this.context.commenting.fetchScoreAspects()
 		await this.context.commenting.postComment({
 			topicId: this.topic!,
 			parentCommentId: undefined,
 			subject: randomSubject(),
 			body: [randomComment(), randomComment(), randomComment()].join(" "),
-			scores: [
-				{aspect: "flavor", score: Math.random() * 100},
-				{aspect: "presentation", score: Math.random() * 100},
-			],
+			scores: scoreAspects.map(aspect => ({
+				aspect,
+				score: Math.random() * 100,
+			})),
 		})
 	}
 
