@@ -112,14 +112,13 @@ export const makeCommentWritingService = asServiceProvider(({
 
 		const ids = idArr.map(id => dbmage.Id.fromString(id))
 		const comments = await database.tables.comments.read(
-			dbmage.findAll(ids, id =>  ({id}))
+			dbmage.findAll(ids, id => ({id}))
 		)
 		for (const comment of comments) {
-			if (!comment) 
+			if (!comment)
 				throw new renraku.ApiError(404, "cannot archive, comment not found")
-				
 
-			if (!isUserAllowedToArchive(user, comment)) 
+			if (!isUserAllowedToArchive(user, comment))
 				throw new renraku.ApiError(403, "forbidden, must be author or admin to archive a comment")
 		}
 
@@ -132,7 +131,7 @@ export const makeCommentWritingService = asServiceProvider(({
 		const scoreCount = await tables.scores.count({
 			...dbmage.findAll(ids, id => ({id}))
 			})
-		
+
 		if (scoreCount)
 			await tables.scores.update({
 				...dbmage.findAll(ids, id => ({id})),
