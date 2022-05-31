@@ -11,11 +11,12 @@ import {randomComment, randomSubject} from "../../../toolbox/randomly.js"
 import {makeCommentingModel} from "../../models/commenting/commenting-model.js"
 
 import namakaCommentCss from "./namaka-comment.css.js"
+import edit2Svg from "../../../icons/feather/edit-2.svg.js"
 import trash2Svg from "../../../icons/feather/trash2.svg.js"
 import infoSquareSvg from "../../../icons/tabler/info-square.svg.js"
 import alertTriangleSvg from "../../../icons/feather/alert-triangle.svg.js"
-import edit2Svg from "../../../icons/feather/edit-2.svg.js"
 
+import {obtool} from "../../../toolbox/obtool.js"
 import {howLongAgo} from "../../../toolbox/how-long-ago.js"
 import {virtualFiveStar} from "../virtual/virtual-five-star.js"
 import {banUserModalView} from "../modals/views/ban-user/ban-user-modal-view.js"
@@ -82,40 +83,36 @@ export class NamakaComment extends mixinStandard<{
 		return this.context.commenting.archiveComments([comment.id])
 	}
 
-	#promptReportModal = () => {
-		const {modals} = this.context
+	get #modalPrompts() {
+		const {modals, auth: {user}} = this.context
 		const comment = this.#getComment()
-		this.#toggleDropDown()
-		reportUserModalView({modals, comment})
-	}
+		return obtool({
 
-	#promptBanModal = async () => {
-		const {modals} = this.context
-		const comment = this.#getComment()
-		this.#toggleDropDown()
-		const banPeriod = await banUserModalView({modals, comment})
-	}
+			report: async() => {
+				reportUserModalView({modals, comment})
+			},
 
-	#promptDeleteModal = async () => {
-		const {modals} = this.context
-		const {user} = this.context.auth
-		const userCanArchiveAnyComment
-			= !!user?.permissions.canArchiveAnyComment
-		const comment = this.#getComment()
-		this.#toggleDropDown()
-		const deletionChoice = await deletePostModalView({
-			modals,
-			comment,
-			userCanArchiveAnyComment,
+			ban: async() => {
+				const banPeriod = await banUserModalView({modals, comment})
+				console.log(`ban user ${comment.user.profile.nickname} for ${banPeriod}`)
+			},
+
+			delete: async() => {
+				const deletionChoice = await deletePostModalView({
+					modals,
+					comment,
+					userCanArchiveAnyComment: !!user?.permissions.canArchiveAnyComment,
+				})
+				if (deletionChoice !== undefined)
+					await this.#archiveThisComment()
+			},
+
+			edit: async() => {},
+
+		}).map(fun => async() => {
+			this.#toggleDropDown()
+			return fun()
 		})
-		if (deletionChoice !== undefined)
-			await this.#archiveThisComment()
-	}
-
-	#promptEditModal = async () => {
-		const {modals} = this.context
-		const comment = this.#getComment()
-		this.#toggleDropDown()
 	}
 
 	#renderDropDown = () => {
@@ -123,75 +120,67 @@ export class NamakaComment extends mixinStandard<{
 		const {user} = this.context.auth
 
 		const isUserLoggedIn = !!user
-		const userCanArchiveAnyComment
-			= !!user?.permissions.canArchiveAnyComment
-		
-		const userCanEditAnyComment
-			= !!user?.permissions.canEditAnyComment
+		const {canArchiveAnyComment, canEditAnyComment, canBanUsers}
+			= user?.permissions ?? {}
 
-		const userIsTheAuthorOfThisComment = isUserLoggedIn
+		const isAuthor = isUserLoggedIn
 			&& user?.id === comment.user.id
 
-		const deleteButtonIsAvailable = userCanArchiveAnyComment
-			|| userIsTheAuthorOfThisComment
-		
-		const editButtonIsAvailable = userIsTheAuthorOfThisComment
-
-		const banUserButtonIsAvailable = !!user?.permissions.canBanUsers
+		const buttons = {
+			delete: canArchiveAnyComment || isAuthor,
+			edit: isAuthor || canEditAnyComment,
+			ban: canBanUsers,
+		}
 
 		const isThread = comment.parentCommentId === undefined
 		const isReview = comment.scoring !== undefined
+		const postType = isThread
+			? isReview
+				? "review"
+				: "thread"
+			: "reply"
 
-		const deleteText = isThread
-			? isReview
-				? "Delete review"
-				: "Delete thread"
-			: "Delete reply"
-		
-		const editText = isThread
-			? isReview
-				? "Edit review"
-				: "Edit thread"
-			: "Edit reply"
+		const prompts = this.#modalPrompts
 
 		return html`
-			<div class="blanket" @click=${this.#toggleDropDown}></div>
-			<div class="dropdownmenu" part="drop-down">
+			<div class=blanket @click=${this.#toggleDropDown}></div>
+			<div class=dropdownmenu part=dropdownmenu>
 				<button
-					part="report"
-					@click=${this.#promptReportModal}>
+					part=report
+					@click=${prompts.report}>
 						${infoSquareSvg}
 						Report user
 				</button>
 
-				${banUserButtonIsAvailable
+				${buttons.ban
 					? html`
-						<button part="suspend" @click=${this.#promptBanModal}>
+						<button part=suspend @click=${prompts.ban}>
 							${alertTriangleSvg}
 							Suspend user
 						</button>
 					`
 					: null}
-				
-				${deleteButtonIsAvailable
+
+				${buttons.delete
 					? html`
-						<button part="delete" @click=${this.#promptDeleteModal}>
+						<button part=delete @click=${prompts.delete}>
 							${trash2Svg}
-							${deleteText}
+							Delete ${postType}
 						</button>
 					`
 					: null}
 
-				${editButtonIsAvailable
+				${buttons.edit
 					? html`
-						<button part="edit" @click=${this.#promptEditModal}>
+						<button part=edit @click=${prompts.edit}>
 							${edit2Svg}
-							${editText}
+							Edit ${postType}
 						</button>
 					`
 					: null}
 			</div>
-	`}
+		`
+	}
 
 	render() {
 		const {FiveStar} = this
