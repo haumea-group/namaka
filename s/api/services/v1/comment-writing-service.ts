@@ -105,15 +105,15 @@ export const makeCommentWritingService = asServiceProvider(({
 	},
 
 	async archiveComments(rawIds: string[]): Promise<void> {
-		const idArr = enforceValidation(rawIds, validateIdArray)
-
 		if (!user)
 			throw new renraku.ApiError(403, "cannot archive, not logged in")
 
-		const ids = idArr.map(id => dbmage.Id.fromString(id))
-		const comments = await database.tables.comments.read(
-			dbmage.findAll(ids, id => ({id}))
-		)
+		const ids = enforceValidation(rawIds, validateIdArray)
+			.map(id => dbmage.Id.fromString(id))
+
+		const conditional = dbmage.findAll(ids, id => ({id}))
+		const comments = await database.tables.comments.read(conditional)
+
 		for (const comment of comments) {
 			if (!comment)
 				throw new renraku.ApiError(404, "cannot archive, comment not found")
@@ -124,17 +124,17 @@ export const makeCommentWritingService = asServiceProvider(({
 
 		await database.transaction(async({tables}) => {
 		await tables.comments.update({
-			...dbmage.findAll(ids, id => ({id})),
+			...conditional,
 			write: {archived: true}
 			})
 
 		const scoreCount = await tables.scores.count({
-			...dbmage.findAll(ids, id => ({id}))
+			...conditional
 			})
 
 		if (scoreCount)
 			await tables.scores.update({
-				...dbmage.findAll(ids, id => ({id})),
+				...conditional,
 				write: {archived: true}
 			})
 		})

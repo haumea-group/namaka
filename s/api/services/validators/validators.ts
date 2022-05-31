@@ -60,5 +60,6 @@ export const validateCommentEditDraft = schema<CommentEditDraft>({
 
 export const validateIdArray = validator(
 	array(),
-	each(validateId)
+	minLength(1),
+	each(validateId),
 )

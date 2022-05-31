@@ -8,7 +8,7 @@ export function enforceValidation<T>(data: T, validator: Validator<T>) {
 
 	if (problems.length) {
 		const message = problems.join("; ")
-		throw new ApiError(403, `validation error - ${message}`)
+		throw new ApiError(400, `validation error - ${message}`)
 	}
 	else {
 		return data
