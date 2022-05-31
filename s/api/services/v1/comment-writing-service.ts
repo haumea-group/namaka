@@ -114,7 +114,9 @@ export const makeCommentWritingService = asServiceProvider(({
 		const conditional = dbmage.findAll(ids, id => ({id}))
 		const comments = await database.tables.comments.read(conditional)
 
-		for (const comment of comments) {
+		for (const id of ids) {
+			const comment = comments.find(c => c.id.string === id.string)
+
 			if (!comment)
 				throw new renraku.ApiError(404, "cannot archive, comment not found")
 
@@ -123,21 +125,10 @@ export const makeCommentWritingService = asServiceProvider(({
 		}
 
 		await database.transaction(async({tables}) => {
-		await tables.comments.update({
-			...conditional,
-			write: {archived: true}
-			})
-
-		const scoreCount = await tables.scores.count({
-			...conditional
-			})
-
-		if (scoreCount)
-			await tables.scores.update({
-				...conditional,
-				write: {archived: true}
-			})
+			await tables.comments.update({...conditional, write: {archived: true}})
+			const scoreCount = await tables.scores.count(conditional)
+			if (scoreCount)
+				await tables.scores.update({...conditional, write: {archived: true}})
 		})
-
 	},
 }))
