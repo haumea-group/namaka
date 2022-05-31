@@ -1,5 +1,6 @@
 
 import {Suite, expect} from "cynic"
+import {ApiError, RenrakuError} from "renraku"
 import {User} from "../../../api/types/auth.js"
 import {newServer, randomId} from "./testing/commenting-test-setups.js"
 
@@ -477,6 +478,20 @@ export default <Suite>{
 					.newBrowserTab()
 				const fakeCommentIds = [randomId(), randomId()]
 				await expect(async() => commenting.archiveComments(fakeCommentIds)).throws()
+			},
+			async "cannot archive an empty array of comment ids"() {
+				const {commenting} = newServer()
+					.newUser(makeAdminUser())
+					.newBrowserTab()
+				let error: undefined | ApiError
+				try {
+					await commenting.archiveComments([])
+				}
+				catch (err) {
+					if (err instanceof ApiError)
+						error = err
+				}
+				expect(error?.code).equals(400)
 			},
 		}
 	},
