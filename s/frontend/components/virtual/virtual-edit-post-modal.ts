@@ -14,16 +14,18 @@ const defaultScore = 0
 export const virtualEditPostModal = virtual({
 
 	initialState: {
-		defaultScore: 0,
+		commentBody: "",
+		aspectScores: {}
 	},
 
 	setup: (
 		{getState, setState}, {
-			comment, scoreAspects, modals
+			comment, scoreAspects, modals, onSave
 		} : {
 			comment: NestedComment
 			scoreAspects:string []
 			modals: ModalControls
+			onSave: (commentDetails: object) => void
 		}) => {
 
 		const isThread = comment.parentCommentId === undefined
@@ -46,6 +48,12 @@ export const virtualEditPostModal = virtual({
 					? existingScore.score
 					: defaultScore
 			}
+
+			for (const aspect of scoreAspects) {
+				setState({...getState(),
+					aspectScores: {...getState().aspectScores,[aspect]: getPreviousOrDefaultScore(aspect)}
+				})
+			}
 		
 			const scoringCategories = scoreAspects.map(aspect => ({
 				aspect,
@@ -55,7 +63,12 @@ export const virtualEditPostModal = virtual({
 						editable: true,
 						rating: getPreviousOrDefaultScore(aspect),
 					},
-				})
+				},
+				{onRatingChange: (rating) => {
+					setState({...getState(),
+						aspectScores: {...getState().aspectScores,[aspect]: rating}
+					})
+				}})
 			}))
 
 			renderScoringUi = () => html`
@@ -70,39 +83,40 @@ export const virtualEditPostModal = virtual({
 			`
 		}
 
-		return (
-			state,
-			props: {
-				closeModal: () => void,
-				
-			}) => {
-				const {closeModal} = props
+		return (state, props: {closeModal: () => void}) => {
 
-				return html`
-					<div class="header">
-						<h2>Delete ${postType}</h2>
-					</div>
-					<div class="body">
-						${renderScoringUi()}
+			const {closeModal} = props
 
-						<namaka-textarea
-							.validator=${validateCommentBody}
-							.initial-value="${comment.body}"
-							part="textarea"
-						></namaka-textarea>
-					</div>
-					
-					<div class="buttons">
-						<button @click=${closeModal}>
-							Save
-						</button>
-						<button
-							@click=${closeModal}
-						>Cancel</button>
-					</div>
-				`
+			function handleSaveClick() {
+				onSave(state)
+				closeModal()
+			}
+
+			return html`
+				<div class="header">
+					<h2>Delete ${postType}</h2>
+				</div>
+				<div class="body">
+					${renderScoringUi()}
+
+					<namaka-textarea
+						.validator=${validateCommentBody}
+						.initial-value="${comment.body}"
+						part="textarea"
+					></namaka-textarea>
+				</div>
+				<div class="buttons">
+					<button @click=${handleSaveClick}>
+						Save
+					</button>
+					<button
+						@click=${closeModal}
+					>Cancel</button>
+				</div>
+			`
 		}
 	},
 
 	styles: editPostModalViewCss
 })
+

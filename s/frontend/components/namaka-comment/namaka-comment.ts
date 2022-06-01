@@ -34,7 +34,10 @@ export class NamakaComment extends mixinStandard<{
 		commenting: ReturnType<typeof makeCommentingModel>
 	}>()(LitElement) {
 
-	private FiveStar = virtualFiveStar.attach({component: this})
+	private FiveStar = virtualFiveStar.attach(
+		{component: this},
+		{onRatingChange: (rating) => console.log(rating)}
+	)
 
 	@property({type: Object})
 	comment?: NestedComment = undefined

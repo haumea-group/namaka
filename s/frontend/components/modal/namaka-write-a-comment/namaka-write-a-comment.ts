@@ -16,7 +16,8 @@ export class NamakaWriteAComment extends LitElement {
 			rating: 50,
 			editable: true,
 		},
-	})
+	},
+	{onRatingChange: (rating) => console.log(rating)})
 
 	render() {
 		const {FiveStar} = this

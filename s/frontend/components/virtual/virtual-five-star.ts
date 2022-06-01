@@ -10,7 +10,11 @@ export const virtualFiveStar = virtual({
 		editable: false,
 	},
 
-	setup({getState, setState}, details: void) {
+	setup({getState, setState}, {
+		onRatingChange
+	} : {
+		onRatingChange: (rating: number) => void
+	}) {
 
 		function updateRating(newRating: number) {
 			setState({...getState(), rating: newRating})
@@ -18,8 +22,10 @@ export const virtualFiveStar = virtual({
 
 		function renderStar(treshhold: number) {
 			const handleClick = () => {
-				if (getState().editable)
+				if (getState().editable) {
 					updateRating(treshhold)
+					onRatingChange(getState().rating)
+				}
 			}
 			const className = getState().rating >= treshhold
 				? "star-full"
