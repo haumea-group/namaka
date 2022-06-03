@@ -8,14 +8,14 @@ import {virtualFiveStar} from "./virtual-five-star.js"
 
 import editPostModalViewCss from "../modals/views/edit-thread/edit-post-modal-view.css.js"
 import {ModalControls} from "../modals/modal-types.js"
-
-const defaultScore = 0
+import {ValueChangeEvent} from "../namaka-textarea/namaka-textarea.js"
 
 export const virtualEditPostModal = virtual({
 
 	initialState: {
 		commentBody: "",
-		aspectScores: {}
+		aspectScores: {},
+		isSaveButtonDisabled: true
 	},
 
 	setup: (
@@ -46,7 +46,7 @@ export const virtualEditPostModal = virtual({
 				const existingScore = scores.find(score => score.aspect === aspect)
 				return existingScore
 					? existingScore.score
-					: defaultScore
+					: 0
 			}
 
 			for (const aspect of scoreAspects) {
@@ -83,6 +83,15 @@ export const virtualEditPostModal = virtual({
 			`
 		}
 
+		function handleTextChange(event: ValueChangeEvent<string>) {
+			const {isValid,value} = event.detail
+			setState({
+				...getState(),
+				commentBody: value,
+				isSaveButtonDisabled: !isValid
+			})
+		}
+
 		return (state, props: {closeModal: () => void}) => {
 
 			const {closeModal} = props
@@ -102,11 +111,12 @@ export const virtualEditPostModal = virtual({
 					<namaka-textarea
 						.validator=${validateCommentBody}
 						.initial-value="${comment.body}"
+						@valuechange=${handleTextChange}
 						part="textarea"
 					></namaka-textarea>
 				</div>
 				<div class="buttons">
-					<button @click=${handleSaveClick}>
+					<button ?disabled=${state.isSaveButtonDisabled} @click=${handleSaveClick}>
 						Save
 					</button>
 					<button

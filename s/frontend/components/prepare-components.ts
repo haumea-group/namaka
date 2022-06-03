@@ -55,7 +55,7 @@ export function prepareComponents({
 			.withContext({modals, auth, commenting})
 			.withSubscriptions(subscribe),
 		NamakaBoard: NamakaBoard
-			.withContext({auth, commenting})
+			.withContext({modals, auth, commenting})
 			.withSubscriptions(subscribe),
 		NamakaCopyToClipboard: NamakaCopyToClipboard
 	})

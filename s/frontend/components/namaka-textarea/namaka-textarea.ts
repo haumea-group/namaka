@@ -8,6 +8,16 @@ import {mixinStyles} from "../../framework/mixins/mixin-styles.js"
 
 import NamakaTextareaCss from "./namaka-textarea.css.js"
 
+export class ValueChangeEvent<xValue> extends CustomEvent<{value: xValue, isValid: boolean}> {
+	constructor(value: xValue, isValid: boolean) {
+		super("valuechange", {
+			bubbles: true,
+			composed: true,
+			detail: {value, isValid},
+		})
+	}
+}
+
 @mixinStyles(NamakaTextareaCss)
 export class NamakaTextarea extends LitElement {
 
@@ -29,6 +39,7 @@ export class NamakaTextarea extends LitElement {
 		const input = event.target as HTMLTextAreaElement;
 		this.inputValue = input.value
 		this.problems = this.validator(this.inputValue)
+		this.dispatchEvent(new ValueChangeEvent(this.inputValue, this.problems.length === 0))
 	}
 	
 	render() {

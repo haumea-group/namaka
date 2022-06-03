@@ -9,9 +9,12 @@ import {makeCommentingModel} from "../../models/commenting/commenting-model.js"
 import {recursivelyRenderComments} from "./utils/recursively-render-comments.js"
 
 import namakaCommentsCss from "./namaka-board.css.js"
+import {ModalControls} from "../modals/modal-types.js"
+import {postModalView} from "../modals/views/post-modal-view.js"
 
 @mixinStyles(namakaCommentsCss)
 export class NamakaBoard extends mixinStandard<{
+		modals: ModalControls
 		auth: ReturnType<typeof makeAuthModel>
 		commenting: ReturnType<typeof makeCommentingModel>
 	}>()(LitElement) {
@@ -39,6 +42,24 @@ export class NamakaBoard extends mixinStandard<{
 		})
 	}
 
+	#RandomComment = async(isAReview: boolean = true) => {
+		const {scoreAspects} = await this.context.commenting.fetchScoreAspects()
+		const {modals} = this.context
+		const result = await postModalView({modals, isAReview, scoreAspects})
+		if(result){
+			await this.context.commenting.postComment({
+				topicId: this.topic!,
+				parentCommentId: undefined,
+				subject: randomSubject(),
+				body: [randomComment(), randomComment(), randomComment()].join(" "),
+				scores: scoreAspects.map(aspect => ({
+					aspect,
+					score: Math.random() * 100,
+				})),
+			})
+		}
+	}
+
 	render() {
 		if (!this.topic)
 			return null
@@ -53,6 +74,11 @@ export class NamakaBoard extends mixinStandard<{
 						@click=${this.#postRandomComment}
 						?disabled=${!isLoggedIn}>
 							post a comment
+					</button>
+					<button
+						@click=${this.#RandomComment}
+						?disabled=${!isLoggedIn}>
+							post review
 					</button>
 				</div>
 				<div class=comments>
