@@ -7,7 +7,8 @@ import {makeCommentingModel} from "../../models/commenting/commenting-model.js"
 
 import NamakaDemoCss from "./namaka-demo.css.js"
 
-import {Counter} from "../../framework/magical/counter.js"
+import {ExampleCounter} from "../../framework/magical/examples/example-counter.js"
+import {ExampleTimer} from "../../framework/magical/examples/example-timer.js"
 
 @mixinStyles(NamakaDemoCss)
 export class NamakaDemo extends mixinStandard<{
@@ -80,7 +81,10 @@ export class NamakaDemo extends mixinStandard<{
 			
 			<br/>
 
-			${Counter(9)}
+			${ExampleCounter(0)}
+			<br/>
+			<br/>
+			${ExampleTimer()}
 		`
 	}
 }

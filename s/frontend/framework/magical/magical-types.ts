@@ -3,7 +3,7 @@ import {TemplateResult} from "lit"
 
 export interface Use {
 	state<T>(value: T): [T, (value: T) => void]
-	effect(e: () => () => void): void
+	effect(e: (rerender: () => void) => () => void): void
 }
 
 export type Renderer<xProps extends any[]> = (

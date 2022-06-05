@@ -1,4 +1,5 @@
 
+import {debounce} from "@chasemoskal/snapstate"
 import {directive} from "lit-html/directive.js"
 import {AsyncDirective} from "lit-html/async-directive.js"
 
@@ -21,7 +22,7 @@ export function magical<xProps extends any[]>(sauce: Sauce<xProps>) {
 
 		#generateUse(...props: xProps): Use {
 			const {state, effect} = this.#wires
-			const rerender = () => this.setValue(this.render(...props))
+			const rerender = debounce(0, () => this.setValue(this.render(...props)))
 			return {
 
 				state<T>(value: T): [T, (value: T) => void] {
@@ -30,20 +31,21 @@ export function magical<xProps extends any[]>(sauce: Sauce<xProps>) {
 					if (!initialized)
 						map.set(index, value)
 					const currentValue = map.get(index)
-					const setValue = (newValue: T) => {
-						map.set(index, newValue)
-						rerender()
+					const set = (newValue: T) => {
+						if (newValue !== currentValue) {
+							map.set(index, newValue)
+							rerender()
+						}
 					}
 					state.index += 1
-					return [currentValue, setValue]
+					return [currentValue, set]
 				},
 
 				effect(e) {
 					const {index, map} = effect
 					const initialized = map.has(index)
-					if (!initialized) {
-						map.set(index, e())
-					}
+					if (!initialized)
+						map.set(index, e(rerender))
 					effect.index += 1
 				},
 			}
