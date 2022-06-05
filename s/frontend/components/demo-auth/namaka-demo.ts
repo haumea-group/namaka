@@ -7,10 +7,10 @@ import {makeCommentingModel} from "../../models/commenting/commenting-model.js"
 
 import NamakaDemoCss from "./namaka-demo.css.js"
 
-import {ExampleCounter} from "../../framework/magical/examples/example-counter.js"
 import {ExampleTimer} from "../../framework/magical/examples/example-timer.js"
+import {ExampleCounter} from "../../framework/magical/examples/example-counter.js"
 
-@mixinStyles(NamakaDemoCss)
+@mixinStyles(NamakaDemoCss, ExampleTimer.css)
 export class NamakaDemo extends mixinStandard<{
 		auth: ReturnType<typeof makeAuthModel>
 		modals: ModalControls

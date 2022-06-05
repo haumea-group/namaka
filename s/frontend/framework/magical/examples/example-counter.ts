@@ -7,7 +7,7 @@ export const ExampleCounter = magical(use => (start: number) => {
 	const handleClick = () => setCount(count + 1)
 
 	return html`
-		<p>count: ${count}</p>
+		<p>count ${count}</p>
 		<button @click=${handleClick}>increment</button>
 	`
 })

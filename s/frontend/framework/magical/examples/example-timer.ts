@@ -1,5 +1,5 @@
 
-import {html} from "lit"
+import {html, css} from "lit"
 import {magical} from "../magical.js"
 
 export const ExampleTimer = magical(use => () => {
@@ -35,7 +35,25 @@ export const ExampleTimer = magical(use => () => {
 	}
 
 	return html`
-		<p>timer: ${(current / 1000).toFixed(2)}</p>
-		<button @click=${handleClick}>${active ?"stop" :"start"}</button>
+		<div class=timer ?data-active=${active}>
+			<p>timer ${(current / 1000).toFixed(2)}</p>
+			<button @click=${handleClick}>${active ?"stop" :"start"}</button>
+		</div>
 	`
 })
+
+ExampleTimer.css = css`
+
+.timer {
+	color: green;
+}
+
+.timer p {
+	font-family: monospace;
+}
+
+.timer[data-active] {
+	color: yellow;
+}
+
+`
