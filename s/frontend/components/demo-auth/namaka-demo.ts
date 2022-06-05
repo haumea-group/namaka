@@ -7,6 +7,8 @@ import {makeCommentingModel} from "../../models/commenting/commenting-model.js"
 
 import NamakaDemoCss from "./namaka-demo.css.js"
 
+import {Counter} from "../../framework/magical/counter.js"
+
 @mixinStyles(NamakaDemoCss)
 export class NamakaDemo extends mixinStandard<{
 		auth: ReturnType<typeof makeAuthModel>
@@ -75,6 +77,10 @@ export class NamakaDemo extends mixinStandard<{
 					</p>	
 				`
 				: html`<p>logged out</p>`}
+			
+			<br/>
+
+			${Counter(9)}
 		`
 	}
 }
