@@ -8,7 +8,10 @@ function arrayize<T>(item: T | T[]) {
 
 const notUndefined = (x: any) => x !== undefined
 
-function combineStyles(parentStyles: CSSResultGroup, newStyles: CSSResultGroup[]) {
+function combineStyles(
+		parentStyles: CSSResultGroup,
+		newStyles: (undefined | CSSResultGroup)[]
+	) {
 	const styles = [
 		...(arrayize(parentStyles) ?? []),
 		...arrayize(newStyles),
@@ -18,7 +21,7 @@ function combineStyles(parentStyles: CSSResultGroup, newStyles: CSSResultGroup[]
 		.filter(notUndefined)
 }
 
-export function mixinStyles(...newStyles: CSSResultGroup[]) {
+export function mixinStyles(...newStyles: (undefined | CSSResultGroup)[]) {
 	return function<C extends Constructor<LitElement>>(Base: C): C {
 		return class extends Base {
 			static styles = combineStyles(
