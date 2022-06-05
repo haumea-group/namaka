@@ -17,8 +17,8 @@ import infoSquareSvg from "../../../icons/tabler/info-square.svg.js"
 import alertTriangleSvg from "../../../icons/feather/alert-triangle.svg.js"
 
 import {obtool} from "../../../toolbox/obtool.js"
+import {FiveStar} from "../virtual/virtual-five-star.js"
 import {howLongAgo} from "../../../toolbox/how-long-ago.js"
-import {virtualFiveStar} from "../virtual/virtual-five-star.js"
 import {banUserModalView} from "../modals/views/ban-user/ban-user-modal-view.js"
 import {mixinRefreshInterval} from "../../framework/mixins/mixin-refresh-interval.js"
 import {reportUserModalView} from "../modals/views/report-user/report-user-modal-view.js"
@@ -26,14 +26,12 @@ import {deletePostModalView} from "../modals/views/delete-post/delete-post-modal
 import {recursivelyCountAllNestedChildren} from "./utils/recursively-count-all-nested-children.js"
 
 @mixinRefreshInterval(1000)
-@mixinStyles(namakaCommentCss, virtualFiveStar.styles)
+@mixinStyles(namakaCommentCss, FiveStar.css)
 export class NamakaComment extends mixinStandard<{
 		modals: ModalControls
 		auth: ReturnType<typeof makeAuthModel>
 		commenting: ReturnType<typeof makeCommentingModel>
 	}>()(LitElement) {
-
-	private FiveStar = virtualFiveStar.attach({component: this})
 
 	@property({type: Object})
 	comment?: NestedComment = undefined
@@ -49,17 +47,6 @@ export class NamakaComment extends mixinStandard<{
 
 	get #canPost() {
 		return !!this.context.auth.user?.permissions.canPost
-	}
-
-	async firstUpdated() {
-		const comment = this.#getComment()
-
-		this.FiveStar.setState({
-			rating: comment.scoring
-				? comment.scoring.average
-				: 0,
-			editable: false,
-		})
 	}
 
 	#postRandomReply = async() => {
@@ -183,7 +170,6 @@ export class NamakaComment extends mixinStandard<{
 	}
 
 	render() {
-		const {FiveStar} = this
 		const comment = this.#getComment()
 
 		if (!comment.user)
@@ -202,7 +188,10 @@ export class NamakaComment extends mixinStandard<{
 						</span>
 						<span class=fivestar>
 							${comment.scoring
-								? FiveStar()
+								? FiveStar({
+									editable: false,
+									initialScore: comment.scoring.average,
+								})
 								: null}
 						</span>
 						<button class=dropdownbutton @click=${this.#toggleDropDown}>
