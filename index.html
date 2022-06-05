@@ -1,0 +1,54 @@
+<!doctype html>
+<html>
+<head>
+	<meta charset="utf-8"/>
+	<meta name="viewport" content="width=device-width, initial-scale=1"/>
+	<meta name="darkreader" content="dark"/>
+	<title>namaka</title>
+	<link rel=stylesheet href="/demo.css"/>
+
+	<script defer type=importmap-shim src="/x/importmap.json"></script>
+	<script defer type=module-shim>
+		const lastCommitId = localStorage["commitId"]
+		const result = await fetch("/x/commit-id.txt")
+		const commitId = (await result.text()).trim()
+
+		if (commitId !== lastCommitId) {
+			localStorage.clear()
+			localStorage["commitId"] = commitId
+
+			let log = `🧹 wiped database`
+			if (lastCommitId)
+				log += `\n- old commit ${lastCommitId.slice(0, 8)}`
+			log += `\n- new commit ${commitId.slice(0, 8)}`
+			console.log(log)
+		}
+
+		await import("/x/mock.js")
+	</script>
+	<script defer src="/node_modules/es-module-shims/dist/es-module-shims.wasm.js"></script>
+</head>
+<body>
+
+	<namaka-modals>
+		<p slot=report-user-lol-custom>Custom Text for Report User</p>
+		<p slot=delete-post-lol-custom>Custom Text for Delete Post</p>
+		<a slot="report-user-support-email" href="mailto:support@valor.com">support@valor.com</a>
+	</namaka-modals>
+
+	<header>
+		<h1>
+			<strong>⁓ 🌑 namaka ⁓</strong>
+			<em>user comments and 5-star reviews</em>
+		</h1>
+		<p><em>"nine pregnant women cannot make a baby in one month"</em></p>
+		<p>free and open source <a href="https://github.com/haumea-group/namaka">on github</a></p>
+	</header>
+
+	<namaka-demo></namaka-demo>
+
+	<namaka-board
+		topic=74315c4911702b10f2db70f26e35a1fe733e680f351491e48237cc06795af462>
+	</namaka-board>
+</body>
+</html>

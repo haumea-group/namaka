@@ -1,0 +1,1 @@
+{"version":3,"file":"row-to-bans.js","sourceRoot":"","sources":["../../../../s/api/services/utils/row-to-bans.ts"],"names":[],"mappings":"AAGA,MAAM,UAAU,UAAU,CAAC,GAAW;IACrC,OAAO;QACN,MAAM,EAAE,GAAG,CAAC,MAAM,CAAC,MAAM;QACzB,MAAM,EAAE,GAAG,CAAC,MAAM;QAClB,KAAK,EAAE,GAAG,CAAC,KAAK;KAChB,CAAA;AACF,CAAC"}

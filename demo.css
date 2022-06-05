@@ -1,0 +1,131 @@
+
+* {
+	margin: 0;
+	padding: 0;
+	box-sizing: border-box;
+}
+
+:not(:defined) {
+	display: none;
+}
+
+html {
+	background: #111;
+	color: #888;
+}
+
+body {
+	text-align: center;
+	padding-bottom: 10em;
+}
+
+h1 > strong {
+	color: white;
+	text-shadow: 0 0 12px #fff6;
+}
+
+h1 > em {
+	display: block;
+	opacity: 0.5;
+	font-size: 0.5em;
+	padding-top: 0.5em;
+}
+
+body > * + * {
+	margin-top: 2em;
+}
+
+a { color: skyblue; }
+a:hover { color: white; }
+
+.layout {
+	padding: 5vh 10vw;
+	margin: auto;
+	width: 100%;
+}
+
+.demo > * + * {
+	margin-top: 2em;
+}
+
+namaka-demo {
+	margin: 1em auto;
+	padding: 1em;
+}
+
+namaka-board {
+	text-align: left;
+	margin: auto;
+}
+
+.review-title {
+	margin-bottom: 20px;
+}
+
+.title {
+	font-size: 1.5rem;
+	line-height: 1.8rem;
+	text-align: left;
+}
+
+.container {
+	width: 100%;
+	display: grid;
+	margin: 0 auto;
+	row-gap: 2em;
+	padding: 0 20px;
+	/* overflow-x: auto; */
+}
+
+@media (min-width: 640px) {
+	.container {
+		max-width: 640px;
+		margin: 0 auto;
+	}
+}
+
+@media (min-width: 768px) {
+	.container {
+		max-width: 768px;
+	}
+}
+
+@media (min-width: 1024px) {
+	.container {
+		max-width: 1024px;
+	}
+}
+
+@media (min-width: 1280px) {
+	.container {
+		max-width: 1280px;
+	}
+}
+
+.all-comments {
+	border: 1px solid #F5F5FA;
+	box-shadow: 0px 10px 25px rgba(151, 143, 175, 0.04);
+	border-radius: 16px;
+	padding: 20px;
+}
+
+.heading {
+	display: flex;
+	justify-content: space-between;
+	align-items: center;
+	padding: 10px 0;
+	border-bottom: 1px solid #EDEFF5;
+	padding-bottom: 15px;
+}
+
+select {
+	padding: 5px;
+	border:  1px solid #EDEFF5;
+	color: #676767;
+	border-radius: 5px;
+}
+
+.banned-users {
+	width: 100%;
+	overflow-x: scroll;
+}

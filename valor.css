@@ -1,0 +1,162 @@
+html {
+	background: #fff;
+	color: #000;
+}
+
+:is(
+	namaka-ban,
+	namaka-unban,
+	namaka-edit-comment,
+	namaka-author-reply,
+	namaka-archive-comment,
+	namaka-board-stats,
+	namaka-comments,
+	namaka-board,
+	namaka-write-a-comment
+)::part(container),
+:is(
+	namaka-ban,
+	namaka-unban,
+	namaka-edit-comment,
+	namaka-author-reply,
+	namaka-archive-comment,
+	namaka-board-stats,
+	namaka-comments,
+	namaka-board,
+	namaka-write-a-comment
+) {
+	border-radius: 25px;
+	background: #fff;
+	padding: 30px;
+}
+
+namaka-archive-comment::part(title),
+namaka-ban::part(title),
+namaka-unban::part(title) {
+	color: #000;
+}
+
+namaka-archive-comment::part(deleteButton),
+namaka-ban::part(deleteButton) {
+	background: #EB5757;
+	color: #fff;
+}
+
+namaka-archive-comment::part(dangerButton),
+namaka-ban::part(dangerButton),
+namaka-unban::part(dangerButton) {
+	background: #EB5757;
+	color: #fff;
+}
+
+namaka-archive-comment::part(cancelButton),
+namaka-ban::part(cancelButton),
+namaka-unban::part(cancelButton),
+namaka-author-reply::part(cancelButton){
+	background: #FFFAF0;
+	color: #FFAF02;
+}
+
+namaka-unban::part(name) {
+	color: #000;
+	font-weight: bold;
+}
+
+namaka-unban::part(primaryColor),
+namaka-edit-comment::part(primaryColor),
+namaka-write-a-comment::part(primaryColor) {
+	background: #FFAF02;
+	color: #fff;
+	border: none;
+}
+
+namaka-archive-comment::part(button),
+namaka-ban::part(button),
+namaka-unban::part(button),
+namaka-author-reply::part(button) {
+	padding: 15px 0;
+	width: 100%;
+	max-width: 180px;
+	border-radius: 40px;
+}
+
+namaka-edit-comment::part(title),
+namaka-write-a-comment::part(title) {
+	font-size: 18px;
+	font-weight: 700;
+	line-height: 24px;
+	color: #000;
+}
+
+namaka-edit-comment::part(subtitle),
+namaka-write-a-comment::part(subtitle) {
+	font-weight: 700;
+	color: #000;
+}
+
+namaka-edit-comment::part(primaryColor),
+namaka-write-a-comment::part(primaryColor) {
+	width: 250px;
+	padding: 15px 0;
+	border-radius: 40px;
+}
+
+namaka-edit-comment::part(bold),
+namaka-write-a-comment::part(bold) {
+	color: #000;
+	font-weight: 700;
+}
+
+namaka-bans::part(container) {
+	border: 1px solid #F5F5FA;
+	box-shadow: 0px 1px 5px rgba(0, 0, 0, 0.05);
+	background: white;
+	color: #1A202C;
+}
+
+namaka-bans::part(search) {
+	border-color: #EEEEEE;
+	border-radius: 5px;
+	width: 100%;
+	max-width: 435px;
+}
+
+namaka-bans::part(text),
+namaka-bans::part(filter) {
+	color: #000;
+	width: 100%
+}
+
+namaka-bans td {
+	border-bottom: 1px solid #000;
+}
+
+namaka-bans::part(tableHeading) {
+	background: #F5F8FC;
+	color: #000;
+	border-radius: 5px;
+}
+
+namaka-bans::part(tag) {
+	background: #FFAF02;
+	color: #fff;
+	padding: 10px 8px;
+	border-radius: 10px;
+}
+
+namaka-ban::part(label),
+namaka-archive-comment::part(bold),
+namaka-ban::part(bold) {
+	color: #000;
+}
+
+namaka-board {
+	/* border: none; */
+	padding: 0;
+}
+
+namaka-comment::part(button) {
+	background: transparent;
+	color: #000;
+	border: none;
+}
